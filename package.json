@@ -1,0 +1,38 @@
+{
+  "name": "core",
+  "version": "0.0.0",
+  "description": "A cross-platform tool for managing your databases",
+  "main": "./src/main.js",
+  "scripts": {
+    "clean": "rm -Rf ./build ./dist",
+    "compile": "npm run -s clean && npm run -s copy && npm run -s compile:js && npm run -s compile:css && (cd ./build && npm install --production)",
+    "compile:css": "node-sass --output ./build/src/styles ./src/styles/*.scss && replace-in-file .scss .css ./build/src/index.html",
+    "compile:js": "babel --out-dir ./build/src ./build/src",
+    "copy": "mkdir -p ./build && cp -Rf ./src ./build/src && cp ./package.json ./build && npm run compile:js && rm ./build/src/serve.js",
+    "package": "npm run -s package:app",
+    "package:app": "electron-packager ./build nodedb --icon src/assets/img/logo.png --all --out ./dist --overwrite true",
+    "serve": "DEBUG=-electron-compile:* ENABLE_LIVE_RELOAD=true SHOW_DEV_TOOLS=true electron ./src/serve",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nodedb/core.git"
+  },
+  "author": "Simon Emms <simon@simonemms.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nodedb/core/issues"
+  },
+  "homepage": "https://github.com/nodedb/core#readme",
+  "dependencies": {
+    "electron": "^1.6.11",
+    "electron-compile": "^6.4.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "electron-compilers": "^5.9.0",
+    "electron-packager": "^8.7.2",
+    "node-sass": "^4.5.3",
+    "replace-in-file": "^2.5.3"
+  }
+}
