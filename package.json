@@ -11,6 +11,7 @@
     "copy": "mkdir -p ./build && cp -Rf ./src ./build/src && cp ./package.json ./build && npm run compile:js && rm ./build/src/serve.js",
     "package": "npm run -s package:app",
     "package:app": "electron-packager ./build nodedb --icon src/assets/img/logo.png --all --out ./dist --overwrite true",
+    "package:local": "npm run compile && electron-packager ./build nodedb --icon src/assets/img/logo.png --out ./dist --overwrite true",
     "serve": "DEBUG=-electron-compile:* ENABLE_LIVE_RELOAD=true SHOW_DEV_TOOLS=true electron ./src/serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
