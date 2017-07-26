@@ -5,10 +5,10 @@
   "main": "./src/main.js",
   "scripts": {
     "clean": "rm -Rf ./build ./dist ./tmp",
-    "ci": "echo '@todo: tests' && npm run -s compile",
-    "compile": "npm run -s clean && npm run -s copy && npm run -s compile:js && npm run -s compile:css && (cd ./tmp && npm install --production)",
-    "compile:css": "node-sass --output ./tmp/src/styles ./src/styles/*.scss && replace-in-file .scss .css ./tmp/src/index.html",
-    "compile:js": "babel --out-dir ./tmp/src ./tmp/src",
+    "ci": "npm run -s test && npm run -s compile",
+    "compile": "npm run -s clean && npm run -s copy && npm run -s compile:js && npm run -s compile:css && cp -Rf ./node_modules ./tmp && (cd ./tmp && npm prune --production)",
+    "compile:css": "node-sass --output-style=compressed --output=./tmp/src/styles ./src/styles/*.scss && replace-in-file .scss .css ./tmp/src/index.html",
+    "compile:js": "babel --minified --compact=true --no-comments --source-maps=false --out-dir=./tmp/src ./tmp/src",
     "copy": "mkdir -p ./tmp && cp -Rf ./src ./tmp/src && cp ./package.json ./tmp && npm run compile:js && rm ./tmp/src/serve.js",
     "dist": "npm run -s package && npm run -s dist:rename && mkdir -p dist && npm run -s dist:compress",
     "dist:compress": "npm run -s dist:compress:armv7l && npm run -s dist:compress:linux32 && npm run -s dist:compress:linux64 && npm run -s dist:compress:osx && npm run -s dist:compress:win32 && npm run -s dist:compress:win64;",
@@ -23,7 +23,10 @@
     "package:local": "npm run compile && electron-packager ./tmp nodedb --icon src/assets/img/logo.png --out ./build --overwrite true",
     "postversion": "git push --tags && git push",
     "serve": "DEBUG=-electron-compile:* ENABLE_LIVE_RELOAD=true SHOW_DEV_TOOLS=true electron ./src/serve",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run -s test:lint",
+    "test:lint": "npm run -s test:lint:src && npm run -s test:lint:test",
+    "test:lint:src": "eslint src",
+    "test:lint:test": "eslint test"
   },
   "repository": {
     "type": "git",
@@ -43,6 +46,12 @@
     "babel-cli": "^6.24.1",
     "electron-compilers": "^5.9.0",
     "electron-packager": "^8.7.2",
+    "eslint": "^4.3.0",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-plugin-classes": "^0.1.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.1.0",
     "node-sass": "^4.5.3",
     "replace-in-file": "^2.5.3"
   }

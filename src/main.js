@@ -9,8 +9,8 @@
 import path from 'path';
 
 /* Third-party modules */
-import {app, BrowserWindow, shell} from 'electron';
-import {enableLiveReload} from 'electron-compile';
+import { app, BrowserWindow, shell } from 'electron';
+import { enableLiveReload } from 'electron-compile';
 
 /* Files */
 import pkg from '../package.json';
@@ -26,10 +26,10 @@ function createWindow () {
     icon: path.join(__dirname, 'assets', 'img', 'logo.png'),
     minHeight: 600,
     minWidth: 993, // Prevents us having to faff about with the mobile view
-    title: pkg.name
+    title: pkg.name,
   });
 
-  const {webContents} = mainWindow;
+  const { webContents } = mainWindow;
 
   if (process.env.ENABLE_LIVE_RELOAD === 'true') {
     enableLiveReload();
@@ -43,7 +43,9 @@ function createWindow () {
 
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
-  mainWindow.on('closed', () => mainWindow = null);
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
 
   const handleRedirect = (event, url) => {
     if (url !== webContents.getURL()) {
@@ -58,7 +60,7 @@ function createWindow () {
 }
 
 app
-  .on('activate', () => mainWindow === null ? createWindow() : '')
+  .on('activate', () => (mainWindow === null ? createWindow() : ''))
   .on('ready', createWindow)
   .on('window-all-closed', () => app.quit());
 
