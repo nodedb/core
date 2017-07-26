@@ -1,5 +1,6 @@
 {
   "name": "core",
+  "title": "NodeDB",
   "version": "0.0.0",
   "description": "A cross-platform tool for managing your databases",
   "main": "./src/main.js",
