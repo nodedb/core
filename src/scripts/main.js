@@ -1,5 +1,5 @@
 /**
- * app
+ * main
  */
 
 /* Node modules */
