@@ -1,11 +1,10 @@
 <template lang="jade">
-  div
-    h1 Howdy doody
-
-    p
-      router-link(
-        to='/foo'
-      ) Go to fooooo
-
+  #app
     router-view
 </template>
+
+<script>
+  export default {
+      name: 'my-project',
+  };
+</script>

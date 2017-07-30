@@ -5,6 +5,7 @@
 /* Node modules */
 
 /* Third-party modules */
+import electron from 'electron';
 import Vue from 'vue/dist/vue.min';
 
 /* Files */
