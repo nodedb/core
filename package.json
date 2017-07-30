@@ -3,14 +3,14 @@
   "title": "NodeDB",
   "version": "0.0.0",
   "description": "A cross-platform tool for managing your databases",
-  "main": "./src/main.js",
+  "main": "./src/serve.js",
   "scripts": {
     "clean": "rm -Rf ./build ./dist ./tmp",
     "ci": "npm run -s test && npm run -s compile",
-    "compile": "npm run -s clean && npm run -s copy && npm run -s rewrite:package && cp -Rf ./node_modules ./tmp && (cd ./tmp && npm prune --production)",
+    "compile": "npm run -s clean && npm run -s copy && cp -Rf ./node_modules ./tmp && (cd ./tmp && npm prune --production)",
     "compile:css": "node-sass --output-style=compressed --output=./tmp/src/styles ./src/styles/*.scss && replace-in-file .scss .css ./tmp/src/index.html",
     "compile:js": "babel --minified --compact=true --no-comments --source-maps=false --out-dir=./tmp/src ./tmp/src",
-    "copy": "mkdir -p ./tmp && cp -Rf ./src ./tmp/src && cp ./package.json ./tmp && cp ./es6-shim.js ./tmp && cp ./.compilerc ./tmp",
+    "copy": "mkdir -p ./tmp && cp -Rf ./src ./tmp/src && cp ./package.json ./tmp && cp ./.compilerc ./tmp",
     "dist": "npm run -s package && npm run -s dist:rename && mkdir -p dist && npm run -s dist:compress",
     "dist:compress": "npm run -s dist:compress:armv7l && npm run -s dist:compress:linux32 && npm run -s dist:compress:linux64 && npm run -s dist:compress:osx && npm run -s dist:compress:win32 && npm run -s dist:compress:win64;",
     "dist:compress:armv7l": "cd build && tar -zcf ../dist/armv7l.tar.gz armv7l/ && cd ..",
@@ -23,8 +23,7 @@
     "package": "electron-packager ./tmp nodedb --icon src/assets/img/logo.png --all --out ./build --overwrite true",
     "package:local": "npm run compile && electron-packager ./tmp nodedb --icon src/assets/img/logo.png --out ./build --overwrite true",
     "postversion": "git push --tags && git push",
-    "rewrite:package": "json -I -f ./tmp/package.json -e 'this.originalMain=this.main,this.main=\"./es6-shim.js\"'",
-    "serve": "DEBUG=-electron-compile:* ENABLE_LIVE_RELOAD=true SHOW_DEV_TOOLS=true electron ./src/serve",
+    "serve": "DEBUG=-electron-compile:* ENABLE_LIVE_RELOAD=true SHOW_DEV_TOOLS=true electron .",
     "test": "npm run -s test:lint",
     "test:lint": "npm run -s test:lint:src && npm run -s test:lint:test",
     "test:lint:src": "eslint src",
@@ -55,7 +54,6 @@
     "eslint-plugin-classes": "^0.1.1",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.1.0",
-    "json": "^9.0.6"
+    "eslint-plugin-react": "^7.1.0"
   }
 }
