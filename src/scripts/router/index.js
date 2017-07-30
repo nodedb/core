@@ -9,16 +9,16 @@ import Vue from 'vue/dist/vue.min';
 import VueRouter from 'vue-router';
 
 /* Files */
-import landingPage from '../components/LandingPage.vue';
+import login from '../components/Login.vue';
 
 Vue.use(VueRouter);
 
 const routes = [{
-  path: '/',
-  component: landingPage,
+  path: '/login',
+  component: login,
 }, {
   path: '*',
-  redirect: '/',
+  redirect: '/login',
 }];
 
 export default new VueRouter({
