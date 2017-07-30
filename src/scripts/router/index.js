@@ -14,11 +14,11 @@ import landingPage from '../components/LandingPage.vue';
 Vue.use(VueRouter);
 
 const routes = [{
-  path: '/foo',
+  path: '/',
   component: landingPage,
 }, {
   path: '*',
-  redirect: '/foo',
+  redirect: '/',
 }];
 
 export default new VueRouter({
