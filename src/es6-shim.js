@@ -1,5 +1,5 @@
 /**
- * serve
+ * es6-shim
  *
  * This is used to serve the application
  * when used for development
