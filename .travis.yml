@@ -7,7 +7,7 @@ matrix:
   fast_finish: true
 
 env:
-- NBD_API_URL='https://api.todo.com'
+- NDB_API_URL='https://api.todo.com'
 
 dist: trusty
 
