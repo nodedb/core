@@ -40,9 +40,12 @@
   },
   "homepage": "https://github.com/nodedb/core#readme",
   "dependencies": {
+    "@panter/vue-i18next": "^0.5.1",
     "electron": "^1.6.11",
     "electron-compile": "^6.4.1",
     "electron-compilers": "^5.9.0",
+    "i18next": "^8.4.3",
+    "i18next-sync-fs-backend": "^1.0.0",
     "vue": "^2.4.2",
     "vue-router": "^2.7.0",
     "vueify": "^9.4.1"

@@ -1,3 +1,4 @@
 <template lang="jade">
-  div login
+  div
+    h1 {{ $t('common:GREETING') }}
 </template>
