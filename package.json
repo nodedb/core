@@ -8,8 +8,6 @@
     "clean": "rm -Rf ./build ./dist ./tmp",
     "ci": "npm run -s test && npm run -s compile",
     "compile": "npm run -s clean && npm run -s copy && cp -Rf ./node_modules ./tmp && (cd ./tmp && npm prune --production)",
-    "compile:css": "node-sass --output-style=compressed --output=./tmp/src/styles ./src/styles/*.scss && replace-in-file .scss .css ./tmp/src/index.html",
-    "compile:js": "babel --minified --compact=true --no-comments --source-maps=false --out-dir=./tmp/src ./tmp/src",
     "copy": "mkdir -p ./tmp && cp -Rf ./src ./tmp/src && cp ./package.json ./tmp && cp ./.compilerc ./tmp",
     "dist": "npm run -s package && npm run -s dist:rename && mkdir -p dist && npm run -s dist:compress",
     "dist:compress": "npm run -s dist:compress:armv7l && npm run -s dist:compress:linux32 && npm run -s dist:compress:linux64 && npm run -s dist:compress:osx && npm run -s dist:compress:win32 && npm run -s dist:compress:win64;",
