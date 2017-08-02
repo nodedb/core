@@ -27,7 +27,7 @@
     "test:lint": "npm run -s test:lint:src && npm run -s test:lint:test",
     "test:lint:src": "eslint src",
     "test:lint:test": "eslint test",
-    "test:unit": "echo 'No unit tests configured' && exit 1",
+    "test:unit": "ELECTRON_PATH=$PWD/node_modules/.bin/electron electron-mocha --throw-deprecation --ui bdd --full-trace --recursive test/unit",
     "watch:test:unit": "nodemon --exec 'npm run -s test:unit'"
   },
   "repository": {
@@ -55,14 +55,15 @@
   "devDependencies": {
     "chai": "^4.1.0",
     "chai-as-promised": "^7.1.1",
+    "electron-mocha": "^4.0.0",
     "electron-packager": "^8.7.2",
+    "electron-prebuilt-compile": "^1.6.11",
     "eslint": "^4.3.0",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-classes": "^0.1.1",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
-    "mocha": "^3.5.0",
     "nodemon": "^1.11.0",
     "proxyquire": "^1.8.0",
     "sinon": "^2.4.1",
