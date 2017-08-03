@@ -23,7 +23,7 @@
     "package:local": "npm run compile && electron-packager ./tmp nodedb --icon src/assets/img/logo.png --out ./build --overwrite true",
     "postversion": "git push --tags && git push",
     "serve": "DEBUG=-electron-compile:* ENABLE_LIVE_RELOAD=true SHOW_DEV_TOOLS=true electron .",
-    "test": "npm run -s test:lint && npm run -s test:uni",
+    "test": "npm run -s test:lint && npm run -s test:unit",
     "test:lint": "npm run -s test:lint:src && npm run -s test:lint:test",
     "test:lint:src": "eslint src",
     "test:lint:test": "eslint test",
