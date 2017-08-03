@@ -13,6 +13,9 @@ dist: trusty
 
 sudo: required
 
+cache:
+  yarn: true
+
 before_script:
 - sudo dpkg --add-architecture i386
 - sudo add-apt-repository ppa:jonathonf/wine -y
