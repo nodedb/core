@@ -28,7 +28,8 @@
     "test:lint:src": "eslint src",
     "test:lint:test": "eslint test",
     "test:unit": "ELECTRON_PATH=$PWD/node_modules/.bin/electron electron-mocha --throw-deprecation --ui bdd --full-trace --recursive test/unit",
-    "watch:test:unit": "nodemon --exec 'npm run -s test:unit'"
+    "watch:test:lint": "nodemon --ext 'js,json,vue,scss' --exec 'npm run -s test:lint'",
+    "watch:test:unit": "nodemon --ext 'js,json,vue,scss' --exec 'npm run -s test:unit'"
   },
   "repository": {
     "type": "git",
