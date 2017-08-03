@@ -13,6 +13,6 @@ const compile = require('electron-compile');
 
 /* Files */
 
-const appRoot = path.join(__dirname, '..');
+const appRoot = path.join(__dirname, '..', '..');
 
 module.exports = compile.init(appRoot, require.resolve('./main'));

@@ -3,7 +3,7 @@
   "title": "NodeDB",
   "version": "0.0.0",
   "description": "A cross-platform tool for managing your databases",
-  "main": "./src/es6-shim.js",
+  "main": "./src/app/es6-shim.js",
   "private": true,
   "scripts": {
     "clean": "rm -Rf ./build ./dist ./tmp",

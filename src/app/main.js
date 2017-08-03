@@ -13,7 +13,7 @@ import { app, BrowserWindow, shell } from 'electron';
 import { enableLiveReload } from 'electron-compile';
 
 /* Files */
-import pkg from '../package.json';
+import pkg from '../../package.json';
 
 /*
  Keep a global reference of the window, so it's
@@ -41,7 +41,7 @@ function createWindow () {
 
   mainWindow.maximize();
 
-  mainWindow.loadURL(`file://${__dirname}/index.html`);
+  mainWindow.loadURL(`file://${__dirname}/../index.html`);
 
   mainWindow.on('closed', () => {
     mainWindow = null;
