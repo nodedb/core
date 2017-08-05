@@ -23,7 +23,7 @@ i18next
     backend: {
       loadPath: path.join(__dirname, '..', 'locales', '{{lng}}', '{{ns}}.json'),
     },
-    debug: true,
+    debug: false,
     defaultNS: 'common',
     fallbackLng: 'en',
     initImmediate: false,
