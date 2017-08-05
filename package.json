@@ -36,7 +36,7 @@
     "type": "git",
     "url": "git+https://github.com/nodedb/core.git"
   },
-  "author": "Simon Emms <simon@simonemms.com>",
+  "author": "Guerrilla Software Ltd (https://guerrilla.software)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/nodedb/core/issues"
