@@ -20,7 +20,7 @@ export default (logPath) => {
   const logger = bunyan.createLogger({
     name: 'NodeDB',
     streams: [{
-      level: 'info',
+      level: 'trace',
       stream: process.stdout,
     }, {
       type: 'rotating-file',
