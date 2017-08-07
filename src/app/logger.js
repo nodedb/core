@@ -32,7 +32,7 @@ export default (logPath) => {
 
   return (level, message, data = {}, ...additional) => {
     try {
-      logger[level](message, data, additional);
+      logger[level](message, data, ...additional);
     } catch (err) {
       logger.fatal('Unknown log level', {
         level,
