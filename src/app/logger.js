@@ -23,9 +23,10 @@ export default (logPath) => {
       level: 'info',
       stream: process.stdout,
     }, {
-      type: 'file',
+      type: 'rotating-file',
       path: logPath,
       level: 'trace',
+      period: 'weekly',
     }],
   });
 
