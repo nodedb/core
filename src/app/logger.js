@@ -22,7 +22,7 @@ export default (logPath) => {
     streams: [{
       level: 'info',
       stream: process.stdout,
-    },{
+    }, {
       type: 'file',
       path: logPath,
       level: 'trace',
