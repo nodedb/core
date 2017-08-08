@@ -8,7 +8,7 @@
 
 /* Files */
 import { expect, proxyquire } from '../../helpers/configure';
-import App from '../../../src/renderer/App.vue';
+import App from '../../../src/renderer/app.vue';
 
 describe('main tests', function () {
 

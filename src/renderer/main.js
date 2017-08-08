@@ -6,11 +6,14 @@
 
 /* Third-party modules */
 import Vue from 'vue/dist/vue.min';
+import VueFormGenerator from 'vue-form-generator';
 
 /* Files */
-import App from './App.vue';
+import App from './app.vue';
 import i18n from './lib/i18n';
 import router from './router';
+
+Vue.use(VueFormGenerator);
 
 /* eslint-ignore-next-line no-new */
 new Vue({

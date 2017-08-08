@@ -9,7 +9,7 @@ import Vue from 'vue/dist/vue.min';
 import VueRouter from 'vue-router';
 
 /* Files */
-import login from '../components/Login.vue';
+import login from '../components/login.vue';
 
 Vue.use(VueRouter);
 
