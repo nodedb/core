@@ -44,6 +44,7 @@
   "homepage": "https://github.com/nodedb/core#readme",
   "dependencies": {
     "@panter/vue-i18next": "^0.5.1",
+    "bootstrap-sass": "^3.3.7",
     "bunyan": "^1.8.12",
     "electron": "^1.6.11",
     "electron-compile": "^6.4.1",
@@ -54,6 +55,7 @@
     "i18next-sync-fs-backend": "^1.0.0",
     "lodash": "^4.17.4",
     "vue": "^2.4.2",
+    "vue-form-generator": "^2.0.0",
     "vue-router": "^2.7.0",
     "vueify": "^9.4.1"
   },
