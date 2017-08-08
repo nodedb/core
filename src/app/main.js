@@ -13,7 +13,7 @@ import { app, BrowserWindow, shell } from 'electron';
 import { enableLiveReload } from 'electron-compile';
 
 /* Files */
-import logger from './logger';
+import Logger from './logger';
 import pkg from '../../package.json';
 
 /*
@@ -66,6 +66,6 @@ app
   .on('window-all-closed', () => app.quit());
 
 /* Set the logger */
-app.log = logger(`${app.getPath('userData')}/logs/nodedb.log`);
+app.logger = new Logger(`${app.getPath('userData')}/logs/nodedb.log`);
 
 module.exports = app;
