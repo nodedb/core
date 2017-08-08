@@ -19,51 +19,56 @@
 
   export default {
     data () {
-      return {
+      const values = drivers.drivers.map(({ name, type }) => ({
+        id: type,
+        name,
+      }));
+
+      const form = {
         formOptions: {
           validateAfterLoad: true,
           validateAfterChanged: true,
         },
         model: {
-          password: '',
-          username: '',
+          driver: values[0].id,
         },
         schema: {
           fields: [{
-            type: 'input',
-            inputType: 'text',
-            label: this.$i18n.i18next.t('form:USERNAME'),
-            model: 'username',
+            type: 'select',
+            label: 'driver',
+            model: 'driver',
+            values,
             required: true,
             validator: [
-              validators.string,
-            ]
-          }, {
-            type: 'input',
-            inputType: 'password',
-            label: this.$i18n.i18next.t('form:PASSWORD'),
-            model: 'password',
-            required: true,
-            validator: [
-              validators.string,
-            ]
-          }, {
-            type: 'button',
-            label: this.$i18n.i18next.t('button:LOGIN'),
-            model: 'button',
-            onSubmit: (model) => {
-              console.log({
-                model
-              });
-            },
-            styleClass: [
-              'btn',
-              'btn-primary',
+              validators.required,
             ],
-            validateBeforeSubmit: true,
+            selectOptions: {
+              hideNoneSelectedText: true,
+            },
           }],
-        }
+        },
       };
+
+      /* Add in all the fields for the different databases */
+
+      /* Finally, add in the submit button */
+      form.schema.fields.push({
+        type: 'button',
+        label: this.$i18n.i18next.t('button:LOGIN'),
+        model: 'button',
+        onSubmit: (model) => {
+          console.log({
+            model
+          });
+        },
+        styleClass: [
+          'btn',
+          'btn-primary',
+        ],
+        validateBeforeSubmit: true,
+      });
+
+      return form;
     },
   };
 </script>

@@ -47,6 +47,7 @@ export default class Driver {
           this.drivers.push({
             name: item.name,
             driver: new Connection(driver, item.type),
+            type: item.type,
           });
 
           logger.trigger('info', 'Loaded driver', {
@@ -59,6 +60,7 @@ export default class Driver {
         this.drivers.push({
           name: driver.name,
           driver: new Connection(driver),
+          type: driver,
         });
 
         logger.trigger('info', 'Loaded driver', {
