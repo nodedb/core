@@ -32,7 +32,7 @@ i18next
     fallbackLng: 'en',
     initImmediate: false,
     ns: [
-      'buttons',
+      'button',
       'common',
       'form',
     ],

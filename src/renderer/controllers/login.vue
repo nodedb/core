@@ -2,18 +2,16 @@
   div
     h1 {{ $t('common:GREETING') }}
 
-    select(
-      v-model="selected"
-    )
-      option(
-        value=""
-      ) - {{ $t('form:SELECT') }} -
-      option(
-        v-for="driver in drivers.drivers"
-      ) {{ driver.name }}
+    form
+      vue-form-generator(
+        :schema="schema",
+        :model="model",
+        :options="formOptions"
+      )
 </template>
 
 <script>
+  import { validators } from 'vue-form-generator';
   import Driver from '../lib/driver';
 
   const drivers = Driver.load()
@@ -22,8 +20,49 @@
   export default {
     data () {
       return {
-        drivers,
-        selected: '',
+        formOptions: {
+          validateAfterLoad: true,
+          validateAfterChanged: true,
+        },
+        model: {
+          password: '',
+          username: '',
+        },
+        schema: {
+          fields: [{
+            type: 'input',
+            inputType: 'text',
+            label: this.$i18n.i18next.t('form:USERNAME'),
+            model: 'username',
+            required: true,
+            validator: [
+              validators.string,
+            ]
+          }, {
+            type: 'input',
+            inputType: 'password',
+            label: this.$i18n.i18next.t('form:PASSWORD'),
+            model: 'password',
+            required: true,
+            validator: [
+              validators.string,
+            ]
+          }, {
+            type: 'button',
+            label: this.$i18n.i18next.t('button:LOGIN'),
+            model: 'button',
+            onSubmit: (model) => {
+              console.log({
+                model
+              });
+            },
+            styleClass: [
+              'btn',
+              'btn-primary',
+            ],
+            validateBeforeSubmit: true,
+          }],
+        }
       };
     },
   };
