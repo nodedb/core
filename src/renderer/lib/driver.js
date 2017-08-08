@@ -13,7 +13,7 @@ import { remote } from 'electron';
 /* Files */
 import Connection from './connection';
 
-const logger = remote.app.log;
+const logger = remote.app.logger;
 
 export default class Driver {
 
@@ -31,7 +31,7 @@ export default class Driver {
    * @returns {Driver}
    */
   loadDriver (driverPath) {
-    logger('info', 'Attempting to load driver', {
+    logger.trigger('info', 'Attempting to load driver', {
       driverPath,
     });
 
@@ -49,7 +49,7 @@ export default class Driver {
             driver: new Connection(driver, item.type),
           });
 
-          logger('info', 'Loaded driver', {
+          logger.trigger('info', 'Loaded driver', {
             driverPath,
             name: item.name,
           });
@@ -61,13 +61,13 @@ export default class Driver {
           driver: new Connection(driver),
         });
 
-        logger('info', 'Loaded driver', {
+        logger.trigger('info', 'Loaded driver', {
           driverPath,
           name: driver.name,
         });
       }
     } catch (err) {
-      logger('error', 'Failed to load driver', {
+      logger.trigger('error', 'Failed to load driver', {
         driverPath,
         err,
       });
