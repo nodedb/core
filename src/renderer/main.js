@@ -11,7 +11,7 @@ import VueFormGenerator from 'vue-form-generator';
 /* Files */
 import App from './app.vue';
 import i18n from './lib/i18n';
-import router from './router';
+import router from './lib/router';
 
 Vue.use(VueFormGenerator);
 
