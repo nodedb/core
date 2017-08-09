@@ -38,4 +38,7 @@ i18next
     ],
   });
 
+/* Set the i18next instance to the app */
+remote.app.$i18n = i18next;
+
 export default new VueI18Next(i18next);

@@ -2,12 +2,16 @@
   div
     h1 {{ $t('common:GREETING') }}
 
-    form
-      vue-form-generator(
-        :schema="schema",
-        :model="model",
-        :options="formOptions"
-      )
+    div(v-if="loading") loading...
+    div(v-else)
+      form(v-if="drivers.length > 0")
+        vue-form-generator(
+          :schema="schema",
+          :model="model",
+          :options="formOptions"
+        )
+      div(v-else) no drivers available
+
 </template>
 
 <script>
@@ -18,68 +22,173 @@
   /* Node modules */
 
   /* Third-party modules */
+  import { _ } from 'lodash';
   import { validators } from 'vue-form-generator';
 
   /* Files */
   import Driver from '../lib/driver';
 
-//  const drivers = Driver.load()
-//    .sort();
-
   export default {
+    created () {
+      this.resolve();
+    },
     data () {
-//      const values = drivers.drivers.map(({ name, type }) => ({
-//        id: type,
-//        name,
-//      }));
-
-      const values = [];
-
-      const form = {
+      return {
+        drivers: [],
         formOptions: {
           validateAfterLoad: true,
           validateAfterChanged: true,
         },
+        loading: false,
         model: {
-//          driver: values[0].id,
+          driver: '',
         },
         schema: {
-          fields: [{
-            type: 'select',
-            label: 'driver',
-            model: 'driver',
-            values,
-            required: true,
-            validator: [
-              validators.required,
-            ],
-            selectOptions: {
-              hideNoneSelectedText: true,
-            },
-          }],
-        },
+          fields: [],
+        }
       };
+    },
+    methods: {
+      resolve () {
+        this.loading = true;
 
-      /* Add in all the fields for the different databases */
+        return Driver.loadAll()
+          .then((drivers) => {
+            this.loading = false;
 
-      /* Finally, add in the submit button */
-      form.schema.fields.push({
-        type: 'button',
-        label: this.$i18n.i18next.t('button:LOGIN'),
-        model: 'button',
-        onSubmit: (model) => {
-          console.log({
-            model
+            this.drivers = drivers;
+
+            const values = drivers.map(({ name, type }, key) => {
+              if (key === 0) {
+                this.model.driver = type;
+              }
+              return {
+                id: type,
+                name,
+              };
+            });
+
+            const fields = [{
+              type: 'select',
+              label: 'driver',
+              model: 'driver',
+              values,
+              required: true,
+              validator: [
+                validators.required,
+              ],
+              selectOptions: {
+                hideNoneSelectedText: true,
+              },
+            }];
+
+            /* Add in all the fields for the different databases */
+//            this.drivers.forEach(driver => driver
+//              .connectForm()
+//              .forEach((item) => {
+//                item.model = `${driver.type}_${item.model}`;
+//
+////                item.visible = model => driver.type === model.driver;
+//
+//                fields.push(item);
+//              }));
+
+            /* Finally, add in the submit button */
+            fields.push({
+              type: 'button',
+              label: this.$i18n.i18next.t('button:LOGIN'),
+              model: 'button',
+              onSubmit: (model) => {
+                const driver = drivers.find(({ type }) => type === model.driver);
+
+                console.log(driver);
+              },
+              styleClass: [
+                'btn',
+                'btn-primary',
+              ],
+              validateBeforeSubmit: true,
+            });
+
+            this.schema.fields = fields;
+          })
+          .catch((err) => {
+            console.log(err);
           });
-        },
-        styleClass: [
-          'btn',
-          'btn-primary',
-        ],
-        validateBeforeSubmit: true,
-      });
-
-      return form;
+      }
+    },
+    watch: {
+      '$route': 'resolve',
     },
   };
+
+//  const values = drivers.map(({ name, type }) => ({
+//    id: type,
+//    name,
+//  }));
+//
+//  export default {
+//    data () {
+//      const fields = [{
+//        type: 'select',
+//        label: 'driver',
+//        model: 'driver',
+//        values,
+//        required: true,
+//        validator: [
+//          validators.required,
+//        ],
+//        selectOptions: {
+//          hideNoneSelectedText: true,
+//        },
+//      }];
+//
+//      /* Add in all the fields for the different databases */
+//      drivers.forEach((driver) => {
+//        const form = driver.connectForm()
+//          .map(item => {
+//            item.model = `${driver.type}_${item.model}`;
+//
+//            item.visible = (model) => {
+//
+//            };
+//
+//            return item;
+//          });
+//
+//        console.log(form);
+//      });
+//
+//      /* Finally, add in the submit button */
+//      fields.push({
+//        type: 'button',
+//        label: this.$i18n.i18next.t('button:LOGIN'),
+//        model: 'button',
+//        onSubmit: (model) => {
+//          const driver = drivers.find(({ type }) => type === model.driver);
+//
+//          console.log(driver);
+//        },
+//        styleClass: [
+//          'btn',
+//          'btn-primary',
+//        ],
+//        validateBeforeSubmit: true,
+//      });
+//
+//      return {
+//        drivers,
+//        formOptions: {
+//          validateAfterLoad: true,
+//          validateAfterChanged: true,
+//        },
+//        model: {
+//          driver: _.has(values, 0) ? values[0].id : '',
+//        },
+//        schema: {
+//          fields,
+//        },
+//      };
+//    },
+//  };
 </script>

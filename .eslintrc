@@ -26,13 +26,6 @@
     ],
     "no-param-reassign": [
       0
-    ],
-    "padded-blocks": [
-      "error",
-      {
-        "blocks": "never",
-        "classes": "always"
-      }
     ]
   },
   "plugins": [

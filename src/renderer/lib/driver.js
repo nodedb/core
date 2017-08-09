@@ -3,93 +3,24 @@
  */
 
 /* Node modules */
-import fs from 'fs-extra';
 import path from 'path';
 
 /* Third-party modules */
-import { _ } from 'lodash';
+import fs from 'fs-extra';
 import { remote } from 'electron';
+import { validators } from 'vue-form-generator';
 
 /* Files */
-import Connection from './connection';
+import Base from './base';
 
-const logger = remote.app.logger;
+export default class Driver extends Base {
 
-export default class Driver {
+  constructor ({ driver, moduleName, modulePath }) {
+    super();
 
-  constructor () {
-    this.drivers = [];
-  }
-
-  /**
-   * Load Driver
-   *
-   * Takes the driver path and loads the driver into
-   * this object
-   *
-   * @param {string} driverPath
-   * @returns {Driver}
-   */
-  loadDriver (driverPath) {
-    logger.trigger('info', 'Attempting to load driver', {
-      driverPath,
-    });
-
-    try {
-      // eslint-disable-next-line global-require,import/no-dynamic-require
-      let driver = require(driverPath);
-
-      driver = driver.default || driver;
-
-      if (_.isArray(driver.drivers) && driver.drivers.length > 0) {
-        /* Multiple database drivers being loaded */
-        driver.drivers.forEach((item) => {
-          this.drivers.push({
-            name: item.name,
-            driver: new Connection(driver, item.type),
-            type: item.type,
-          });
-
-          logger.trigger('info', 'Loaded driver', {
-            driverPath,
-            name: item.name,
-          });
-        });
-      } else {
-        /* Single database driver being loaded */
-        this.drivers.push({
-          name: driver.name,
-          driver: new Connection(driver),
-          type: driver,
-        });
-
-        logger.trigger('info', 'Loaded driver', {
-          driverPath,
-          name: driver.name,
-        });
-      }
-    } catch (err) {
-      logger.trigger('error', 'Failed to load driver', {
-        driverPath,
-        err,
-      });
-    }
-
-    return this;
-  }
-
-  sort () {
-    this.drivers.sort((a, b) => {
-      if (a.name < b.name) {
-        return -1;
-      } else if (a.name > b.name) {
-        return 1;
-      }
-
-      return 0;
-    });
-
-    return this;
+    this.driver = driver;
+    this.name = moduleName;
+    this.path = modulePath;
   }
 
   /**
@@ -105,23 +36,66 @@ export default class Driver {
   }
 
   /**
-   * Load
+   * LoadAll
    *
-   * Factory method that creates an object
-   * with all our drivers loaded to it
+   * Loads up the drivers array
    *
-   * @returns {Driver}
+   * @returns {Promise.<Driver[]>}
    */
-  static load () {
-    const driver = new Driver();
+  static loadAll () {
+    return new Promise((resolve, reject) => {
+      fs.readdir(Driver.driverPath, (err, result) => {
+        if (err) {
+          reject(err);
+          return;
+        }
 
-    const drivers = fs.readdirSync(Driver.driverPath);
+        resolve(result);
+      });
+    }).then(drivers => drivers
+      .reduce((result, moduleName) => {
+        Driver.loadModule(moduleName)
+          .forEach((driver) => {
+            result.push(driver);
+          });
 
-    drivers.forEach((driverName) => {
-      driver.loadDriver(path.join(Driver.driverPath, driverName));
-    });
+        return result;
+      }, [])
+      .sort((a, b) => {
+        if (a.name < b.name) {
+          return -1;
+        } else if (a.name > b.name) {
+          return 1;
+        }
 
-    return driver;
+        return 0;
+      }));
+  }
+
+  static loadModule (moduleName) {
+    const modulePath = path.join(Driver.driverPath, moduleName);
+
+    try {
+      // eslint-disable-next-line global-require, import/no-dynamic-require
+      let module = require(modulePath);
+
+      if (module.default) {
+        /* The driver is on exports.default not module.exports */
+        module = module.default;
+      }
+
+      return module.load({
+        i18next: remote.app.$i18n,
+        validators,
+      });
+    } catch (err) {
+      Driver.logger('error', 'Failed to load driver module', {
+        err,
+        modulePath,
+      });
+    }
+
+    return [];
   }
 
 }

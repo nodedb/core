@@ -20,7 +20,7 @@ export default class Base extends EventEmitter {
    * @returns {*}
    */
   static get logger () {
-    return remote.app.logger;
+    return remote.app.logger.trigger;
   }
 
-};
+}
