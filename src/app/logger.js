@@ -12,7 +12,6 @@ import fs from 'fs-extra';
 /* Files */
 
 export default class Logger {
-
   constructor (logPath) {
     this.logPath = logPath;
 
@@ -71,5 +70,4 @@ export default class Logger {
 
     return this;
   }
-
 }

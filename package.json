@@ -47,7 +47,8 @@
     "bunyan": "^1.8.12",
     "electron": "^1.6.11",
     "electron-compile": "^6.4.1",
-    "electron-compilers": "^5.9.0"
+    "electron-compilers": "^5.9.0",
+    "fs-extra": "^4.0.1"
   },
   "devDependencies": {
     "chai": "^4.1.0",
