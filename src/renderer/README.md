@@ -1,3 +1,3 @@
 # Scripts
 
-This is where the logic for the Vue application lives
+This is where the logic for the application lives

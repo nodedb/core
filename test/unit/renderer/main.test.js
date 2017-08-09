@@ -7,22 +7,13 @@
 /* Third-party modules */
 
 /* Files */
-import { expect, proxyquire } from '../../helpers/configure';
-import App from '../../../src/renderer/app.vue';
+import { expect } from '../../helpers/configure';
 
 describe('main tests', function () {
 
-  beforeEach(function () {
-    this.main = proxyquire('../../src/app/main', {});
-  });
-
-  it('should ', function () {
+  it('should do something', function () {
 
     expect(2).to.be.equal(2);
-
-    expect(this.main).to.not.be.undefined;
-    expect(App).to.be.an('object');
-    expect(App.name).to.be.equal('my-project');
 
   });
 

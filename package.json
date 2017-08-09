@@ -29,8 +29,8 @@
     "test:lint:src": "eslint src",
     "test:lint:test": "eslint test",
     "test:unit": "ELECTRON_PATH=$PWD/node_modules/.bin/electron electron-mocha --throw-deprecation --ui bdd --full-trace --recursive test/unit",
-    "watch:test:lint": "nodemon --ext 'js,json,vue,scss' --exec 'npm run -s test:lint'",
-    "watch:test:unit": "nodemon --ext 'js,json,vue,scss' --exec 'npm run -s test:unit'"
+    "watch:test:lint": "nodemon --ext 'js,json,scss' --exec 'npm run -s test:lint'",
+    "watch:test:unit": "nodemon --ext 'js,json,scss' --exec 'npm run -s test:unit'"
   },
   "repository": {
     "type": "git",
@@ -43,22 +43,11 @@
   },
   "homepage": "https://github.com/nodedb/core#readme",
   "dependencies": {
-    "@panter/vue-i18next": "^0.5.1",
     "bootstrap-sass": "^3.3.7",
     "bunyan": "^1.8.12",
     "electron": "^1.6.11",
     "electron-compile": "^6.4.1",
-    "electron-compilers": "^5.9.0",
-    "fs-extra": "^4.0.1",
-    "i18next": "^8.4.3",
-    "i18next-electron-language-detector": "0.0.8",
-    "i18next-sync-fs-backend": "^1.0.0",
-    "lodash": "^4.17.4",
-    "uuid": "^3.1.0",
-    "vue": "^2.4.2",
-    "vue-form-generator": "^2.0.0",
-    "vue-router": "^2.7.0",
-    "vueify": "^9.4.1"
+    "electron-compilers": "^5.9.0"
   },
   "devDependencies": {
     "chai": "^4.1.0",
