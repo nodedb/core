@@ -11,18 +11,29 @@
 </template>
 
 <script>
+  /**
+   * login
+   */
+
+  /* Node modules */
+
+  /* Third-party modules */
   import { validators } from 'vue-form-generator';
+
+  /* Files */
   import Driver from '../lib/driver';
 
-  const drivers = Driver.load()
-    .sort();
+//  const drivers = Driver.load()
+//    .sort();
 
   export default {
     data () {
-      const values = drivers.drivers.map(({ name, type }) => ({
-        id: type,
-        name,
-      }));
+//      const values = drivers.drivers.map(({ name, type }) => ({
+//        id: type,
+//        name,
+//      }));
+
+      const values = [];
 
       const form = {
         formOptions: {
@@ -30,7 +41,7 @@
           validateAfterChanged: true,
         },
         model: {
-          driver: values[0].id,
+//          driver: values[0].id,
         },
         schema: {
           fields: [{

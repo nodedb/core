@@ -7,8 +7,17 @@
 </template>
 
 <script>
+  /**
+   * fieldButton
+   */
+
+  /* Node modules */
+
+  /* Third-party modules */
   import { abstractField } from 'vue-form-generator';
   import { isFunction } from 'lodash';
+
+  /* Files */
 
   export default {
     methods: {
