@@ -52,6 +52,11 @@ export default class Logger {
   }
 
   trigger (level, message, data = {}, ...additional) {
+    /* Set "log" level to "info" */
+    if (level === 'log') {
+      level = 'info';
+    }
+
     try {
       this.bunyan[level](message, data, ...additional);
     } catch (err) {
