@@ -32,7 +32,7 @@ export default class Logger {
         type: 'rotating-file',
         path: this.logPath,
         level: 'trace',
-        period: 'weekly',
+        period: '1d',
       }],
     });
   }
