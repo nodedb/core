@@ -29,8 +29,8 @@
     "test:lint:src": "eslint src",
     "test:lint:test": "eslint test",
     "test:unit": "ELECTRON_PATH=$PWD/node_modules/.bin/electron electron-mocha --throw-deprecation --ui bdd --full-trace --recursive test/unit",
-    "watch:test:lint": "nodemon --ext 'js,json,scss' --exec 'npm run -s test:lint'",
-    "watch:test:unit": "nodemon --ext 'js,json,scss' --exec 'npm run -s test:unit'"
+    "watch:test:lint": "nodemon --ext 'js,vue,json,scss' --exec 'npm run -s test:lint'",
+    "watch:test:unit": "nodemon --ext 'js,vue, json,scss' --exec 'npm run -s test:unit'"
   },
   "repository": {
     "type": "git",
@@ -44,7 +44,6 @@
   "homepage": "https://github.com/nodedb/core#readme",
   "dependencies": {
     "@panter/vue-i18next": "^0.5.1",
-    "bootstrap-sass": "^3.3.7",
     "bunyan": "^1.8.12",
     "electron": "^1.6.11",
     "electron-compile": "^6.4.1",
