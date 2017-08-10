@@ -1,10 +1,5 @@
 <template lang="jade">
-  div
-    md-toolbar
-      h1.md-title My Title
-
-    .main-content
-      p hello world
+  div login page
 </template>
 
 <script>
