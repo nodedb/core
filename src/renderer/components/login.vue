@@ -1,22 +1,28 @@
 <template lang="jade">
-  layout-login
+  div
+    div(
+      v-if="loading"
+    ) loading...
 
-    form(
-      v-on:submit="submit"
+    div(
+      v-else
     )
-      select(
-        v-model="model.driver"
-      )
-        option(
-          v-for="driver in driverList"
-          v-bind:value="driver.type"
-        ) {{ driver.name }}
+      layout-login
 
-      button(
-        type="submit"
-      ) login
+        form(
+          @submit="submit"
+        )
+          select(
+            v-model="model.driver"
+          )
+            option(
+              v-for="driver in driverList"
+              v-bind:value="driver.type"
+            ) {{ driver.name }}
 
-    pre {{ model }}
+          button login
+
+        pre {{ model }}
 
 </template>
 
@@ -28,34 +34,51 @@
   /* Node modules */
 
   /* Third-party modules */
-  import { _ } from 'lodash';
 
   /* Files */
+  import Driver from '../lib/driver';
 
   export default {
-    data () {
-      const driverList = [{
-        name: 'MySQL',
-        type: 'sql-mysql',
-      }, {
-        name: 'PostgreSQL',
-        type: 'sql-pg',
-      }];
 
-      let driver = _.first(driverList);
-      driver = _.has(driver, 'type') ? driver.type : '';
+    created () {
+      this.loadDrivers();
+    },
+
+    data () {
 
       return {
-        driverList,
+        driverList: [],
+        loading: true,
         model: {
-          driver,
+          driver: '',
         },
       };
     },
+
     methods: {
+      loadDrivers () {
+        Driver.getDriverList()
+          .then((driverList) => {
+            this.driverList = driverList;
+            if (driverList.length > 0) {
+              this.model.driver = driverList[0].type;
+            }
+            this.loading = false;
+          })
+          .catch((err) => {
+            console.log({
+              err
+            });
+          });
+      },
       submit () {
         console.log(this.model);
       }
-    }
+    },
+
+    watch: {
+      $route: 'loadDrivers',
+    },
+
   };
 </script>

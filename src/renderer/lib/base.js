@@ -21,4 +21,8 @@ export default class Base extends EventEmitter {
   static get logger () {
     return remote.app.logger.trigger;
   }
+
+  static get i18n () {
+    return remote.app.$i18n;
+  }
 }
