@@ -1,6 +1,9 @@
 <template lang="jade">
-  .layout.login.row
-    .col.s12 main
+  div
+    navbar
+
+    .layout.login.row
+      .col.s12 main
 </template>
 
 <script>

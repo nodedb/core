@@ -1,5 +1,5 @@
 <template lang="jade">
-  layout-default
+  layout-login
     p login page
 </template>
 

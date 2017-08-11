@@ -1,7 +1,7 @@
 <template lang="jade">
   .navbar-fixed
     .row
-      nav
+      nav.teal
         .nav-wrapper
           .col.s12
             a(href="#").brand-logo Logo
