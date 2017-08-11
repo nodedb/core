@@ -1,6 +1,6 @@
 <template lang="jade">
-  layout-default
-    p login page
+  .layout.login.row
+    .col.s12 main
 </template>
 
 <script>
@@ -16,8 +16,7 @@
 
   export default {
     data() {
-      return {
-      };
+      return {};
     }
   };
 </script>

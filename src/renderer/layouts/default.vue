@@ -1,11 +1,18 @@
 <template lang="jade">
-  layout-default
-    p login page
+  div
+    navbar
+
+    .layout.default.row
+      .col.s3
+        p sidebar
+
+      .col.s9
+        slot
 </template>
 
 <script>
   /**
-   * login
+   * default
    */
 
   /* Node modules */
@@ -16,8 +23,7 @@
 
   export default {
     data() {
-      return {
-      };
+      return {};
     }
   };
 </script>
