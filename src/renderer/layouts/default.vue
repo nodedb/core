@@ -2,9 +2,8 @@
   div
     navbar
 
-    .layout.default.row
-      .col.s3
-        p sidebar
+    .main-content
+      p sidebar
 
       .col.s9
         slot

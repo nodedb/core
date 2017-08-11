@@ -2,8 +2,7 @@
   div
     navbar
 
-    .layout.login.row
-      .col.s12 main
+    slot
 </template>
 
 <script>
@@ -23,3 +22,6 @@
     }
   };
 </script>
+
+<style scoped>
+</style>

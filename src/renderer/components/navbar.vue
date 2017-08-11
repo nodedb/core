@@ -1,16 +1,6 @@
 <template lang="jade">
-  .navbar-fixed
-    .row
-      nav.teal
-        .nav-wrapper
-          .col.s12
-            a(href="#").brand-logo Logo
-
-            ul.right.hide-on-med-and-dow
-              li
-                a(href="#") Sass
-              li
-                a(href="#") Components
+  md-toolbar
+    h1.md-title Logo
 </template>
 
 <script>
