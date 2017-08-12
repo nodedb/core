@@ -12,15 +12,22 @@
         form(
           @submit="submit"
         )
-          select(
-            v-model="model.driver"
-          )
-            option(
-              v-for="driver in driverList"
-              v-bind:value="driver.type"
-            ) {{ driver.name }}
+          .form-group
+            select(
+              v-model="model.driver"
+            )
+              option(
+                v-for="driver in driverList"
+                v-bind:value="driver.type"
+              ) {{ driver.name }}
 
-          button login
+          .form-group(
+            v-for="item in connectForm"
+          )
+            div {{ item }}
+
+          .form-group
+            button login
 
         pre {{ model }}
 
@@ -47,6 +54,8 @@
     data () {
 
       return {
+        connectForm: [],
+        driver: null,
         driverList: [],
         loading: true,
         model: {
@@ -56,6 +65,14 @@
     },
 
     methods: {
+      changeForm () {
+        /* Load the driver */
+        const { driver } = this.driverList.find(({ type }) => type === this.model.driver);
+        this.driver = driver;
+
+        /* Get the form */
+        this.connectForm = this.driver.connectForm;
+      },
       loadDrivers () {
         Driver.getDriverList()
           .then((driverList) => {
@@ -72,12 +89,16 @@
           });
       },
       submit () {
-        console.log(this.model);
+        console.log({
+          driver: this.driver,
+          model: this.model
+        });
       }
     },
 
     watch: {
       $route: 'loadDrivers',
+      'model.driver': 'changeForm',
     },
 
   };

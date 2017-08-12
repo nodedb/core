@@ -47,10 +47,11 @@ export default class Driver extends Base {
     }).then(drivers => drivers.reduce((result, moduleName) => {
       const module = Driver.loadModule(moduleName);
 
-      module.forEach((mod) => {
+      module.forEach((driver) => {
         result.push({
-          name: mod.name,
-          type: mod.type,
+          driver,
+          name: driver.name,
+          type: driver.type,
         });
       });
 
