@@ -8,11 +8,65 @@ import path from 'path';
 
 /* Third-party modules */
 import { remote } from 'electron';
+import { validators } from 'vue-form-generator';
 
 /* Files */
 import Base from './base';
 
+const i18n = remote.app.$i18n;
+
 export default class Driver extends Base {
+  constructor (strategy) {
+    super();
+
+    this.strategy = strategy;
+  }
+
+  get id () {
+    return this.strategy.id;
+  }
+
+  get name () {
+    return this.strategy.name;
+  }
+
+  /**
+   * Connect
+   *
+   * Attempts to connect to a database
+   *
+   * @param {object} params
+   * @returns {Promise.<T>}
+   */
+  connect (params) {
+    Driver.logger('info', 'Attempting to connect to database', {
+      id: this.strategy.id,
+      params,
+    });
+
+    return this.strategy.connect(params)
+      .then(() => {
+        Driver.logger('info', 'Successfully connected to database', {
+          id: this.strategy.id,
+        });
+      })
+      .catch((err) => {
+        Driver.logger('warn', 'Failed to connect to database', {
+          id: this.strategy.id,
+          err,
+        });
+
+        throw err;
+      });
+  }
+
+  connectForm () {
+    return this.strategy.connectForm({
+      validators,
+      i18n,
+    });
+  }
+
   /**
    * Driver Path
    *
@@ -79,11 +133,9 @@ export default class Driver extends Base {
    * Loads up all the drivers in a module
    *
    * @param {string} moduleName
-   * @param {*} validators
-   * @param {*} i18n
    * @returns {*[]}
    */
-  static loadModule (moduleName, validators, i18n) {
+  static loadModule (moduleName) {
     const modulePath = path.join(Driver.driverPath, moduleName);
 
     // eslint-disable-next-line global-require, import/no-dynamic-require
@@ -93,12 +145,12 @@ export default class Driver extends Base {
 
     /* Check if multi-driver module */
     if (module.drivers) {
-      return module.drivers.map(({ id }) => module.load(id));
+      return module.drivers.map(({ id }) => new Driver(module.load(id)));
     }
 
     /* Just one driver in module */
     return [
-      module.load(),
+      new Driver(module.load()),
     ];
   }
 }

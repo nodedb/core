@@ -76,10 +76,7 @@
           type: 'select',
           values: this.driverList,
         }]
-          .concat(this.driver.connectForm({
-            validators,
-            i18n,
-          }))
+          .concat(this.driver.connectForm())
           .reduce((result, field) => {
             /* Ensure truthy value */
             if (_.isPlainObject(field)) {
@@ -113,15 +110,16 @@
             }
             this.loading = false;
           })
-            .catch((err) => {
-              console.log(err.stack);
+          .catch((err) => {
+            // @todo
+            console.log(err.stack);
           });
       },
       submit () {
-        console.log({
-          driver: this.driver,
-          model: this.model
-        });
+        return this.driver.connect(this.model)
+          .then((...args) => {
+            console.log(args);
+          })
       }
     },
 
