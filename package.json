@@ -52,7 +52,9 @@
     "i18next": "^8.4.3",
     "i18next-electron-language-detector": "0.0.8",
     "i18next-sync-fs-backend": "^1.0.0",
+    "lodash": "^4.17.4",
     "vue": "^2.4.2",
+    "vue-form-generator": "^2.0.0",
     "vue-router": "^2.7.0",
     "vueify": "^9.4.1"
   },

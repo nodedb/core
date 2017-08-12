@@ -1,0 +1,9 @@
+{
+  "DATABASE": "Database",
+  "DRIVER_TYPE": "Driver",
+  "FILENAME": "File name",
+  "HOSTNAME": "Host name",
+  "PASSWORD": "Password",
+  "PORT": "Port",
+  "USERNAME": "Username"
+}

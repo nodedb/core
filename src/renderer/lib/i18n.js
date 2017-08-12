@@ -32,9 +32,8 @@ i18next
     fallbackLng: 'en',
     initImmediate: false,
     ns: [
-      'button',
       'common',
-      'form',
+      'connect',
     ],
   });
 

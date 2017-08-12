@@ -51,7 +51,7 @@ export default class Driver extends Base {
         result.push({
           driver,
           name: driver.name,
-          type: driver.type,
+          id: driver.id,
         });
       });
 
@@ -79,9 +79,11 @@ export default class Driver extends Base {
    * Loads up all the drivers in a module
    *
    * @param {string} moduleName
+   * @param {*} validators
+   * @param {*} i18n
    * @returns {*[]}
    */
-  static loadModule (moduleName) {
+  static loadModule (moduleName, validators, i18n) {
     const modulePath = path.join(Driver.driverPath, moduleName);
 
     // eslint-disable-next-line global-require, import/no-dynamic-require
@@ -91,7 +93,7 @@ export default class Driver extends Base {
 
     /* Check if multi-driver module */
     if (module.drivers) {
-      return module.drivers.map(({ type }) => module.load(type));
+      return module.drivers.map(({ id }) => module.load(id));
     }
 
     /* Just one driver in module */

@@ -9,27 +9,15 @@
     )
       layout-login
 
-        form(
-          @submit="submit"
-        )
-          .form-group
-            select(
-              v-model="model.driver"
-            )
-              option(
-                v-for="driver in driverList"
-                v-bind:value="driver.type"
-              ) {{ driver.name }}
-
-          .form-group(
-            v-for="item in connectForm"
+        form(@submit="submit")
+          vue-form-generator(
+            :model="model",
+            :options="formOptions",
+            :schema="connectForm",
           )
-            div {{ item }}
-
-          .form-group
-            button login
 
         pre {{ model }}
+        pre {{ connectForm }}
 
 </template>
 
@@ -41,9 +29,11 @@
   /* Node modules */
 
   /* Third-party modules */
+  import { _ } from 'lodash';
 
   /* Files */
   import Driver from '../lib/driver';
+  import { validators } from 'vue-form-generator';
 
   export default {
 
@@ -55,8 +45,13 @@
 
       return {
         connectForm: [],
-        driver: null,
+        connection: {},
         driverList: [],
+        driverType: '',
+        formOptions: {
+          validateAfterLoad: true,
+          validateAfterChanged: true,
+        },
         loading: true,
         model: {
           driver: '',
@@ -67,25 +62,59 @@
     methods: {
       changeForm () {
         /* Load the driver */
-        const { driver } = this.driverList.find(({ type }) => type === this.model.driver);
+        const { driver } = this.driverList.find(({ id }) => id === this.model.driver);
         this.driver = driver;
+        const i18n = this.$i18n.i18next;
 
         /* Get the form */
-        this.connectForm = this.driver.connectForm;
+        const fields = [{
+          label: i18n.t('connect:DRIVER_TYPE'),
+          model: 'driver',
+          selectOptions: {
+            hideNoneSelectedText: true,
+          },
+          type: 'select',
+          values: this.driverList,
+        }]
+          .concat(this.driver.connectForm({
+            validators,
+            i18n,
+          }))
+          .reduce((result, field) => {
+            /* Ensure truthy value */
+            if (_.isPlainObject(field)) {
+              /* Set any default field */
+              if (_.has(field, 'default')) {
+                this.model[field.model] = field.default;
+              }
+
+              result.push(field);
+            }
+            return result;
+          }, []);
+
+        /* Add login button */
+        fields.push({
+          buttonText: 'login',
+          type: 'submit',
+          validateBeforeSubmit: true,
+        });
+
+        this.connectForm = {
+          fields,
+        };
       },
       loadDrivers () {
         Driver.getDriverList()
           .then((driverList) => {
             this.driverList = driverList;
             if (driverList.length > 0) {
-              this.model.driver = driverList[0].type;
+              this.model.driver = driverList[0].id;
             }
             this.loading = false;
           })
-          .catch((err) => {
-            console.log({
-              err
-            });
+            .catch((err) => {
+              console.log(err.stack);
           });
       },
       submit () {
