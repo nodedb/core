@@ -30,7 +30,6 @@
 
   /* Files */
   import Driver from '../lib/driver';
-  import { validators } from 'vue-form-generator';
 
   export default {
 
@@ -39,7 +38,6 @@
     },
 
     data () {
-
       return {
         connectForm: [],
         connection: {},
@@ -116,8 +114,8 @@
         return this.driver.connect(this.model)
           .then((...args) => {
             console.log(args);
-          })
-      }
+          });
+      },
     },
 
     watch: {
