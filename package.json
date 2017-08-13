@@ -26,8 +26,8 @@
     "serve": "DEBUG=-electron-compile:* ENABLE_LIVE_RELOAD=true SHOW_DEV_TOOLS=true electron . | bunyan",
     "test": "npm run -s test:lint && npm run -s test:unit",
     "test:lint": "npm run -s test:lint:src && npm run -s test:lint:test",
-    "test:lint:src": "eslint src",
-    "test:lint:test": "eslint test",
+    "test:lint:src": "eslint --ext .js,.vue src",
+    "test:lint:test": "eslint --ext .js,.vue test",
     "test:unit": "ELECTRON_PATH=$PWD/node_modules/.bin/electron electron-mocha --throw-deprecation --ui bdd --full-trace --recursive test/unit",
     "watch:test:lint": "nodemon --ext 'js,vue,json,scss' --exec 'npm run -s test:lint'",
     "watch:test:unit": "nodemon --ext 'js,vue, json,scss' --exec 'npm run -s test:unit'"
@@ -70,6 +70,7 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
+    "eslint-plugin-vue": "^2.1.0",
     "nodemon": "^1.11.0",
     "png2icons": "^0.9.1",
     "proxyquire": "^1.8.0",
