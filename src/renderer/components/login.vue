@@ -16,9 +16,6 @@
             :schema="connectForm",
           )
 
-        pre {{ model }}
-        pre {{ connectForm }}
-
 </template>
 
 <script>
