@@ -1,17 +1,13 @@
 <template lang="jade">
-  div
+  .layout.layout--no-sidebar
     navbar
 
-    .main-content
-      p sidebar
-
-      .col.s9
-        slot
+    slot
 </template>
 
 <script>
   /**
-   * default
+   * login
    */
 
   /* Node modules */
@@ -26,3 +22,6 @@
     },
   };
 </script>
+
+<style scoped>
+</style>

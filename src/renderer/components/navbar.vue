@@ -1,6 +1,10 @@
 <template lang="jade">
-  md-toolbar
-    h1.md-title Logo
+  .navbar.navbar-expand-lg.navbar-light.bg-light.row
+    .navbar__content
+      a.navbar-brand(
+        href="#"
+      ) site name
+
 </template>
 
 <script>

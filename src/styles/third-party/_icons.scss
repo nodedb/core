@@ -1,0 +1,20 @@
+/*
+  Font Awesome
+
+  Sexy Icons
+
+  @link http://fontawesome.io/icons/
+ */
+
+$fa-font-path: "../../node_modules/font-awesome/fonts";
+$fa-css-prefix: "nodedb";
+@import "../../../node_modules/font-awesome/scss/font-awesome";
+
+@mixin icon ($name) {
+  @extend .#{$fa-css-prefix};
+  @extend .#{$fa-css-prefix}-#{$name};
+}
+
+.icon--wifi {
+  @include icon('wifi');
+}

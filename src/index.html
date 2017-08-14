@@ -1,18 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <title>NodeDB</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <link rel="stylesheet" href="../node_modules/vue-form-generator/dist/vfg.css" />
+    <link rel="stylesheet" href="./styles/main.scss" />
+    <!--<link rel="stylesheet" href="../node_modules/vue-form-generator/dist/vfg.css" />-->
   </head>
 
   <body>
-    <div id="app"></div>
+    <div id="app" class="site"></div>
 
     <script>
+      window.Popper = require('popper.js');
+      window.jQuery = window.$ = require('jquery');
       require('./renderer/main');
     </script>
   </body>

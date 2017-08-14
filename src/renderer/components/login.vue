@@ -1,13 +1,17 @@
 <template lang="jade">
-  div
-    div(
-      v-if="loading"
-    ) loading...
+  layout-no-sidebar
+    div.login-page
+      div(
+        v-if="loading"
+      )
+        img(
+          src="assets/img/loading.svg"
+          alt="loading..."
+        )
 
-    div(
-      v-else
-    )
-      layout-login
+      div(
+        v-else
+      )
 
         form(@submit="submit")
           vue-form-generator(
@@ -97,7 +101,7 @@
         };
       },
       loadDrivers () {
-        Driver.getDriverList()
+        return Driver.getDriverList()
           .then((driverList) => {
             this.driverList = driverList;
             if (driverList.length > 0) {

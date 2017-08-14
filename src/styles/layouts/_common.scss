@@ -1,0 +1,7 @@
+.layout {
+  @extend .container-fluid;
+
+  .main-content {
+    @extend .row;
+  }
+}

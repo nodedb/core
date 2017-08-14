@@ -1,0 +1,10 @@
+/*
+  Bootstrap
+
+  @link https://getbootstrap.com
+ */
+
+@import "../../../node_modules/bootstrap/scss/bootstrap.scss";
+
+$navbar-height: $navbar-brand-height + ($navbar-brand-padding-y * 3); // I don't get this calculation, but it works
+$default-sidebar-width: 250px;

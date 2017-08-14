@@ -1,0 +1,22 @@
+.layout.layout--left-sidebar {
+
+  .main-content__sidebar,
+  .main-content__body {
+    position: absolute;
+    top: $navbar-height;
+    bottom: 0;
+    overflow: auto;
+    padding: $grid-gutter-width / 2;
+  }
+
+  .main-content__sidebar {
+    left: 0;
+    width: $default-sidebar-width;
+  }
+
+  .main-content__body {
+    left: $default-sidebar-width;
+    right: 0;
+  }
+
+}
