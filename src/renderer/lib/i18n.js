@@ -34,6 +34,7 @@ i18next
     ns: [
       'common',
       'connect',
+      'error',
     ],
   });
 

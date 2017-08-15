@@ -10,15 +10,23 @@ import VueRouter from 'vue-router';
 
 /* Files */
 import login from '../components/login.vue';
+import query from '../components/query.vue';
 
 Vue.use(VueRouter);
 
 const routes = [{
   path: '/login',
+  name: 'login',
   component: login,
 }, {
+  path: '/query',
+  name: 'query',
+  component: query,
+}, {
   path: '*',
-  redirect: '/login',
+  redirect: {
+    name: 'login',
+  },
 }];
 
 export default new VueRouter({

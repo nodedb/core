@@ -6,7 +6,9 @@
     top: $navbar-height;
     bottom: 0;
     overflow: auto;
-    padding: $grid-gutter-width / 2;
+    padding: $grid-gutter-width / 2 {
+      top: $grid-gutter-width;
+    }
   }
 
   .main-content__sidebar {

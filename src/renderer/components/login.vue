@@ -15,6 +15,10 @@
         v-else
       )
 
+        .alert.alert-danger(
+          v-if="connectErr"
+        ) {{ $t('error:DB_CONNECTION', { err: connectErr.message }) }}
+
         form(@submit="submit")
           vue-form-generator(
             :model="model",
@@ -36,6 +40,7 @@
 
   /* Files */
   import Driver from '../lib/driver';
+  import router from '../lib/router';
 
   export default {
 
@@ -49,6 +54,7 @@
         connection: {},
         driverList: [],
         driverType: '',
+        connectErr: null,
         formOptions: {
           validateAfterLoad: true,
           validateAfterChanged: true,
@@ -119,8 +125,17 @@
       },
       submit () {
         return this.driver.connect(this.model)
-          .then((...args) => {
-            console.log(args);
+          .then(() => {
+            this.connectErr = null;
+
+            return router.push({
+              name: 'query',
+            });
+
+          })
+          .catch((err) => {
+            /* Failed to connect - show the reason */
+            this.connectErr = err;
           });
       },
     },
