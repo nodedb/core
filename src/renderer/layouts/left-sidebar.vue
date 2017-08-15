@@ -30,11 +30,6 @@
     props: {
       sidebar: {
         type: Object,
-//        default: () => [],
-//        validator (value) {
-//          console.log(value);
-//          return false;
-//        },
       },
     },
   };
