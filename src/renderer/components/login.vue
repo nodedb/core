@@ -41,6 +41,7 @@
   /* Files */
   import Driver from '../lib/driver';
   import router from '../lib/router';
+  import store from '../store';
 
   export default {
 
@@ -126,13 +127,18 @@
       submit () {
         return this.driver.connect(this.model)
           .then(() => {
+            /* Remove any connection error */
             this.connectErr = null;
 
-            return router.push({
-              name: 'query',
-            });
-
+            /* Add connection to the state */
+            return store.dispatch('saveConnection', this.model);
           })
+          .then(connectionId => router.push({
+            name: 'query',
+            params: {
+              connectionId,
+            },
+          }))
           .catch((err) => {
             /* Failed to connect - show the reason */
             this.connectErr = err;

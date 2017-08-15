@@ -19,7 +19,7 @@ const routes = [{
   name: 'login',
   component: login,
 }, {
-  path: '/query',
+  path: '/query/:connectionId',
   name: 'query',
   component: query,
 }, {
