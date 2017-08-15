@@ -1,5 +1,7 @@
 <template lang="jade">
-  layout-no-sidebar
+  layout-no-sidebar(
+    :sidebar="sidebar"
+  )
     div.login-page
       div(
         v-if="loading"
@@ -55,6 +57,7 @@
         model: {
           driver: '',
         },
+        sidebar: 'hello sidebar',
       };
     },
 

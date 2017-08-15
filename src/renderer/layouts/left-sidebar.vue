@@ -5,6 +5,7 @@
     .main-content
       .main-content__sidebar
         p sidebar
+        p {{ sidebar }}
 
       .main-content__body
         slot
@@ -23,7 +24,18 @@
 
   export default {
     data () {
+      console.log(this.sidebar);
       return {};
+    },
+    props: {
+      sidebar: {
+        type: Object,
+//        default: () => [],
+//        validator (value) {
+//          console.log(value);
+//          return false;
+//        },
+      },
     },
   };
 </script>

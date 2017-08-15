@@ -1,0 +1,16 @@
+.navigation {
+  @extend .navbar;
+  @extend .navbar-expand-lg;
+  @extend .navbar-dark;
+  @extend .bg-dark;
+  @extend .row;
+
+  .nav-icons {
+    @extend .navbar-nav;
+    @extend .mr-auto;
+
+    a {
+      color: #fff;
+    }
+  }
+}

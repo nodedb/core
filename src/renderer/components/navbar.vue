@@ -1,9 +1,18 @@
 <template lang="jade">
-  .navbar.navbar-expand-lg.navbar-light.bg-light.row
+  .navigation
     .navbar__content
-      a.navbar-brand(
-        href="#"
-      ) site name
+
+      ul.nav-icons
+        li(
+          v-for="item in menu"
+        )
+          a(
+            href="#",
+            :title="item.title"
+          )
+            i.icon--large(
+              :class="'icon--' + item.icon"
+            )
 
 </template>
 
@@ -20,7 +29,15 @@
 
   export default {
     data () {
-      return {};
+      return {
+        menu: [{
+          title: 'some title',
+          icon: 'wifi',
+        }, {
+          title: 'run',
+          icon: 'play',
+        }],
+      };
     },
   };
 </script>

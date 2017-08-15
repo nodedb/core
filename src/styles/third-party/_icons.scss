@@ -15,6 +15,30 @@ $fa-css-prefix: "nodedb";
   @extend .#{$fa-css-prefix}-#{$name};
 }
 
+.icon--large {
+  @extend .#{$fa-css-prefix}-lg;
+}
+
+.icon--2x {
+  @extend .#{$fa-css-prefix}-2x;
+}
+
+.icon--3x {
+  @extend .#{$fa-css-prefix}-3x;
+}
+
+.icon--4x {
+  @extend .#{$fa-css-prefix}-4x;
+}
+
+.icon--5x {
+  @extend .#{$fa-css-prefix}-5x;
+}
+
+.icon--play {
+  @include icon('play');
+}
+
 .icon--wifi {
   @include icon('wifi');
 }
