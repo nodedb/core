@@ -6,9 +6,10 @@
 
 /* Third-party modules */
 import { _ } from 'lodash';
-import { v4 as uuid } from 'uuid';
 
 /* Files */
+import Connection from '../lib/connection';
+import Driver from '../lib/driver';
 
 let connections = [];
 
@@ -23,18 +24,48 @@ try {
 }
 
 export default {
-  actions: {
-    saveConnection ({ commit }, connection) {
-      /* Generate a random ID */
-      const connectionId = uuid();
 
-      connection.connectionId = connectionId;
+  actions: {
+
+    getConnection ({ state }, opts) {
+      try {
+        const {
+          connectionId,
+          driverName,
+          moduleName,
+          params,
+        } = state.find(data => data.connectionId === opts.connectionId);
+
+        /* Get the driver */
+        const driver = Driver.loadDriver(driverName, moduleName);
+
+        if (!driver) {
+          return null;
+        }
+
+        return Connection.load(driver, connectionId, params);
+      } catch (err) {
+        return Promise.reject(err);
+      }
+    },
+
+    saveConnection ({ commit }, { id, moduleName, params }) {
+      /* Generate a connection ID */
+      const connectionId = Connection.generateId();
+
+      const connection = {
+        connectionId,
+        driverName: id,
+        moduleName,
+        params,
+      };
 
       commit('addConnection', connection);
 
       return connectionId;
     },
   },
+
   mutations: {
     addConnection (state, connection) {
       state.push(connection);
@@ -44,5 +75,7 @@ export default {
       sessionStorage.setItem('connections', strState);
     },
   },
+
   state: connections,
+
 };

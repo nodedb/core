@@ -1,7 +1,5 @@
 <template lang="jade">
-  layout-no-sidebar(
-    :sidebar="sidebar"
-  )
+  layout-no-sidebar
     div.login-page
       div(
         v-if="loading"
@@ -46,7 +44,7 @@
   export default {
 
     created () {
-      this.loadDrivers();
+      return this.loadDrivers();
     },
 
     data () {
@@ -64,7 +62,6 @@
         model: {
           driver: '',
         },
-        sidebar: 'hello sidebar',
       };
     },
 
@@ -131,7 +128,11 @@
             this.connectErr = null;
 
             /* Add connection to the state */
-            return store.dispatch('saveConnection', this.model);
+            return store.dispatch('saveConnection', {
+              id: this.driver.id,
+              moduleName: this.driver.module,
+              params: this.model,
+            });
           })
           .then(connectionId => router.push({
             name: 'query',

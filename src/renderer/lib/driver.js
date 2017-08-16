@@ -16,9 +16,11 @@ import Base from './base';
 const i18n = remote.app.$i18n;
 
 export default class Driver extends Base {
-  constructor (strategy) {
+  constructor (strategy, module) {
     super();
 
+    /* This may or may not be the same the id */
+    this.module = module;
     this.strategy = strategy;
   }
 
@@ -60,6 +62,13 @@ export default class Driver extends Base {
       });
   }
 
+  /**
+   * Connect Form
+   *
+   * Retrieves the connect form for the driver
+   *
+   * @returns {*}
+   */
   connectForm () {
     return this.strategy.connectForm({
       validators,
@@ -127,6 +136,12 @@ export default class Driver extends Base {
     });
   }
 
+  static loadDriver (moduleName, driverName) {
+    const drivers = Driver.loadModule(moduleName);
+
+    return drivers.find(({ id }) => id === driverName);
+  }
+
   /**
    * Load Module
    *
@@ -145,12 +160,12 @@ export default class Driver extends Base {
 
     /* Check if multi-driver module */
     if (module.drivers) {
-      return module.drivers.map(({ id }) => new Driver(module.load(id)));
+      return module.drivers.map(({ id }) => new Driver(module.load(id), moduleName));
     }
 
     /* Just one driver in module */
     return [
-      new Driver(module.load()),
+      new Driver(module.load(), moduleName),
     ];
   }
 }
