@@ -57,37 +57,35 @@ const router = new VueRouter({
 });
 
 /* Check that we have appropriate permissions */
-router.beforeEach((to, from, next) => Promise
-  .resolve()
-  .then(() => {
-    if (!to.meta.requireLogin) {
-      /* Don't need to be connected to any databases */
-      return next();
-    }
+router.beforeEach((to, from, next) => {
+  /* Check if we need to be logged in */
+  if (!to.meta.requireLogin) {
+    /* Return Promise for consistent output */
+    return Promise.resolve()
+      .then(() => next());
+  }
 
-    return Promise.all([
-      store.dispatch('getConnections'),
-      store.dispatch('getConnection', {
-        connectionId: to.params.connectionId,
-      }),
-    ]);
-  })
-  .then(([connections, connection]) => {
+  return Promise.all([
+    store.dispatch('getConnections'),
+    store.dispatch('getConnection', {
+      connectionId: to.params.connectionId,
+    }),
+  ]).then(([connections, connection]) => {
     /* Check if we have any connections */
     if (!connection) {
       /* No connection available - back to login page */
-      return next('login');
+      return next({
+        name: 'login',
+      });
     }
 
     to.meta.connection = connection;
     to.meta.connections = connections;
 
     return next();
-  })
-  .catch((err) => {
-    console.log({
-      err,
-    });
-  }));
+  }).catch((err) => {
+    return next(err);
+  });
+});
 
 export default router;
