@@ -49,6 +49,8 @@ export default {
       }
     },
 
+    getConnections: ({ state }) => state,
+
     saveConnection ({ commit }, { id, moduleName, params }) {
       /* Generate a connection ID */
       const connectionId = Connection.generateId();

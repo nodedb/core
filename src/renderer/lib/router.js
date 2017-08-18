@@ -15,6 +15,7 @@ import layoutNoSidebar from '../layouts/no-sidebar.vue';
 import login from '../components/login.vue';
 import navbar from '../components/navbar.vue';
 import query from '../components/query.vue';
+import store from '../store';
 
 Vue.use(VueRouter);
 
@@ -35,6 +36,9 @@ const routes = [{
   children: [{
     path: '/query/:connectionId',
     name: 'query',
+    meta: {
+      requireLogin: true,
+    },
     components: {
       body: query,
       navbar,
@@ -53,6 +57,37 @@ const router = new VueRouter({
 });
 
 /* Check that we have appropriate permissions */
-router.beforeEach((to, from, next) => next());
+router.beforeEach((to, from, next) => Promise
+  .resolve()
+  .then(() => {
+    if (!to.meta.requireLogin) {
+      /* Don't need to be connected to any databases */
+      return next();
+    }
+
+    return Promise.all([
+      store.dispatch('getConnections'),
+      store.dispatch('getConnection', {
+        connectionId: to.params.connectionId,
+      }),
+    ]);
+  })
+  .then(([connections, connection]) => {
+    /* Check if we have any connections */
+    if (!connection) {
+      /* No connection available - back to login page */
+      return next('login');
+    }
+
+    to.meta.connection = connection;
+    to.meta.connections = connections;
+
+    return next();
+  })
+  .catch((err) => {
+    console.log({
+      err,
+    });
+  }));
 
 export default router;
