@@ -1,20 +1,10 @@
 <template lang="jade">
-  .layout.layout--no-sidebar
-    router-view(
-      name="navbar"
-    )
-
-    .main-content
-
-      .main-content__body
-        router-view(
-          name="body"
-        )
+  div i am the db list
 </template>
 
 <script>
   /**
-   * login
+   * sidebar
    */
 
   /* Node modules */

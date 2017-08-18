@@ -1,28 +1,27 @@
 <template lang="jade">
-  layout-no-sidebar
-    div.login-page
-      div(
-        v-if="loading"
+  div.login-page
+    div(
+      v-if="loading"
+    )
+      img(
+        src="assets/img/loading.svg"
+        alt="loading..."
       )
-        img(
-          src="assets/img/loading.svg"
-          alt="loading..."
+
+    div(
+      v-else
+    )
+
+      .alert.alert-danger(
+        v-if="connectErr"
+      ) {{ $t('error:DB_CONNECTION', { err: connectErr.message }) }}
+
+      form(@submit="submit")
+        vue-form-generator(
+          :model="model",
+          :options="formOptions",
+          :schema="connectForm",
         )
-
-      div(
-        v-else
-      )
-
-        .alert.alert-danger(
-          v-if="connectErr"
-        ) {{ $t('error:DB_CONNECTION', { err: connectErr.message }) }}
-
-        form(@submit="submit")
-          vue-form-generator(
-            :model="model",
-            :options="formOptions",
-            :schema="connectForm",
-          )
 
 </template>
 

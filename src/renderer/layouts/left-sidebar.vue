@@ -1,14 +1,19 @@
 <template lang="jade">
   .layout.layout--left-sidebar
-    navbar
+    router-view(
+      name="navbar"
+    )
 
     .main-content
       .main-content__sidebar
-        p sidebar
-        p {{ sidebar }}
+        router-view(
+          name="sidebar"
+        )
 
       .main-content__body
-        slot
+        router-view(
+          name="body"
+        )
 </template>
 
 <script>
@@ -24,13 +29,7 @@
 
   export default {
     data () {
-      console.log(this.sidebar);
       return {};
-    },
-    props: {
-      sidebar: {
-        type: Object,
-      },
     },
   };
 </script>
