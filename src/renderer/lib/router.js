@@ -19,24 +19,28 @@ import query from '../components/query.vue';
 Vue.use(VueRouter);
 
 const routes = [{
-  path: '/login',
+  path: '/no',
   component: layoutNoSidebar,
   children: [{
-    path: '',
+    path: 'login',
     name: 'login',
     components: {
       body: login,
       navbar,
-      sidebar: dbList,
     },
   }],
 }, {
-  path: '/query/:connectionId',
-  name: 'query',
-  components: {
-    body: query,
-    layout: layoutLeftSidebar,
-  },
+  path: '/left',
+  component: layoutLeftSidebar,
+  children: [{
+    path: '/query/:connectionId',
+    name: 'query',
+    components: {
+      body: query,
+      navbar,
+      sidebar: dbList,
+    },
+  }],
 }, {
   path: '*',
   redirect: {
