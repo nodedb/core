@@ -32,7 +32,7 @@ export default class Connection extends Base {
   }
 
   get name () {
-    return 'connectionName';
+    return this.params.name;
   }
 
   static generateId () {

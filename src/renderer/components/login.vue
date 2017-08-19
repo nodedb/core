@@ -34,6 +34,7 @@
 
   /* Third-party modules */
   import { _ } from 'lodash';
+  import { validators } from 'vue-form-generator';
 
   /* Files */
   import Driver from '../lib/driver';
@@ -53,7 +54,7 @@
         driverType: '',
         connectErr: null,
         formOptions: {
-          validateAfterLoad: true,
+          validateAfterLoad: false,
           validateAfterChanged: true,
         },
         loading: true,
@@ -79,6 +80,14 @@
           },
           type: 'select',
           values: this.driverList,
+        }, {
+          label: 'name',
+          model: 'name',
+          type: 'input',
+          required: true,
+          validator: [
+            validators.string,
+          ],
         }]
           .concat(this.driver.connectForm())
           .reduce((result, field) => {
@@ -105,6 +114,7 @@
           fields,
         };
       },
+
       loadDrivers () {
         return Driver.getDriverList()
           .then((driverList) => {
@@ -119,6 +129,7 @@
             console.log(err.stack);
           });
       },
+
       submit () {
         return this.driver.connect(this.model)
           .then(() => {
