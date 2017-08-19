@@ -37,7 +37,6 @@
 
   /* Files */
   import Driver from '../lib/driver';
-  import router from '../lib/router';
   import store from '../store';
 
   export default {
@@ -133,7 +132,7 @@
               params: this.model,
             });
           })
-          .then(connectionId => router.push({
+          .then(connectionId => this.$router.push({
             name: 'query',
             params: {
               connectionId,

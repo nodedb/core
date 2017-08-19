@@ -26,6 +26,11 @@ try {
 export default {
 
   actions: {
+    removeConnection ({ commit }, { id }) {
+      commit('removeConnection', id);
+
+      return id;
+    },
 
     getConnection ({ state }, opts) {
       try {
@@ -37,19 +42,24 @@ export default {
         } = state.find(data => data.connectionId === opts.connectionId);
 
         /* Get the driver */
-        const driver = Driver.loadDriver(driverName, moduleName);
-
-        if (!driver) {
-          return null;
-        }
-
-        return Connection.load(driver, connectionId, params);
+        return Driver.loadConnection(driverName, moduleName, connectionId, params);
       } catch (err) {
         return Promise.reject(err);
       }
     },
 
-    getConnections: ({ state }) => state,
+    getConnections: ({ state }, activeId) => state.map((connection) => {
+      const {
+        connectionId,
+        driverName,
+        moduleName,
+        params,
+      } = connection;
+
+      const isActive = activeId === connectionId;
+
+      return Driver.loadConnection(driverName, moduleName, connectionId, params, isActive);
+    }),
 
     saveConnection ({ commit }, { id, moduleName, params }) {
       /* Generate a connection ID */
@@ -71,6 +81,14 @@ export default {
   mutations: {
     addConnection (state, connection) {
       state.push(connection);
+
+      const strState = JSON.stringify(state);
+
+      sessionStorage.setItem('connections', strState);
+    },
+
+    removeConnection (state, id) {
+      _.remove(state, con => con.connectionId === id);
 
       const strState = JSON.stringify(state);
 

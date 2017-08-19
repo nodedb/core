@@ -90,10 +90,12 @@ router.beforeEach((to, from, next) => {
       .then(() => next());
   }
 
+  const connectionId = to.params.connectionId;
+
   return Promise.all([
-    store.dispatch('getConnections'),
+    store.dispatch('getConnections', connectionId),
     store.dispatch('getConnection', {
-      connectionId: to.params.connectionId,
+      connectionId,
     }),
   ]).then(([connectionList, connection]) => {
     /* Check if we have any connections */
@@ -108,7 +110,10 @@ router.beforeEach((to, from, next) => {
     to.meta.connectionList = connectionList;
 
     return next();
-  }).catch(err => next(err));
+  }).catch((err) => {
+    console.log(err);
+    return next(err);
+  });
 });
 
 export default router;

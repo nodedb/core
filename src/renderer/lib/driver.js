@@ -12,6 +12,7 @@ import { validators } from 'vue-form-generator';
 
 /* Files */
 import Base from './base';
+import Connection from './connection';
 
 const i18n = remote.app.$i18n;
 
@@ -134,6 +135,16 @@ export default class Driver extends Base {
 
       throw err;
     });
+  }
+
+  static loadConnection (driverName, moduleName, connectionId, params, isActive) {
+    const driver = Driver.loadDriver(driverName, moduleName);
+
+    if (!driver) {
+      return null;
+    }
+
+    return Connection.load(driver, connectionId, params, isActive);
   }
 
   static loadDriver (moduleName, driverName) {

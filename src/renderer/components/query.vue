@@ -1,8 +1,8 @@
 <template lang="jade">
   div
     div query page {{ $t('common:LOADING_PAGE') }}
-    div connections {{ connectionList.length }}
     div connection {{ connection.id }}
+    a(href="#") back
 </template>
 
 <script>
@@ -18,11 +18,25 @@
 
   export default {
 
+    created () {
+      return this.fetchData();
+    },
+
     data () {
       return {
         connection: this.$route.meta.connection,
-        connectionList: this.$route.meta.connectionList,
       };
+    },
+
+    methods: {
+      fetchData () {
+        this.connectionId = this.$route.meta.connection.id;
+        this.connectionList = this.$route.meta.connectionList;
+      },
+    },
+
+    watch: {
+      $route: 'fetchData',
     },
 
   };
