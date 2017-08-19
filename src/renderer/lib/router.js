@@ -5,11 +5,13 @@
 /* Node modules */
 
 /* Third-party modules */
+import { remote } from 'electron';
 import Vue from 'vue/dist/vue.min';
 import VueRouter from 'vue-router';
 
 /* Files */
 import dbList from '../components/dbList.vue';
+import error from '../components/error.vue';
 import layoutLeftSidebar from '../layouts/left-sidebar.vue';
 import layoutNoSidebar from '../layouts/no-sidebar.vue';
 import login from '../components/login.vue';
@@ -23,6 +25,16 @@ const routes = [{
   path: '/no',
   component: layoutNoSidebar,
   children: [{
+    path: 'error',
+    meta: {
+      err: null,
+    },
+    name: 'error',
+    components: {
+      body: error,
+      navbar,
+    },
+  }, {
     path: 'login',
     name: 'login',
     components: {
@@ -56,6 +68,17 @@ const router = new VueRouter({
   routes,
 });
 
+/* Handle routing errors */
+router.onError((err) => {
+  remote.app.logger.trigger('error', 'Routing error', {
+    err,
+  });
+
+  router.push({
+    name: 'error',
+  });
+});
+
 /* Check that we have appropriate permissions */
 router.beforeEach((to, from, next) => {
   /* Check if we need to be logged in */
@@ -83,9 +106,7 @@ router.beforeEach((to, from, next) => {
     to.meta.connections = connections;
 
     return next();
-  }).catch((err) => {
-    return next(err);
-  });
+  }).catch(err => next(err));
 });
 
 export default router;
