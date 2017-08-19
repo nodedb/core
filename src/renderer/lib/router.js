@@ -10,6 +10,7 @@ import Vue from 'vue/dist/vue.min';
 import VueRouter from 'vue-router';
 
 /* Files */
+import connections from '../components/connections.vue';
 import dbList from '../components/dbList.vue';
 import error from '../components/error.vue';
 import layoutLeftSidebar from '../layouts/left-sidebar.vue';
@@ -53,6 +54,7 @@ const routes = [{
     },
     components: {
       body: query,
+      connections,
       navbar,
       sidebar: dbList,
     },
@@ -93,7 +95,7 @@ router.beforeEach((to, from, next) => {
     store.dispatch('getConnection', {
       connectionId: to.params.connectionId,
     }),
-  ]).then(([connections, connection]) => {
+  ]).then(([connectionList, connection]) => {
     /* Check if we have any connections */
     if (!connection) {
       /* No connection available - back to login page */
@@ -103,7 +105,7 @@ router.beforeEach((to, from, next) => {
     }
 
     to.meta.connection = connection;
-    to.meta.connections = connections;
+    to.meta.connectionList = connectionList;
 
     return next();
   }).catch(err => next(err));

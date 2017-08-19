@@ -11,9 +11,15 @@
         )
 
       .main-content__body
-        router-view(
-          name="body"
-        )
+        .main-content__body__connections
+          router-view(
+            name="connections"
+          )
+
+        .main-content__body__main
+          router-view(
+            name="body"
+          )
 </template>
 
 <script>

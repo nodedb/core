@@ -1,7 +1,7 @@
 <template lang="jade">
   div
     div query page {{ $t('common:LOADING_PAGE') }}
-    div connections {{ connections.length }}
+    div connections {{ connectionList.length }}
     div connection {{ connection.id }}
 </template>
 
@@ -21,7 +21,7 @@
     data () {
       return {
         connection: this.$route.meta.connection,
-        connections: this.$route.meta.connections,
+        connectionList: this.$route.meta.connectionList,
       };
     },
 
