@@ -81,7 +81,7 @@
           type: 'select',
           values: this.driverList,
         }, {
-          label: 'name',
+          label: i18n.t('connect:CONNECTION_NAME'),
           model: 'name',
           type: 'input',
           required: true,

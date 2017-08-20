@@ -35,10 +35,14 @@ $fa-css-prefix: "nodedb";
   @extend .#{$fa-css-prefix}-5x;
 }
 
-.icon--play {
-  @include icon('play');
+.icon--add {
+  @include icon('plus');
 }
 
-.icon--wifi {
-  @include icon('wifi');
+.icon--close {
+  @include icon('close');
+}
+
+.icon--play {
+  @include icon('play');
 }

@@ -7,22 +7,24 @@
       a.nav-link(
         href="#"
         v-on:click.prevent.self="selectConnection(connection.id)",
-        :class="{ 'active': connection.active }"
-      ) {{ connection.name || 'duh' }}
+        :class="{ 'active': connection.active }",
+        :title="connection.name"
+      ) {{ truncate(connection.name) }}
 
-        a(
-          href="#"
+        a.btn.btn-xs.btn-left-margin.btn-outline-danger(
+          href="#",
+          :title="$t('connect:CLOSE_CONNECTION')",
           v-on:click.prevent="removeConnection(connection.id)"
-        ) kill
+        )
+          i.icon--close
 
     li.nav-item
 
       router-link.nav-link(
+        :title="$t('connect:ADD_CONNECTION')",
         :to="{ name: 'login' }"
-      ) add
-
-    li.nav-item
-      a.nav-link {{ connectionId }}
+      )
+        i.icon--add
 
 </template>
 
@@ -98,6 +100,12 @@
           params: {
             connectionId,
           },
+        });
+      },
+
+      truncate (str, { length = 10 } = {}) {
+        return _.truncate(str, {
+          length,
         });
       },
     },
