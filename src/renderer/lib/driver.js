@@ -25,6 +25,10 @@ export default class Driver extends Base {
     this.strategy = strategy;
   }
 
+  get iconPath () {
+    return this.strategy.iconPath;
+  }
+
   get id () {
     return this.strategy.id;
   }

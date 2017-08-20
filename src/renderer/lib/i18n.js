@@ -35,6 +35,7 @@ i18next
       'common',
       'connect',
       'error',
+      'modal',
     ],
   });
 

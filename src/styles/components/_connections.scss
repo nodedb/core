@@ -1,0 +1,17 @@
+.connections {
+  > ul {
+    @extend .nav;
+    @extend .nav-tabs;
+
+    > li {
+      @extend .nav-item;
+
+      .icon {
+        width: 16px;
+        margin: {
+          right: $grid-gutter-width / 2;
+        }
+      }
+    }
+  }
+}

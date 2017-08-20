@@ -1,30 +1,37 @@
 <template lang="jade">
-  ul.nav.nav-tabs
-    li.nav-item(
-      v-for="connection in connectionList"
-    )
-
-      a.nav-link(
-        href="#"
-        v-on:click.prevent.self="selectConnection(connection.id)",
-        :class="{ 'active': connection.active }",
-        :title="connection.name"
-      ) {{ truncate(connection.name) }}
-
-        a.btn.btn-xs.btn-left-margin.btn-outline-danger(
-          href="#",
-          :title="$t('connect:CLOSE_CONNECTION')",
-          v-on:click.prevent="removeConnection(connection.id)"
-        )
-          i.icon--close
-
-    li.nav-item
-
-      router-link.nav-link(
-        :title="$t('connect:ADD_CONNECTION')",
-        :to="{ name: 'login' }"
+  .connections
+    ul
+      li(
+        v-for="connection in connectionList"
       )
-        i.icon--add
+
+        a.nav-link(
+          href="#"
+          v-on:click.prevent.self="selectConnection(connection.id)",
+          :class="{ 'active': connection.active }",
+          :title="connection.name"
+        )
+          img.icon(
+            v-if="connection.driver.iconPath",
+            :src="connection.driver.iconPath",
+            :alt="connection.driver.name"
+          )
+          span {{ truncate(connection.name) }}
+
+          a.btn.btn-xs.btn-left-margin.btn-outline-danger(
+            href="#",
+            :title="$t('connect:CLOSE_CONNECTION')",
+            v-on:click.prevent="removeConnection(connection.id)"
+          )
+            i.icon--close
+
+      li.nav-item
+
+        router-link.nav-link(
+          :title="$t('connect:ADD_CONNECTION')",
+          :to="{ name: 'login' }"
+        )
+          i.icon--add
 
 </template>
 
@@ -51,13 +58,6 @@
       return this.fetchData();
     },
 
-    data () {
-      return {
-        connectionId: this.$route.meta.connection.id,
-        connectionList: this.$route.meta.connectionList,
-      };
-    },
-
     methods: {
       fetchData () {
         this.connectionId = this.$route.meta.connection.id;
@@ -67,7 +67,7 @@
       removeConnection (id) {
         return new Promise((resolve, reject) => {
           vex.dialog.confirm({
-            message: 'Are you a twat?',
+            message: this.$i18n.i18next.t('modal:CONFIRM'),
             callback (value) {
               if (value) {
                 return resolve();
@@ -129,7 +129,7 @@
         });
       },
 
-      truncate (str, { length = 10 } = {}) {
+      truncate (str, { length = 20 } = {}) {
         return _.truncate(str, {
           length,
         });
