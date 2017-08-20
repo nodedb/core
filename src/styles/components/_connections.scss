@@ -6,10 +6,18 @@
     > li {
       @extend .nav-item;
 
-      .icon {
-        width: 16px;
-        margin: {
-          right: $grid-gutter-width / 2;
+      .nav-link {
+
+        &.nav-link--icon {
+          padding: {
+            left: ($nav-link-padding-x * 2) + 1rem;
+          }
+          background: {
+            position-x: $grid-gutter-width / 2;
+            position-y: center;
+            repeat: no-repeat;
+            size: 1rem;
+          }
         }
       }
     }

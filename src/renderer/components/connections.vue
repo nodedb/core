@@ -5,20 +5,13 @@
         v-for="connection in connectionList"
       )
 
-        a.nav-link(
+        a.nav-link.nav-link--icon(
           href="#",
+          v-on:click.prevent.self="selectConnection(connection.id)",
           :class="{ 'active': connection.active }",
-          :title="connection.name"
-        )
-          span(
-            v-on:click.prevent="selectConnection(connection.id)",
-          )
-            img.icon(
-              v-if="connection.driver.iconPath",
-              :src="connection.driver.iconPath",
-              :alt="connection.driver.name"
-            )
-            span {{ truncate(connection.name) }}
+          :title="connection.name",
+          :style="'background-image: url(' + connection.driver.iconPath + ')'"
+        ) {{ truncate(connection.name) }}
 
           a.btn.btn-xs.btn-left-margin.btn-outline-danger(
             href="#",
