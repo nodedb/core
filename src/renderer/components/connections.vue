@@ -22,9 +22,10 @@
 
       li.nav-item
 
-        router-link.nav-link(
+        a.nav-link(
+          href="#",
+          v-on:click.prevent="newConnection()",
           :title="$t('connect:ADD_CONNECTION')",
-          :to="{ name: 'login' }"
         )
           i.icon--add
 
@@ -61,11 +62,42 @@
     },
 
     methods: {
+      /**
+       * Fetch Data
+       *
+       * Fetches all the data to make this component
+       * work
+       */
       fetchData () {
         this.connectionId = this.$route.meta.connection.id;
         this.connectionList = this.$route.meta.connectionList;
       },
 
+      /**
+       * New Connection
+       *
+       * This is fired when the user wants to make
+       * a new connection
+       */
+      newConnection () {
+        return this.$router.push({
+          name: 'login',
+          query: {
+            active: this.connectionId,
+          },
+        });
+      },
+
+      /**
+       * Remove Connection
+       *
+       * Prompts a user to confirm if they want to
+       * remove a connection from the list and then
+       * removes it.
+       *
+       * @param {string} id
+       * @returns {Promise<never | T> | Promise.<T>}
+       */
       removeConnection (id) {
         return new Promise((resolve, reject) => {
           vex.dialog.confirm({
@@ -121,6 +153,15 @@
         });
       },
 
+      /**
+       * Select Connection
+       *
+       * Selects a new active connection and tells
+       * the application all about it
+       *
+       * @todo tell the application
+       * @param {string} connectionId
+       */
       selectConnection (connectionId) {
         /* Select a new connection */
         return this.$router.push({
@@ -131,6 +172,16 @@
         });
       },
 
+      /**
+       * Truncate
+       *
+       * Function to truncate the name of the
+       * connection
+       *
+       * @param {string} str
+       * @param {number} length
+       * @returns {string}
+       */
       truncate (str, { length = 20 } = {}) {
         return _.truncate(str, {
           length,
