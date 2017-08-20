@@ -37,9 +37,13 @@
 
   /* Third-party modules */
   import { _ } from 'lodash';
+  import { remote } from 'electron';
+  import vex from 'vex-js';
 
   /* Files */
   import store from '../store';
+
+  const logger = remote.app.logger;
 
   export default {
 
@@ -61,9 +65,20 @@
       },
 
       removeConnection (id) {
-        return store.dispatch('removeConnection', {
+        return new Promise((resolve, reject) => {
+          vex.dialog.confirm({
+            message: 'Are you a twat?',
+            callback (value) {
+              if (value) {
+                return resolve();
+              }
+
+              return reject(new Error('CANCEL'));
+            },
+          });
+        }).then(() => store.dispatch('removeConnection', {
           id,
-        }).then(() => {
+        })).then(() => {
           const index = _.findIndex(this.connectionList, con => con.id === id);
 
           /* Remove from the list */
@@ -90,6 +105,17 @@
 
           /* Nothing to do - we're not changing page */
           return undefined;
+        }).catch((err) => {
+          if (err.message === 'CANCEL') {
+            /* We've cancelled the request - log and move on */
+            logger.trigger('trace', 'Remove connection request cancelled', {
+              connectionId: id,
+            });
+
+            return;
+          }
+
+          throw err;
         });
       },
 

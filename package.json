@@ -58,6 +58,8 @@
     "lodash": "^4.17.4",
     "popper.js": "^1.11.1",
     "uuid": "^3.1.0",
+    "vex-dialog": "^1.0.7",
+    "vex-js": "^4.0.0",
     "vue": "^2.4.2",
     "vue-form-generator": "^2.0.0",
     "vue-router": "^2.7.0",
