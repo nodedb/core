@@ -6,17 +6,19 @@
       )
 
         a.nav-link(
-          href="#"
-          v-on:click.prevent.self="selectConnection(connection.id)",
+          href="#",
           :class="{ 'active': connection.active }",
           :title="connection.name"
         )
-          img.icon(
-            v-if="connection.driver.iconPath",
-            :src="connection.driver.iconPath",
-            :alt="connection.driver.name"
+          span(
+            v-on:click.prevent="selectConnection(connection.id)",
           )
-          span {{ truncate(connection.name) }}
+            img.icon(
+              v-if="connection.driver.iconPath",
+              :src="connection.driver.iconPath",
+              :alt="connection.driver.name"
+            )
+            span {{ truncate(connection.name) }}
 
           a.btn.btn-xs.btn-left-margin.btn-outline-danger(
             href="#",
@@ -56,6 +58,13 @@
 
     created () {
       return this.fetchData();
+    },
+
+    data () {
+      return {
+        connectionId: null,
+        connectionList: null,
+      };
     },
 
     methods: {
