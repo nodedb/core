@@ -26,6 +26,8 @@
           href="#",
           v-on:click.prevent="newConnection()",
           :title="$t('connect:ADD_CONNECTION')",
+          v-shortkey="[ 'ctrl', 'n' ]",
+          @shortkey="newConnection()"
         )
           i.icon--add
 

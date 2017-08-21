@@ -9,6 +9,7 @@ import vex from 'vex-js';
 import vexDialog from 'vex-dialog/src/vex.dialog';
 import Vue from 'vue/dist/vue.min';
 import VueFormGenerator from 'vue-form-generator';
+import VueShortKey from 'vue-shortkey';
 
 /* Files */
 import App from './components/app.vue';
@@ -17,6 +18,7 @@ import router from './lib/router';
 
 /* Register global Vue components */
 Vue.use(VueFormGenerator);
+Vue.use(VueShortKey);
 
 /* Configure Vex */
 vex.registerPlugin(vexDialog);
