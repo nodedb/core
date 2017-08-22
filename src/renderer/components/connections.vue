@@ -2,11 +2,13 @@
   .connections
     ul
       li(
-        v-for="connection in connectionList"
+        v-for="(connection, index) in connectionList"
       )
 
         a.nav-link.nav-link--icon(
           href="#",
+          v-shortkey="[ 'ctrl', (index + 1) ]",
+          @shortkey="selectConnection(connection.id)",
           v-on:click.prevent.self="selectConnection(connection.id)",
           :class="{ 'active': connection.active }",
           :title="connection.name",
