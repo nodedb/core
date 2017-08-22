@@ -7,7 +7,7 @@
 
         a.nav-link.nav-link--icon(
           href="#",
-          v-shortkey="[ 'ctrl', (index + 1) ]",
+          v-shortkey="[ 'alt', (index + 1) ]",
           @shortkey="selectConnection(connection.id)",
           v-on:click.prevent.self="selectConnection(connection.id)",
           :class="{ 'active': connection.active }",
