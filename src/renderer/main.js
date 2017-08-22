@@ -13,10 +13,13 @@ import VueShortKey from 'vue-shortkey';
 
 /* Files */
 import App from './components/app.vue';
+import fieldButtonGroup from './components/fields/button-group.vue';
 import i18n from './lib/i18n';
 import router from './lib/router';
 
 /* Register global Vue components */
+Vue.component('fieldButtonGroup', fieldButtonGroup);
+
 Vue.use(VueFormGenerator);
 Vue.use(VueShortKey);
 

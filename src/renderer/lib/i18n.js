@@ -32,6 +32,7 @@ i18next
     fallbackLng: 'en',
     initImmediate: false,
     ns: [
+      'buttons',
       'common',
       'connect',
       'error',

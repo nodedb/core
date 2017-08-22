@@ -16,7 +16,7 @@
         v-if="connectErr"
       ) {{ $t('error:DB_CONNECTION', { err: connectErr.message }) }}
 
-      form(@submit="submit")
+      form
         vue-form-generator(
           :model="model",
           :options="formOptions",
@@ -65,11 +65,22 @@
     },
 
     methods: {
+      cancel () {
+        return this.$router.push({
+          name: 'query',
+          params: {
+            connectionId: this.$route.query.active,
+          },
+        });
+      },
+
       changeForm () {
         /* Load the driver */
         const { driver } = this.driverList.find(({ id }) => id === this.model.driver);
         this.driver = driver;
         const i18n = this.$i18n.i18next;
+
+        const active = this.$route.query.active;
 
         /* Get the form */
         const fields = [{
@@ -104,10 +115,28 @@
           }, []);
 
         /* Add login button */
-        fields.push({
+        const groupButtons = [{
           buttonText: 'login',
           type: 'submit',
+          styleClass: 'btn btn-primary',
           validateBeforeSubmit: true,
+          onSubmit: this.submit,
+        }];
+
+        /* Do we add in a cancel button */
+        if (active) {
+          groupButtons.push({
+            buttonText: 'cancel',
+            styleClass: 'btn btn-default',
+            type: 'link',
+            onClick: this.cancel,
+          });
+        }
+
+        fields.push({
+          type: 'button-group',
+          label: ' ',
+          groupButtons,
         });
 
         this.connectForm = {
