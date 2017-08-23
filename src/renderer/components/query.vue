@@ -22,16 +22,13 @@
       return this.fetchData();
     },
 
-    data () {
-      return {
-        connection: this.$route.meta.connection,
-      };
-    },
+    data: () => ({
+      connection: null,
+    }),
 
     methods: {
       fetchData () {
-        this.connectionId = this.$route.meta.connection.id;
-        this.connectionList = this.$route.meta.connectionList;
+        this.connection = this.$route.meta.connection;
       },
     },
 
