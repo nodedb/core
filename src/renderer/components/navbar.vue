@@ -4,11 +4,12 @@
 
       ul.nav-icons
         li(
-          v-for="item in menu"
+          v-for="(item, itemId) in menu"
         )
           a(
             href="#",
-            :title="item.title"
+            :title="item.title",
+            v-on:click.prevent="execute(itemId)"
           )
             i.icon--large(
               :class="'icon--' + item.icon"
@@ -28,16 +29,24 @@
   /* Files */
 
   export default {
-    data () {
-      return {
-        menu: [{
-          title: 'some title',
-          icon: 'wifi',
-        }, {
-          title: 'run',
-          icon: 'play',
-        }],
-      };
+
+    data: () => ({
+      menu: [{
+        title: 'some title',
+        icon: 'add',
+      }, {
+        title: 'run',
+        icon: 'play',
+      }],
+    }),
+
+    methods: {
+
+      execute (id) {
+        console.log('Executing "%s2', this.menu[id].title);
+      },
+
     },
+
   };
 </script>
