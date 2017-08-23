@@ -1,5 +1,7 @@
 <template lang="jade">
-  div i am the db list
+  div
+    div i am the db list
+    div connection {{ connection.id }}
 </template>
 
 <script>
@@ -14,8 +16,24 @@
   /* Files */
 
   export default {
-    data () {
-      return {};
+
+    created () {
+      return this.fetchData();
     },
+
+    data: () => ({
+      connection: null,
+    }),
+
+    methods: {
+      fetchData () {
+        this.connection = this.$route.meta.connection;
+      },
+    },
+
+    watch: {
+      $route: 'fetchData',
+    },
+
   };
 </script>
