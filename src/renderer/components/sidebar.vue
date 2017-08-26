@@ -1,6 +1,6 @@
 <template lang="jade">
   div
-    div i am the db list
+    div i am the sidebar
     div connection {{ connection.id }}
 </template>
 

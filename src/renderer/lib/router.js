@@ -11,13 +11,13 @@ import VueRouter from 'vue-router';
 
 /* Files */
 import connections from '../components/connections.vue';
-import dbList from '../components/dbList.vue';
 import error from '../components/error.vue';
 import layoutLeftSidebar from '../layouts/left-sidebar.vue';
 import layoutNoSidebar from '../layouts/no-sidebar.vue';
 import login from '../components/login.vue';
 import navbar from '../components/navbar.vue';
 import query from '../components/query.vue';
+import sidebar from '../components/sidebar.vue';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -56,7 +56,7 @@ const routes = [{
       body: query,
       connections,
       navbar,
-      sidebar: dbList,
+      sidebar
     },
   }],
 }, {
