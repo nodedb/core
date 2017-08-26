@@ -1,7 +1,7 @@
 <template lang="jade">
   .layout.layout--no-sidebar
     router-view(
-      name="navbar"
+      name="connections"
     )
 
     .main-content

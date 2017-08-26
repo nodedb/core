@@ -44,7 +44,8 @@ export default {
         /* Get the driver */
         return Driver.loadConnection(driverName, moduleName, connectionId, params);
       } catch (err) {
-        return Promise.reject(err);
+        /* No connection found */
+        return null;
       }
     },
 

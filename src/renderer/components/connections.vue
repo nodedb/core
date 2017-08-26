@@ -1,6 +1,16 @@
 <template lang="jade">
   .connections
     ul
+      li
+        a.nav-link(
+          href="#",
+          v-shortkey="[ 'ctrl', 'h' ]",
+          @shortkey="homepage()",
+          v-on:click.prevent.self="homepage()",
+          title="connection.name"
+        )
+          i.icon--home
+
       li(
         v-for="(connection, index) in connectionList"
       )
@@ -22,7 +32,9 @@
           )
             i.icon--close
 
-      li.nav-item
+      li.nav-item(
+        v-if="displayNew"
+      )
 
         a.nav-link(
           href="#",
@@ -60,12 +72,21 @@
 
     data () {
       return {
-        connectionId: null,
+        connection: null,
         connectionList: null,
+        displayNew: false,
       };
     },
 
     methods: {
+      connectionId () {
+        if (this.connection) {
+          return this.connection.id;
+        }
+
+        return null;
+      },
+
       /**
        * Fetch Data
        *
@@ -73,8 +94,13 @@
        * work
        */
       fetchData () {
-        this.connectionId = this.$route.meta.connection.id;
+        this.connection = this.$route.meta.connection;
         this.connectionList = this.$route.meta.connectionList;
+        this.displayNew = this.$route.name !== 'login';
+      },
+
+      homepage () {
+        console.log('homepage');
       },
 
       /**
@@ -87,7 +113,7 @@
         return this.$router.push({
           name: 'login',
           query: {
-            active: this.connectionId,
+            active: this.connectionId(),
           },
         });
       },
@@ -128,7 +154,7 @@
             return this.$router.push({
               name: 'login',
             });
-          } else if (this.connectionId === id) {
+          } else if (this.connectionId() === id) {
             /* Route to new connection, but which one */
             const newId = _.has(this.connectionList, index) ?
               this.connectionList[index].id : this.connectionList[index - 1].id;

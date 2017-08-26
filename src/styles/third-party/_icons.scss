@@ -43,6 +43,10 @@ $fa-css-prefix: "nodedb";
   @include icon('close');
 }
 
+.icon--home {
+  @include icon('home');
+}
+
 .icon--play {
   @include icon('play');
 }

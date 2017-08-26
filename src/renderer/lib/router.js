@@ -15,7 +15,6 @@ import error from '../components/error.vue';
 import layoutLeftSidebar from '../layouts/left-sidebar.vue';
 import layoutNoSidebar from '../layouts/no-sidebar.vue';
 import login from '../components/login.vue';
-import navbar from '../components/navbar.vue';
 import query from '../components/query.vue';
 import sidebar from '../components/sidebar.vue';
 import store from '../store';
@@ -33,14 +32,14 @@ const routes = [{
     name: 'error',
     components: {
       body: error,
-      navbar,
+      connections,
     },
   }, {
     path: 'login',
     name: 'login',
     components: {
       body: login,
-      navbar,
+      connections,
     },
   }],
 }, {
@@ -55,7 +54,6 @@ const routes = [{
     components: {
       body: query,
       connections,
-      navbar,
       sidebar,
     },
   }],
@@ -83,13 +81,6 @@ router.onError((err) => {
 
 /* Check that we have appropriate permissions */
 router.beforeEach((to, from, next) => {
-  /* Check if we need to be logged in */
-  if (!to.meta.requireLogin) {
-    /* Return Promise for consistent output */
-    return Promise.resolve()
-      .then(() => next());
-  }
-
   const connectionId = to.params.connectionId;
 
   return Promise.all([
@@ -100,10 +91,12 @@ router.beforeEach((to, from, next) => {
   ]).then(([connectionList, connection]) => {
     /* Check if we have any connections */
     if (!connection) {
-      /* No connection available - back to login page */
-      return next({
-        name: 'login',
-      });
+      /* No connection - ensure off to login page */
+      if (to.name !== 'login') {
+        return next({
+          name: 'login',
+        });
+      }
     }
 
     to.meta.connection = connection;

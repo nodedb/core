@@ -1,25 +1,21 @@
 <template lang="jade">
   .layout.layout--left-sidebar
     router-view(
-      name="navbar"
+      name="connections"
     )
 
     .main-content
       .main-content__sidebar
-        router-view(
-          name="sidebar"
-        )
+        <!--router-view(-->
+        <!--name="sidebar"-->
+        <!--)-->
 
       .main-content__body
-        .main-content__body__connections
-          router-view(
-            name="connections"
-          )
 
         .main-content__body__main
-          router-view(
-            name="body"
-          )
+          <!--router-view(-->
+          <!--name="body"-->
+          <!--)-->
 </template>
 
 <script>
