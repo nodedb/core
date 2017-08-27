@@ -13,9 +13,9 @@
       .main-content__body
 
         .main-content__body__main
-          <!--router-view(-->
-          <!--name="body"-->
-          <!--)-->
+          router-view(
+            name="body"
+          )
 </template>
 
 <script>

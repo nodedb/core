@@ -6,7 +6,7 @@
           href="#",
           v-shortkey="[ 'ctrl', 'h' ]",
           @shortkey="homepage()",
-          v-on:click.prevent.self="homepage()",
+          v-on:click.prevent="homepage()",
           :title="$t('common:HOMEPAGE_TITLE')"
         )
           i.icon--home
@@ -72,7 +72,7 @@
 
     data () {
       return {
-        connection: null,
+        activeConnection: null,
         connectionList: null,
         displayNew: false,
       };
@@ -80,11 +80,11 @@
 
     methods: {
       connectionId () {
-        if (this.connection) {
-          return this.connection.id;
+        if (this.activeConnection) {
+          return this.activeConnection.id;
         }
 
-        return null;
+        return false;
       },
 
       /**
@@ -94,13 +94,15 @@
        * work
        */
       fetchData () {
-        this.connection = this.$route.meta.connection;
+        this.activeConnection = this.$route.meta.connection;
         this.connectionList = this.$route.meta.connectionList;
-        this.displayNew = this.$route.name !== 'login';
+        this.displayNew = this.$route.meta.hideNew !== true;
       },
 
       homepage () {
-        console.log('homepage');
+        return this.$router.push({
+          name: 'home',
+        });
       },
 
       /**
@@ -113,7 +115,8 @@
         return this.$router.push({
           name: 'login',
           query: {
-            active: this.connectionId(),
+            /* Default to blank string - query strings can't cope with non-strings */
+            active: this.connectionId() || '',
           },
         });
       },

@@ -3,7 +3,7 @@
   .main-content__sidebar,
   .main-content__body {
     position: absolute;
-    //top: $navbar-height;
+    top: $navbar-height;
     bottom: 0;
     overflow: auto;
     padding: $grid-gutter-width / 2 {

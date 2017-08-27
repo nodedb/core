@@ -12,6 +12,7 @@ import VueRouter from 'vue-router';
 /* Files */
 import connections from '../components/connections.vue';
 import error from '../components/error.vue';
+import home from '../components/home.vue';
 import layoutLeftSidebar from '../layouts/left-sidebar.vue';
 import layoutNoSidebar from '../layouts/no-sidebar.vue';
 import login from '../components/login.vue';
@@ -37,6 +38,9 @@ const routes = [{
   }, {
     path: 'login',
     name: 'login',
+    meta: {
+      hideNew: true,
+    },
     components: {
       body: login,
       connections,
@@ -46,6 +50,17 @@ const routes = [{
   path: '/left',
   component: layoutLeftSidebar,
   children: [{
+    path: '/',
+    name: 'home',
+    meta: {
+
+    },
+    components: {
+      body: home,
+      connections,
+      sidebar,
+    },
+  }, {
     path: '/query/:connectionId',
     name: 'query',
     meta: {
@@ -60,7 +75,7 @@ const routes = [{
 }, {
   path: '*',
   redirect: {
-    name: 'login',
+    name: 'home',
   },
 }];
 
@@ -89,18 +104,15 @@ router.beforeEach((to, from, next) => {
       connectionId,
     }),
   ]).then(([connectionList, connection]) => {
-    /* Check if we have any connections */
-    if (!connection) {
-      /* No connection - ensure off to login page */
-      if (to.name !== 'login') {
-        return next({
-          name: 'login',
-        });
-      }
-    }
-
-    to.meta.connection = connection;
     to.meta.connectionList = connectionList;
+    to.meta.connection = connection;
+
+    if (!connection && to.meta.requireLogin) {
+      /* Connection required and not available - to login page */
+      return next({
+        name: 'login',
+      });
+    }
 
     return next();
   }).catch((err) => {
