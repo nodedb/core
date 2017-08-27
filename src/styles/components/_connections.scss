@@ -1,12 +1,37 @@
 .connections {
+  @extend .row;
+
+  display: block;
+  margin: {
+    bottom: $grid-gutter-width / 2;
+  }
+
   > ul {
     @extend .nav;
-    @extend .nav-tabs;
+
+    background: {
+      color: $gray-500;
+    }
 
     > li {
       @extend .nav-item;
 
+      border-bottom: {
+        color: $blue;
+        width: 0.25rem;
+      }
+
+      &.active {
+        border-bottom: {
+          style: solid;
+        }
+      }
+
       .nav-link {
+        color: $gray-900;
+        margin: {
+          bottom: -0.25rem;
+        }
 
         &.nav-link--icon {
           padding: {

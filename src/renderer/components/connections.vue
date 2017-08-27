@@ -12,7 +12,8 @@
           i.icon--home
 
       li(
-        v-for="(connection, index) in connectionList"
+        v-for="(connection, index) in connectionList",
+        :class="{ 'active': connection.active }"
       )
 
         a.nav-link.nav-link--icon(
@@ -20,12 +21,11 @@
           v-shortkey="[ 'alt', (index + 1) ]",
           @shortkey="selectConnection(connection.id)",
           v-on:click.prevent.self="selectConnection(connection.id)",
-          :class="{ 'active': connection.active }",
           :title="connection.name",
           :style="'background-image: url(' + connection.driver.iconPath + ')'"
         ) {{ truncate(connection.name) }}
 
-          a.btn.btn-xs.btn-left-margin.btn-outline-danger(
+          a.btn.btn-xs.btn-left-margin(
             href="#",
             :title="$t('connect:CLOSE_CONNECTION')",
             v-on:click.prevent="removeConnection(connection.id)"
