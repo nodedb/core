@@ -52,10 +52,12 @@ export default class Driver extends Base {
     });
 
     return this.strategy.connect(params)
-      .then(() => {
+      .then((connection) => {
         Driver.logger('info', 'Successfully connected to database', {
           id: this.strategy.id,
         });
+
+        return connection;
       })
       .catch((err) => {
         Driver.logger('warn', 'Failed to connect to database', {
