@@ -1,5 +1,7 @@
 <template lang="jade">
-  div homepage
+  div
+    h1 {{ $t('homepage:WELCOME') }}
+    div {{ $t('homepage:INTRO') }}
 </template>
 
 <script>
