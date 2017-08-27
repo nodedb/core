@@ -25,7 +25,7 @@ Vue.use(VueShortKey);
 
 /* Configure Vex */
 vex.registerPlugin(vexDialog);
-vex.defaultOptions.className = 'vex-theme-top';
+vex.defaultOptions.className = 'vex-theme-os';
 
 // eslint-disable-next-line no-new
 new Vue({
