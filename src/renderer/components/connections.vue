@@ -1,19 +1,21 @@
 <template lang="jade">
   .connections
     ul
-      li
+      li(
+        :class="{ active: isPage('home') }"
+      )
         a.nav-link(
           href="#",
           v-shortkey="[ 'ctrl', 'h' ]",
           @shortkey="homepage()",
           v-on:click.prevent="homepage()",
-          :title="$t('common:HOMEPAGE_TITLE')"
+          :title="$t('common:HOMEPAGE_TITLE')",
         )
           i.icon--home
 
       li(
         v-for="(connection, index) in connectionList",
-        :class="{ 'active': connection.active }"
+        :class="{ active: connection.active }"
       )
 
         a.nav-link.nav-link--icon(
@@ -33,7 +35,8 @@
             i.icon--close
 
       li.nav-item(
-        v-if="displayNew"
+        v-if="displayNew !== false",
+        :class="{ active: isPage('login') }"
       )
 
         a.nav-link(
@@ -96,13 +99,17 @@
       fetchData () {
         this.activeConnection = this.$route.meta.connection;
         this.connectionList = this.$route.meta.connectionList;
-        this.displayNew = this.$route.meta.hideNew !== true;
+        this.displayNew = this.$route.meta.displayNew;
       },
 
       homepage () {
         return this.$router.push({
           name: 'home',
         });
+      },
+
+      isPage (name) {
+        return this.$route.name === name;
       },
 
       /**

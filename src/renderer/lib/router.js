@@ -42,9 +42,6 @@ const routes = [{
   children: [{
     path: '/',
     name: 'home',
-    meta: {
-
-    },
     components: {
       body: home,
       connections,
@@ -53,9 +50,6 @@ const routes = [{
   }, {
     path: 'login',
     name: 'login',
-    meta: {
-      hideNew: true,
-    },
     components: {
       body: login,
       connections,
@@ -112,6 +106,11 @@ router.beforeEach((to, from, next) => {
       return next({
         name: 'login',
       });
+    }
+
+    if (to.meta.connection) {
+      /* Set the active db */
+      to.meta.connection.db = 'hello';
     }
 
     return next();

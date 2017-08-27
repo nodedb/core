@@ -6,9 +6,9 @@
 
     .main-content
       .main-content__sidebar
-        <!--router-view(-->
-        <!--name="sidebar"-->
-        <!--)-->
+        router-view(
+          name="sidebar"
+        )
 
       .main-content__body
 

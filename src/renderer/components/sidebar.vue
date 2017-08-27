@@ -1,7 +1,9 @@
 <template lang="jade">
   div
-    div i am the sidebar
-    div connection {{ connection.id }}
+    div(v-if="connection")
+      div i am the sidebar
+      div connection {{ connection.id }}
+    div(v-else)
 </template>
 
 <script>
@@ -26,9 +28,11 @@
     }),
 
     methods: {
+
       fetchData () {
         this.connection = this.$route.meta.connection;
       },
+
     },
 
     watch: {
