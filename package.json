@@ -51,6 +51,7 @@
     "electron-compilers": "^5.9.0",
     "font-awesome": "^4.7.0",
     "fs-extra": "^4.0.1",
+    "glob": "^7.1.2",
     "i18next": "^8.4.3",
     "i18next-electron-language-detector": "0.0.8",
     "i18next-sync-fs-backend": "^1.0.0",
