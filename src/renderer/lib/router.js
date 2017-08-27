@@ -35,16 +35,6 @@ const routes = [{
       body: error,
       connections,
     },
-  }, {
-    path: 'login',
-    name: 'login',
-    meta: {
-      hideNew: true,
-    },
-    components: {
-      body: login,
-      connections,
-    },
   }],
 }, {
   path: '/left',
@@ -59,6 +49,16 @@ const routes = [{
       body: home,
       connections,
       sidebar,
+    },
+  }, {
+    path: 'login',
+    name: 'login',
+    meta: {
+      hideNew: true,
+    },
+    components: {
+      body: login,
+      connections,
     },
   }, {
     path: '/query/:connectionId',
