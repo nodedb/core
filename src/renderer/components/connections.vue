@@ -7,7 +7,7 @@
           v-shortkey="[ 'ctrl', 'h' ]",
           @shortkey="homepage()",
           v-on:click.prevent.self="homepage()",
-          title="connection.name"
+          :title="$t('common:HOMEPAGE_TITLE')"
         )
           i.icon--home
 

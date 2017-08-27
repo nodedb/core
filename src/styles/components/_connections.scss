@@ -16,14 +16,25 @@
     > li {
       @extend .nav-item;
 
+      margin: {
+        right: 0.25rem;
+      }
+
       border-bottom: {
-        color: $blue;
+        color: transparent;
+        style: solid;
         width: 0.25rem;
+      }
+
+      &:hover {
+        border-bottom: {
+          color: $gray-600;
+        }
       }
 
       &.active {
         border-bottom: {
-          style: solid;
+          color: $blue;
         }
       }
 
