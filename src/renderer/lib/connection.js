@@ -12,11 +12,10 @@ import { v4 as uuid } from 'uuid';
 import Base from './base';
 
 export default class Connection extends Base {
-  constructor ({ active, db, driver, id, params } = {}) {
+  constructor ({ active, driver, id, params } = {}) {
     super();
 
     this.active = active;
-    this.db = db;
     this.driver = driver;
     this.id = id;
     this.params = params;
@@ -35,18 +34,6 @@ export default class Connection extends Base {
   get name () {
     return this.params.name;
   }
-
-  get db () {
-    return this.activeDb;
-  }
-
-  set db (db) {
-    this.activeDb = db || null;
-  }
-
-  // query () {
-  //
-  // }
 
   static generateId () {
     return uuid();
