@@ -25,6 +25,18 @@ export default class Driver extends Base {
     this.connectionId = null;
     this.module = module;
     this.strategy = strategy;
+
+    /* Set the logger to the strategy */
+    this.strategy.logger = (level, message, data = {}, ...additional) => {
+      /* Ensure there's enough identifying info in the log */
+      data.info = {
+        connectionId: this.connectionId,
+        module: this.module,
+        name: this.name,
+      };
+
+      return Driver.logger(level, message, data, ...additional);
+    };
   }
 
   get active () {
@@ -58,6 +70,7 @@ export default class Driver extends Base {
   set params (params) {
     if (_.isPlainObject(params)) {
       this.dbParams = params;
+      this.strategy.params = params;
     }
   }
 
@@ -75,7 +88,8 @@ export default class Driver extends Base {
       params,
     });
 
-    return this.strategy.connect(params)
+    return Promise.resolve()
+      .then(() => this.strategy.connect(params))
       .then((connection) => {
         Driver.logger('info', 'Successfully connected to database', {
           id: this.strategy.id,
@@ -105,6 +119,19 @@ export default class Driver extends Base {
       validators,
       i18n,
     });
+  }
+
+  /**
+   * Table of Contents
+   *
+   * Gets the table of contents of the database. This
+   * will typically be a list of databases, tables etc.
+   *
+   * @returns {Promise.<TResult>}
+   */
+  tableOfContents () {
+    return Promise.resolve()
+      .then(() => this.strategy.tableOfContents());
   }
 
   /**
