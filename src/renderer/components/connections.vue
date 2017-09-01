@@ -21,16 +21,16 @@
         a.nav-link.nav-link--icon(
           href="#",
           v-shortkey="[ 'alt', (index + 1) ]",
-          @shortkey="selectConnection(connection.id)",
-          v-on:click.prevent.self="selectConnection(connection.id)",
-          :title="connection.name",
-          :style="'background-image: url(' + connection.driver.iconPath + ')'"
-        ) {{ truncate(connection.name) }}
+          @shortkey="selectConnection(connection.connectionId)",
+          v-on:click.prevent.self="selectConnection(connection.connectionId)",
+          :title="connection.connectionName",
+          :style="'background-image: url(' + connection.iconPath + ')'"
+        ) {{ truncate(connection.connectionName) }}
 
           a.btn.btn-xs.btn-left-margin(
             href="#",
             :title="$t('connect:CLOSE_CONNECTION')",
-            v-on:click.prevent="removeConnection(connection.id)"
+            v-on:click.prevent="removeConnection(connection.connectionId)"
           )
             i.icon--close
 
@@ -84,7 +84,7 @@
     methods: {
       connectionId () {
         if (this.activeConnection) {
-          return this.activeConnection.id;
+          return this.activeConnection.connectionId;
         }
 
         return false;
@@ -153,7 +153,7 @@
         }).then(() => store.dispatch('removeConnection', {
           id,
         })).then(() => {
-          const index = _.findIndex(this.connectionList, con => con.id === id);
+          const index = _.findIndex(this.connectionList, con => con.connectionId === id);
 
           /* Remove from the list */
           this.connectionList.splice(index, 1);
@@ -167,7 +167,7 @@
           } else if (this.connectionId() === id) {
             /* Route to new connection, but which one */
             const newId = _.has(this.connectionList, index) ?
-              this.connectionList[index].id : this.connectionList[index - 1].id;
+              this.connectionList[index].connectionId : this.connectionList[index - 1].connectionId;
 
             return this.$router.push({
               name: 'query',

@@ -76,7 +76,7 @@
 
       changeForm () {
         /* Load the driver */
-        const { driver } = this.driverList.find(({ id }) => id === this.model.driver);
+        const { driver } = this.driverList.find(({ id }) => this.model.driver === id);
         this.driver = driver;
         const i18n = this.$i18n.i18next;
 
@@ -147,10 +147,11 @@
       loadDrivers () {
         return Driver.getDriverList()
           .then((driverList) => {
-            this.driverList = driverList;
             if (driverList.length > 0) {
               this.model.driver = driverList[0].id;
             }
+
+            this.driverList = driverList;
             this.loading = false;
           })
           .catch((err) => {

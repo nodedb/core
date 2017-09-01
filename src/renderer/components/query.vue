@@ -1,7 +1,7 @@
 <template lang="jade">
   div
     div query page {{ $t('common:LOADING_PAGE') }}
-    div connection {{ connection.id }}
+    div connection {{ connection.connectionId }}
     a(href="#") back
 </template>
 

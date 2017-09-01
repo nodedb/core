@@ -2,7 +2,8 @@
   div
     div(v-if="connection")
       div i am the sidebar
-      div connection {{ connection.id }}
+      div connection {{ connection.connectionId }}
+      div sidebar {{ sidebar.length }}
     div(v-else)
 </template>
 
@@ -25,6 +26,7 @@
 
     data: () => ({
       connection: null,
+      sidebar: [],
     }),
 
     methods: {

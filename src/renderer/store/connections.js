@@ -8,7 +8,6 @@
 import { _ } from 'lodash';
 
 /* Files */
-import Connection from '../lib/connection';
 import Driver from '../lib/driver';
 
 let connections = [];
@@ -64,7 +63,7 @@ export default {
 
     saveConnection ({ commit }, { id, moduleName, params }) {
       /* Generate a connection ID */
-      const connectionId = Connection.generateId();
+      const connectionId = Driver.generateId();
 
       const connection = {
         connectionId,

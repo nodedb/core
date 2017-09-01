@@ -7,12 +7,13 @@ import fs from 'fs';
 import path from 'path';
 
 /* Third-party modules */
+import { _ } from 'lodash';
 import { remote } from 'electron';
 import { validators } from 'vue-form-generator';
+import { v4 as uuid } from 'uuid';
 
 /* Files */
 import Base from './base';
-import Connection from './connection';
 
 const i18n = remote.app.$i18n;
 
@@ -21,8 +22,21 @@ export default class Driver extends Base {
     super();
 
     /* This may or may not be the same the id */
+    this.connectionId = null;
     this.module = module;
     this.strategy = strategy;
+  }
+
+  get active () {
+    return this.isActive || false;
+  }
+
+  set active (isActive) {
+    this.isActive = isActive === true;
+  }
+
+  get connectionName () {
+    return this.params.name;
   }
 
   get iconPath () {
@@ -35,6 +49,16 @@ export default class Driver extends Base {
 
   get name () {
     return this.strategy.name;
+  }
+
+  get params () {
+    return this.dbParams || {};
+  }
+
+  set params (params) {
+    if (_.isPlainObject(params)) {
+      this.dbParams = params;
+    }
   }
 
   /**
@@ -96,6 +120,17 @@ export default class Driver extends Base {
   }
 
   /**
+   * Generate ID
+   *
+   * Generates a new ID. This is just a UUID.v4
+   *
+   * @returns {string}
+   */
+  static generateId () {
+    return uuid();
+  }
+
+  /**
    * Get Driver List
    *
    * Gets all the drivers loaded to the
@@ -150,7 +185,12 @@ export default class Driver extends Base {
       return null;
     }
 
-    return Connection.load(driver, connectionId, params, isActive);
+    /* Set driver state */
+    driver.active = isActive;
+    driver.connectionId = connectionId;
+    driver.params = params;
+
+    return driver;
   }
 
   static loadDriver (moduleName, driverName) {
