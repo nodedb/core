@@ -6,6 +6,10 @@
     cursor: pointer;
     user-select: none;
 
+    &.no-pointer {
+      cursor: default;
+    }
+
     > .vue-tree__children {
       margin: {
         left: $grid-gutter-width;

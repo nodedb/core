@@ -60,6 +60,10 @@ $fa-css-prefix: "fa";
   @include icon('play');
 }
 
+.icon--server {
+  @include icon('server');
+}
+
 .icon--tree-closed {
   @include icon('plus-square-o');
 }

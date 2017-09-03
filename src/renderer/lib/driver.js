@@ -121,6 +121,18 @@ export default class Driver extends Base {
   }
 
   /**
+   * Connection String
+   *
+   * Returns the connection detail in string form. This
+   * will usually be in the form of 'username@host'
+   *
+   * @returns {*}
+   */
+  connectionString () {
+    return this.strategy.connectionString();
+  }
+
+  /**
    * Table of Contents
    *
    * Gets the table of contents of the database. This

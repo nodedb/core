@@ -1,12 +1,19 @@
 <template lang="jade">
-  div
-    ul.vue-tree(
-      v-if="connection"
-    )
-      vue-tree-item(
-        v-for="item in toc",
-        :node="item"
-      )
+  div(
+    v-if="connection"
+  )
+    ul.vue-tree
+      li.no-pointer
+        span.icon
+          i.icon--server.icon--fw
+
+        span.name {{ connection.connectionString() }}
+
+        ul.vue-tree
+          vue-tree-item(
+            v-for="item in toc",
+            :node="item"
+          )
 </template>
 
 <script>
