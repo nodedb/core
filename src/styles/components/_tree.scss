@@ -1,0 +1,51 @@
+.vue-tree {
+  @extend .list-unstyled;
+
+  li {
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+
+    > .vue-tree__children {
+      margin: {
+        left: $grid-gutter-width;
+      }
+    }
+
+    .open-close-icon{
+      @extend .icon--fw;
+    }
+
+    .open-close-icon-spacer {
+      @extend .icon--fw-spacer;
+    }
+
+    &.tree--closed {
+      .open-close-icon {
+        @extend .icon--tree-closed;
+      }
+
+      > .vue-tree__children {
+        display: none;
+      }
+    }
+
+    &.tree--open {
+      .open-close-icon {
+        @extend .icon--tree-opened;
+      }
+    }
+
+    > span {
+      margin: {
+        right: $grid-gutter-width / 2;
+      }
+
+      &:last-of-type {
+        margin: {
+          right: 0;
+        }
+      }
+    }
+  }
+}

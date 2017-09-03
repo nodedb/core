@@ -14,7 +14,8 @@
 
       .alert.alert-danger(
         v-if="connectErr"
-      ) {{ $t('error:DB_CONNECTION', { err: connectErr.message }) }}
+        v-html="$t('error:DB_CONNECTION', { err: connectErr.message })"
+      )
 
       form
         vue-form-generator(
@@ -161,7 +162,9 @@
       },
 
       submit () {
-        return this.driver.connect(this.model)
+        this.driver.params = this.model;
+
+        return this.driver.connect()
           .then(() => {
             /* Remove any connection error */
             this.connectErr = null;

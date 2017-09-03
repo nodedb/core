@@ -7,12 +7,21 @@
  */
 
 $fa-font-path: "../../node_modules/font-awesome/fonts";
-$fa-css-prefix: "nodedb";
+$fa-css-prefix: "fa";
 @import "../../../node_modules/font-awesome/scss/font-awesome";
 
 @mixin icon ($name) {
   @extend .#{$fa-css-prefix};
   @extend .#{$fa-css-prefix}-#{$name};
+}
+
+.icon--fw {
+  @extend .#{$fa-css-prefix}-fw;
+}
+
+.icon--fw-spacer {
+  @extend .#{$fa-css-prefix};
+  @extend .icon--fw;
 }
 
 .icon--large {
@@ -49,4 +58,12 @@ $fa-css-prefix: "nodedb";
 
 .icon--play {
   @include icon('play');
+}
+
+.icon--tree-closed {
+  @include icon('plus-square-o');
+}
+
+.icon--tree-opened {
+  @include icon('minus-square-o');
 }

@@ -79,27 +79,26 @@ export default class Driver extends Base {
    *
    * Attempts to connect to a database
    *
-   * @param {object} params
    * @returns {Promise.<T>}
    */
-  connect (params) {
+  connect () {
     Driver.logger('info', 'Attempting to connect to database', {
-      id: this.strategy.id,
-      params,
+      id: this.id,
+      params: this.params,
     });
 
     return Promise.resolve()
-      .then(() => this.strategy.connect(params))
+      .then(() => this.strategy.connect())
       .then((connection) => {
         Driver.logger('info', 'Successfully connected to database', {
-          id: this.strategy.id,
+          id: this.id,
         });
 
         return connection;
       })
       .catch((err) => {
         Driver.logger('warn', 'Failed to connect to database', {
-          id: this.strategy.id,
+          id: this.id,
           err,
         });
 

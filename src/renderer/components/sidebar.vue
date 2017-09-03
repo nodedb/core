@@ -1,10 +1,12 @@
 <template lang="jade">
   div
-    div(v-if="connection")
-      div i am the sidebar
-      div connection {{ connection.connectionId }}
-      div sidebar {{ sidebar.length }}
-    div(v-else)
+    ul.vue-tree(
+      v-if="connection"
+    )
+      vue-tree-item(
+        v-for="item in toc",
+        :node="item"
+      )
 </template>
 
 <script>
@@ -15,6 +17,7 @@
   /* Node modules */
 
   /* Third-party modules */
+  import { _ } from 'lodash';
 
   /* Files */
 
@@ -26,13 +29,22 @@
 
     data: () => ({
       connection: null,
-      sidebar: [],
+      toc: [],
     }),
 
     methods: {
 
       fetchData () {
         this.connection = this.$route.meta.connection;
+
+        if (this.connection) {
+          this.connection.tableOfContents()
+            .then((toc) => {
+              if (_.isArray(toc)) {
+                this.toc = toc;
+              }
+            });
+        }
       },
 
     },
