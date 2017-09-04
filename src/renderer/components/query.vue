@@ -1,8 +1,8 @@
 <template lang="jade">
-  div
-    div query page {{ $t('common:LOADING_PAGE') }}
-    div connection {{ connection.connectionId }}
-    a(href="#") back
+  div.full_height
+    .query_wrapper query
+
+    .result_wrapper result
 </template>
 
 <script>

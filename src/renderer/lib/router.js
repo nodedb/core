@@ -42,6 +42,9 @@ const routes = [{
   children: [{
     path: '/',
     name: 'home',
+    meta: {
+      resizableSidebar: false,
+    },
     components: {
       body: home,
       connections,
@@ -50,6 +53,9 @@ const routes = [{
   }, {
     path: 'login',
     name: 'login',
+    meta: {
+      resizableSidebar: false,
+    },
     components: {
       body: login,
       connections,

@@ -2,14 +2,15 @@
   div(
     v-if="connection"
   )
-    ul.vue-tree
+    ul.vue-tree.vue-tree__root
       li.no-pointer
-        span.icon
-          i.icon--server.icon--fw
+        .tree-node
+          span.icon
+            i.icon--server.icon--fw
 
-        span.name {{ connection.connectionString() }}
+          span.name {{ connection.connectionString() }}
 
-        ul.vue-tree
+        ul.vue-tree.vue-tree__children
           vue-tree-item(
             v-for="item in toc",
             :node="item"

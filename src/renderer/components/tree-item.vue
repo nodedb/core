@@ -3,14 +3,15 @@
     v-on:click.prevent.stop="trigger",
     :class="{ 'tree--open': isOpen, 'tree--closed': !isOpen }"
   )
-    span(
-      :class="{'open-close-icon': this.hasChildren, 'open-close-icon-spacer': !this.hasChildren }"
-    )
+    .tree-node
+      span(
+        :class="{'open-close-icon': this.hasChildren, 'open-close-icon-spacer': !this.hasChildren }"
+      )
 
-    span.icon
-      i.fa.fa-fw( :class="'fa-' + node.icon")
+      span.icon
+        i.fa.fa-fw( :class="'fa-' + node.icon")
 
-    span.name {{ node.name }}
+      span.name {{ node.name }}
 
     ul.vue-tree.vue-tree__children
       vue-tree-item(

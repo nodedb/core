@@ -10,12 +10,14 @@ import Vuex from 'vuex';
 
 /* Files */
 import connections from './connections';
+import sidebar from './sidebar';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
     connections,
+    sidebar,
   },
   strict: true,
 });
