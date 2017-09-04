@@ -70,6 +70,16 @@
   export default {
 
     created () {
+      document.onkeyup = ($event) => {
+        if ($event.ctrlKey && $event.keyCode === 9) {
+          if ($event.shiftKey) {
+            this.previousConnection();
+          } else {
+            this.nextConnection();
+          }
+        }
+      };
+
       return this.fetchData();
     },
 
@@ -82,12 +92,21 @@
     },
 
     methods: {
+
+      /**
+       * Connection ID
+       *
+       * Gets the currently active connection ID
+       * or returns undefined;
+       *
+       * @returns {string|undefined}
+       */
       connectionId () {
         if (this.activeConnection) {
           return this.activeConnection.connectionId;
         }
 
-        return false;
+        return undefined;
       },
 
       /**
@@ -102,12 +121,24 @@
         this.displayNew = this.$route.meta.displayNew;
       },
 
+      findIndex (id) {
+        return _.findIndex(this.connectionList, con => con.connectionId === id);
+      },
+
       homepage () {
         return this.$router.push({
           name: 'home',
         });
       },
 
+      /**
+       * Is Page
+       *
+       * Is it a specific page?
+       *
+       * @param {string} name
+       * @returns {boolean}
+       */
       isPage (name) {
         return this.$route.name === name;
       },
@@ -126,6 +157,58 @@
             active: this.connectionId() || '',
           },
         });
+      },
+
+      /**
+       * Next Connection
+       *
+       * Selects the next connection to the
+       * active connection. Cycles along the connection
+       * list.
+       *
+       * @returns {*}
+       */
+      nextConnection () {
+        const id = this.connectionId();
+
+        if (id) {
+          let nextId = this.findIndex(id) + 1;
+
+          if (!this.connectionList[nextId]) {
+            /* Back to the start */
+            nextId = 0;
+          }
+
+          return this.selectConnection(this.connectionList[nextId].connectionId);
+        }
+
+        return undefined;
+      },
+
+      /**
+       * Previous Connection
+       *
+       * Selects the previous connection to the
+       * active connection. Cycles along the connection
+       * list.
+       *
+       * @returns {*}
+       */
+      previousConnection () {
+        const id = this.connectionId();
+
+        if (id) {
+          let nextId = this.findIndex(id) - 1;
+
+          if (!this.connectionList[nextId]) {
+            /* Go to the end */
+            nextId = this.connectionList.length - 1;
+          }
+
+          return this.selectConnection(this.connectionList[nextId].connectionId);
+        }
+
+        return undefined;
       },
 
       /**
@@ -153,7 +236,7 @@
         }).then(() => store.dispatch('removeConnection', {
           id,
         })).then(() => {
-          const index = _.findIndex(this.connectionList, con => con.connectionId === id);
+          const index = this.findIndex(id);
 
           /* Remove from the list */
           this.connectionList.splice(index, 1);
@@ -199,7 +282,6 @@
        * Selects a new active connection and tells
        * the application all about it
        *
-       * @todo tell the application
        * @param {string} connectionId
        */
       selectConnection (connectionId) {
@@ -227,6 +309,7 @@
           length,
         });
       },
+
     },
 
     watch: {
