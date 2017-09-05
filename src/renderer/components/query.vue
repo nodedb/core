@@ -32,7 +32,7 @@
 
     data: () => ({
       connection: null,
-      query: 'SELECT * FROM users',
+      query: '',
     }),
 
     methods: {
