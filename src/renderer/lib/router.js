@@ -114,11 +114,6 @@ router.beforeEach((to, from, next) => {
       });
     }
 
-    if (to.meta.connection) {
-      /* Set the active db */
-      to.meta.connection.db = 'hello';
-    }
-
     return next();
   }).catch((err) => {
     console.log(err);

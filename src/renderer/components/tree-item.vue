@@ -1,10 +1,11 @@
 <template lang="jade">
   li(
-    v-on:click.prevent.stop="trigger",
+    v-on:click.prevent.stop="trigger(false)",
     :class="{ 'tree--open': isOpen, 'tree--closed': !isOpen }"
   )
     .tree-node
       span(
+        v-on:click.prevent.stop.self="trigger(true)",
         :class="{'open-close-icon': this.hasChildren, 'open-close-icon-spacer': !this.hasChildren }"
       )
 
@@ -32,6 +33,7 @@
   import { _ } from 'lodash';
 
   /* Files */
+  import store from '../store';
 
   export default {
 
@@ -54,7 +56,7 @@
         this.isOpen = false;
       },
 
-      trigger () {
+      trigger (openClose) {
         return Promise.resolve()
           .then(() => {
             if (_.isFunction(this.node.contents)) {
@@ -67,7 +69,14 @@
           })
           .then((children) => {
             this.children = children;
-            this.isOpen = !this.isOpen;
+            if (openClose) {
+              this.isOpen = !this.isOpen;
+            }
+
+            store.commit('activeDb', {
+              db: this.node.db,
+              path: this.$route.path,
+            });
           });
       },
     },

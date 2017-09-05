@@ -1,6 +1,13 @@
 <template lang="jade">
   div.full_height
-    .query_wrapper query
+    .query_wrapper
+      textarea(
+        v-model="query"
+      )
+
+      button(
+        @click="submit"
+      ) ok
 
     .result_wrapper result
 </template>
@@ -15,6 +22,7 @@
   /* Third-party modules */
 
   /* Files */
+  import store from '../store';
 
   export default {
 
@@ -24,12 +32,29 @@
 
     data: () => ({
       connection: null,
+      query: 'SELECT * FROM users',
     }),
 
     methods: {
+
       fetchData () {
         this.connection = this.$route.meta.connection;
       },
+
+      submit () {
+        const db = store.getters.getActiveDb(this.$route.path);
+
+        return this.connection.query(db, this.query)
+          .then((result) => {
+            console.log('result');
+            console.log(result);
+          })
+          .catch((err) => {
+            console.log('err');
+            console.log(err.message);
+          });
+      },
+
     },
 
     watch: {

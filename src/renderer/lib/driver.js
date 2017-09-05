@@ -132,6 +132,11 @@ export default class Driver extends Base {
     return this.strategy.connectionString();
   }
 
+  query (db, str) {
+    return Promise.resolve()
+      .then(() => this.strategy.query(db, str));
+  }
+
   /**
    * Table of Contents
    *
