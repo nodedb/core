@@ -37,12 +37,9 @@
     .query_wrapper,
     .result_wrapper {
       position: absolute;
-      left: 0;
+      left: $grid-gutter-width / 6;
       right: 0;
       overflow: auto;
-      padding: $grid-gutter-width / 2 {
-        top: $grid-gutter-width;
-      }
     }
 
     .query_wrapper {

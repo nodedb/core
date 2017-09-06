@@ -1,11 +1,12 @@
 <template lang="jade">
   div.full_height
     .query_wrapper
-      textarea(
-        v-model="query"
-      )
 
-      button(
+      textarea {{ query }}
+
+      .query_input
+
+      button.query_submit(
         @click="submit"
       ) ok
 
@@ -20,6 +21,8 @@
   /* Node modules */
 
   /* Third-party modules */
+  import { _ } from 'lodash';
+  import Quill from 'quill';
 
   /* Files */
   import store from '../store';
@@ -41,6 +44,10 @@
         this.connection = this.$route.meta.connection;
       },
 
+      keyup () {
+        console.log('key up');
+      },
+
       submit () {
         const db = store.getters.getActiveDb(this.$route.path);
 
@@ -55,6 +62,21 @@
           });
       },
 
+    },
+
+    mounted () {
+      this.editor = new Quill('.query_input', {
+      });
+
+      if (this.editor.container) {
+        /* Set the initial query to the editor */
+        this.editor.setText(this.query);
+
+        /* Copy to the textarea */
+        this.editor.on('text-change', () => {
+          this.query = this.editor.getText();
+        });
+      }
     },
 
     watch: {
