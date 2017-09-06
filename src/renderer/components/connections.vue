@@ -9,7 +9,7 @@
           v-shortkey="[ 'ctrl', 'h' ]",
           @shortkey="homepage()",
           v-on:click.prevent="homepage()",
-          :title="$t('common:HOMEPAGE_TITLE')",
+          :title="$t('common:HOMEPAGE_TITLE', { shortcut: 'CTRL + H' })",
         )
           i.icon--home
 
@@ -23,7 +23,7 @@
           v-shortkey="[ 'alt', (index + 1) ]",
           @shortkey="selectConnection(connection.connectionId)",
           v-on:click.prevent.self="selectConnection(connection.connectionId)",
-          :title="connection.connectionName",
+          :title="$t('common:CONNECTION_NAME', { name: connection.connectionName, shortcut: 'Alt + ' + (index + 1) })",
           :style="'background-image: url(' + connection.iconPath + ')'"
         ) {{ truncate(connection.connectionName) }}
 
@@ -42,7 +42,7 @@
         a.nav-link(
           href="#",
           v-on:click.prevent="newConnection()",
-          :title="$t('connect:ADD_CONNECTION')",
+          :title="$t('common:ADD_CONNECTION', { shortcut: 'CTRL + N' })",
           v-shortkey="[ 'ctrl', 'n' ]",
           @shortkey="newConnection()"
         )

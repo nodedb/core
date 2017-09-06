@@ -1,4 +1,6 @@
 {
-  "HOMEPAGE_TITLE": "Homepage",
+  "ADD_CONNECTION": "Add new connection ({{ shortcut }})",
+  "CONNECTION_NAME": "{{ name }} ({{ shortcut }})",
+  "HOMEPAGE_TITLE": "Homepage ({{ shortcut }})",
   "LOADING_PAGE": "Loading..."
 }
