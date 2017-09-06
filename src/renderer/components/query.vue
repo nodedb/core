@@ -21,7 +21,6 @@
   /* Node modules */
 
   /* Third-party modules */
-  import { _ } from 'lodash';
   import Quill from 'quill';
 
   /* Files */
@@ -42,10 +41,6 @@
 
       fetchData () {
         this.connection = this.$route.meta.connection;
-      },
-
-      keyup () {
-        console.log('key up');
       },
 
       submit () {
