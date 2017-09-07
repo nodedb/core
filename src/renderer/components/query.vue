@@ -21,7 +21,6 @@
   /* Node modules */
 
   /* Third-party modules */
-  import Quill from 'quill';
 
   /* Files */
   import store from '../store';
@@ -60,18 +59,6 @@
     },
 
     mounted () {
-      this.editor = new Quill('.query_input', {
-      });
-
-      if (this.editor.container) {
-        /* Set the initial query to the editor */
-        this.editor.setText(this.query);
-
-        /* Copy to the textarea */
-        this.editor.on('text-change', () => {
-          this.query = this.editor.getText();
-        });
-      }
     },
 
     watch: {
