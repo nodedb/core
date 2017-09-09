@@ -2,9 +2,10 @@
   div.full_height
     .query_wrapper
 
-      textarea {{ query }}
-
-      .query_input
+      vue-editor(
+        lang="sql",
+        v-model="query"
+      )
 
       button.query_submit(
         @click="submit"
@@ -33,13 +34,16 @@
 
     data: () => ({
       connection: null,
-      query: '',
+      language: null,
+      query: null,
     }),
 
     methods: {
 
       fetchData () {
         this.connection = this.$route.meta.connection;
+        this.language = 'sql';
+        this.query = '';
       },
 
       submit () {

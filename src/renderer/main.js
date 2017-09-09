@@ -17,9 +17,11 @@ import fieldButtonGroup from './components/fields/button-group.vue';
 import i18n from './lib/i18n';
 import router from './lib/router';
 import treeItem from './components/tree-item.vue';
+import VueEditor from './components/editor.vue';
 
 /* Register global Vue components */
 Vue.component('fieldButtonGroup', fieldButtonGroup);
+Vue.component('vueEditor', VueEditor);
 Vue.component('vueTreeItem', treeItem);
 
 Vue.use(VueFormGenerator);
