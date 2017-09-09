@@ -23,18 +23,25 @@
     },
 
     mounted () {
-      const lang = this.lang || 'text';
       const theme = this.theme || 'chrome';
 
-      // eslint-disable-next-line global-require, import/no-dynamic-require
-      require(`brace/mode/${lang}`);
+      if (!this.lang) {
+        throw new Error('Query language must be set');
+      }
+
+      try {
+        // eslint-disable-next-line global-require, import/no-dynamic-require
+        require(`brace/mode/${this.lang}`);
+      } catch (err) {
+        throw new Error(`Unknown query language: ${this.lang}`);
+      }
       // eslint-disable-next-line global-require, import/no-dynamic-require
       require(`brace/theme/${theme}`);
 
       this.editor = ace.edit(this.$el);
 
       this.editor.$blockScrolling = Infinity;
-      this.editor.getSession().setMode(`ace/mode/${lang}`);
+      this.editor.getSession().setMode(`ace/mode/${this.lang}`);
       this.editor.setTheme(`ace/theme/${theme}`);
 
       this.editor.on('change', () => {

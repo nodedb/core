@@ -3,7 +3,7 @@
     .query_wrapper
 
       vue-editor(
-        lang="sql",
+        :lang="lang",
         v-model="query"
       )
 
@@ -34,7 +34,7 @@
 
     data: () => ({
       connection: null,
-      language: null,
+      lang: null,
       query: null,
     }),
 
@@ -42,7 +42,7 @@
 
       fetchData () {
         this.connection = this.$route.meta.connection;
-        this.language = 'sql';
+        this.lang = this.connection.lang;
         this.query = '';
       },
 

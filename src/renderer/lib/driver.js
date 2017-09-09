@@ -59,6 +59,10 @@ export default class Driver extends Base {
     return this.strategy.id;
   }
 
+  get lang () {
+    return this.strategy.lang;
+  }
+
   get name () {
     return this.strategy.name;
   }
