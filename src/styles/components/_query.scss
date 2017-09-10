@@ -2,10 +2,19 @@
 
   .query_input {
     height: 100%;
+
+    .ace_gutter-cell,
+    .ace_line {
+      padding: {
+        top: 4px !important;
+        bottom: 4px !important;
+      }
+    }
+
   }
 
   .query_submit {
-    //display: none;
+    display: none;
   }
 
 }

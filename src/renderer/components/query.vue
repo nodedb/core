@@ -43,7 +43,7 @@
       fetchData () {
         this.connection = this.$route.meta.connection;
         this.lang = this.connection.lang;
-        this.query = '';
+        this.query = 'select * from `users`\nWHERE `fart` = \'2\'';
       },
 
       submit () {
