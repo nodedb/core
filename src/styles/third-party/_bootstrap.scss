@@ -8,3 +8,7 @@
 
 $navbar-height: $navbar-brand-height; // This seems to change on the content
 $default-sidebar-width: 400px;
+
+.custom-select {
+  -webkit-appearance: none;
+}
