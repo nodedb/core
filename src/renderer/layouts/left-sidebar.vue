@@ -64,7 +64,7 @@
 
       fetchData () {
         const minWidth = 100;
-        const maxWidth = 500;
+        const maxWidth = 600;
         const defaultWidth = (minWidth + maxWidth) / 2;
         const resizableSidebar = this.$route.meta.resizableSidebar !== false;
         const storedWidth = store.getters.getDbSession(this.$route.path, 'sidebarWidth');
