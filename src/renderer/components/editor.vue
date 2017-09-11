@@ -54,8 +54,7 @@
         this.editor.setValue(this.value, 1);
 
         if (this.cursor) {
-          this.editor.gotoLine(this.cursor.row, this.cursor.column, true);
-          this.editor.renderer.scrollToRow(this.cursor.row);
+          this.editor.moveCursorToPosition(this.cursor);
         }
 
         this.editor.on('change', () => {
