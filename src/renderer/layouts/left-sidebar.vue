@@ -67,7 +67,7 @@
         const maxWidth = 500;
         const defaultWidth = (minWidth + maxWidth) / 2;
         const resizableSidebar = this.$route.meta.resizableSidebar !== false;
-        const storedWidth = store.getters.getSidebarWidth(this.$route.path);
+        const storedWidth = store.getters.getDbSession(this.$route.path, 'sidebarWidth');
         let width = defaultWidth;
 
         if (resizableSidebar && storedWidth) {
@@ -113,9 +113,10 @@
       },
 
       save () {
-        store.commit('sidebarWidth', {
-          path: this.$route.path,
-          width: this.width,
+        store.commit('saveDbSession', {
+          id: this.$route.path,
+          key: 'sidebarWidth',
+          value: this.width,
         });
       },
 

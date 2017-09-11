@@ -73,9 +73,10 @@
               this.isOpen = !this.isOpen;
             }
 
-            store.commit('activeDb', {
-              db: this.node.db,
-              path: this.$route.path,
+            store.commit('saveDbSession', {
+              id: this.$route.path,
+              key: 'activeDb',
+              value: this.node.db,
             });
           });
       },

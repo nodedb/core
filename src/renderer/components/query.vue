@@ -43,11 +43,19 @@
       fetchData () {
         this.connection = this.$route.meta.connection;
         this.lang = this.connection.lang;
-        this.query = 'select * from `users`\nWHERE `fart` = \'2\'';
+        this.query = store.getters.getDbSession(this.$route.path, 'query') || '';
+      },
+
+      saveQuery () {
+        store.commit('saveDbSession', {
+          id: this.$route.path,
+          key: 'query',
+          value: this.query,
+        });
       },
 
       submit () {
-        const db = store.getters.getActiveDb(this.$route.path);
+        const db = store.getters.getDbSession(this.$route.path, 'activeDb');
 
         return this.connection.query(db, this.query)
           .then((result) => {
@@ -67,6 +75,7 @@
 
     watch: {
       $route: 'fetchData',
+      query: 'saveQuery',
     },
 
   };
