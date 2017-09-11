@@ -3,8 +3,9 @@
     .query_wrapper
 
       vue-editor(
+        :cursor.sync="cursor",
         :lang="lang",
-        v-model="query"
+        v-model="query",
       )
 
       button.query_submit(
@@ -34,6 +35,7 @@
 
     data: () => ({
       connection: null,
+      cursor: null,
       lang: null,
       query: null,
     }),
@@ -42,8 +44,17 @@
 
       fetchData () {
         this.connection = this.$route.meta.connection;
+        this.cursor = store.getters.getDbSession(this.$route.path, 'cursor');
         this.lang = this.connection.lang;
         this.query = store.getters.getDbSession(this.$route.path, 'query') || '';
+      },
+
+      saveCursor () {
+        store.commit('saveDbSession', {
+          id: this.$route.path,
+          key: 'cursor',
+          value: this.cursor,
+        });
       },
 
       saveQuery () {
@@ -70,11 +81,9 @@
 
     },
 
-    mounted () {
-    },
-
     watch: {
       $route: 'fetchData',
+      cursor: 'saveCursor',
       query: 'saveQuery',
     },
 

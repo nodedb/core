@@ -53,10 +53,17 @@
         this.editor.setFontSize(this.fontSize);
         this.editor.setValue(this.value, 1);
 
-        this.editor.on('change', () => {
-          const value = this.editor.getValue();
+        if (this.cursor) {
+          this.editor.gotoLine(this.cursor.row, this.cursor.column, true);
+          this.editor.renderer.scrollToRow(this.cursor.row);
+        }
 
-          this.$emit('input', value);
+        this.editor.on('change', () => {
+          const cursor = this.editor.getCursorPosition();
+          const query = this.editor.getValue();
+
+          this.$emit('update:cursor', cursor);
+          this.$emit('input', query);
         });
       },
 
@@ -67,11 +74,15 @@
     },
 
     props: {
+      cursor: Object,
       fontSize: {
         default: 14,
         type: Number,
       },
-      lang: String,
+      lang: {
+        required: true,
+        type: String,
+      },
       printMargin: false,
       theme: {
         default: 'chrome',
