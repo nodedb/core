@@ -34,7 +34,39 @@
         @click="submit"
       ) ok
 
-    .result_wrapper result
+    .result_wrapper
+      h2 query
+
+      table.table(
+        v-if="fields.length > 0"
+      )
+
+        thead
+          tr
+            th
+              .form-check
+                input.form-check-input(
+                  type="checkbox"
+                )
+
+            th(
+              v-for="field in fields"
+            ) {{ field }}
+
+        tbody
+          tr(
+            v-for="row in result"
+          )
+            td
+              input.form-check-input(
+                type="checkbox"
+              )
+
+            td(
+              v-for="field in fields"
+            ) {{ row[field] }}
+
+
 </template>
 
 <script>
@@ -61,8 +93,10 @@
       connection: null,
       cursor: null,
       dbList: [],
+      fields: [],
       lang: null,
       query: null,
+      result: [],
       selectedDb: null,
     }),
 
@@ -115,9 +149,9 @@
 
       submit () {
         return this.connection.query(this.selectedDb, this.query)
-          .then((result) => {
-            console.log('result');
-            console.log(result);
+          .then(({ fields, result }) => {
+            this.fields = fields;
+            this.result = result;
           })
           .catch((err) => {
             console.log('err');
