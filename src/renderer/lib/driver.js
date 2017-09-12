@@ -136,6 +136,11 @@ export default class Driver extends Base {
     return this.strategy.connectionString();
   }
 
+  dbList () {
+    return Promise.resolve()
+      .then(() => this.strategy.dbList());
+  }
+
   query (db, str) {
     return Promise.resolve()
       .then(() => this.strategy.query(db, str));

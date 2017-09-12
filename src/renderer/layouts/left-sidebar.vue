@@ -9,7 +9,8 @@
         :style="'width: ' + width + 'px'"
       )
         router-view(
-          name="sidebar"
+          name="sidebar",
+          :active.sync="active"
         )
         .sidebar-width-dragger(
           v-if="resizableSidebar",
@@ -24,7 +25,8 @@
 
         .main-content__body__main
           router-view(
-            name="body"
+            name="body",
+            :activeDb="active"
           )
 </template>
 
@@ -51,6 +53,7 @@
 
     data () {
       return {
+        active: null,
         defaultWidth: 0,
         minWidth: 0,
         maxWidth: 0,

@@ -17,7 +17,8 @@
     ul.vue-tree.vue-tree__children
       vue-tree-item(
         v-for="child in children",
-        :node="child"
+        :node="child",
+        :active.sync="active"
       )
 
 </template>
@@ -33,7 +34,6 @@
   import { _ } from 'lodash';
 
   /* Files */
-  import store from '../store';
 
   export default {
 
@@ -73,16 +73,13 @@
               this.isOpen = !this.isOpen;
             }
 
-            store.commit('saveDbSession', {
-              id: this.$route.path,
-              key: 'activeDb',
-              value: this.node.db,
-            });
+            this.$emit('update:active', this.node.db);
           });
       },
     },
 
     props: {
+      active: String,
       node: {
         type: Object,
       },

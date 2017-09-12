@@ -13,7 +13,8 @@
         ul.vue-tree.vue-tree__children
           vue-tree-item(
             v-for="item in toc",
-            :node="item"
+            :node="item",
+            :active.sync="active"
           )
 </template>
 
@@ -42,6 +43,10 @@
 
     methods: {
 
+      changeActiveDb () {
+        this.$emit('update:active', this.active);
+      },
+
       fetchData () {
         this.connection = this.$route.meta.connection;
 
@@ -57,9 +62,15 @@
 
     },
 
+    props: {
+      active: String,
+    },
+
     watch: {
       $route: 'fetchData',
+      active: 'changeActiveDb',
     },
 
   };
+
 </script>

@@ -1,23 +1,31 @@
-.query_wrapper {
+.query_page_wrapper {
 
-  .query_input {
-    height: 100%;
+  $query-navbar-height: 54px;
 
-    .ace_gutter-cell,
-    .ace_line {
-      padding: {
-        top: 4px !important;
-        bottom: 4px !important;
+  .query_wrapper {
+
+    .query_input {
+      height: calc(100% - #{$query-navbar-height});
+
+      .ace_gutter-cell,
+      .ace_line {
+        padding: {
+          top: 4px !important;
+          bottom: 4px !important;
+        }
       }
+
+    }
+
+    .query_submit {
+      //display: none;
+      position: absolute;
+      bottom: 0;
+      right: 0;
     }
 
   }
 
-  .query_submit {
-    //display: none;
-    position: absolute;
-    bottom: 0;
-    right: 0;
+  .result_wrapper {
   }
-
 }
