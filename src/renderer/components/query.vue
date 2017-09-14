@@ -12,11 +12,7 @@
 
         form.form-inline
           .form-group
-            label(
-              for="selectedDb"
-            ) hello
-
-            select#selectedDb.custom-select(
+            select.custom-select(
               v-model="selectedDb"
             )
               option(
@@ -37,17 +33,21 @@
     .result_wrapper
       h2 query
 
+      .error(
+        v-if="err"
+      ) {{ err.message || err }}
+
       table.table(
-        v-if="fields.length > 0"
+        v-else-if="fields.length > 0"
       )
 
         thead
           tr
             th
-              .form-check
-                input.form-check-input(
-                  type="checkbox"
-                )
+              input(
+                type="checkbox",
+                v-model="selectAll"
+              )
 
             th(
               v-for="field in fields"
@@ -55,17 +55,17 @@
 
         tbody
           tr(
-            v-for="row in result"
+            v-for="(row, id) in result"
           )
             td
-              input.form-check-input(
-                type="checkbox"
+              input(
+                type="checkbox",
+                v-model="selectedRows[id]"
               )
 
             td(
               v-for="field in fields"
             ) {{ row[field] }}
-
 
 </template>
 
@@ -93,11 +93,14 @@
       connection: null,
       cursor: null,
       dbList: [],
+      err: null,
       fields: [],
       lang: null,
       query: null,
       result: [],
+      selectAll: false,
       selectedDb: null,
+      selectedRows: [],
     }),
 
     methods: {
@@ -111,9 +114,10 @@
         this.cursor = store.getters.getDbSession(this.$route.path, 'cursor');
         this.lang = this.connection.lang;
         this.query = store.getters.getDbSession(this.$route.path, 'query') || '';
+        this.selectAll = false;
         this.selectedDb = store.getters.getDbSession(this.$route.path, 'activeDb');
 
-        this.connection.dbList()
+        return this.connection.dbList()
           .then((dbList) => {
             this.dbList = dbList;
 
@@ -147,15 +151,29 @@
         });
       },
 
+      selectAllRows () {
+        if (this.selectAll) {
+          this.selectedRows = this.result.map(() => true);
+        } else {
+          /* Remove all selected rows */
+          this.selectedRows = [];
+        }
+      },
+
       submit () {
+        /* Reset everything */
+        this.err = null;
+        this.fields = [];
+        this.result = [];
+        this.selectAll = false;
+
         return this.connection.query(this.selectedDb, this.query)
           .then(({ fields, result }) => {
             this.fields = fields;
             this.result = result;
           })
           .catch((err) => {
-            console.log('err');
-            console.log(err.message);
+            this.err = err;
           });
       },
 
@@ -170,6 +188,7 @@
       activeDb: 'changeDb',
       cursor: 'saveCursor',
       query: 'saveQuery',
+      selectAll: 'selectAllRows',
       selectedDb: 'saveDb',
     },
 
