@@ -27,8 +27,6 @@ before_script:
 
 script:
 - npm run -s ci
-
-before_deploy:
 - npm run -s dist
 
 deploy:
