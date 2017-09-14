@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "clean": "rm -Rf ./build ./dist ./tmp",
-    "ci": "npm run -s test && npm run -s compile",
+    "ci": "npm run -s clean && npm run -s test && npm run -s compile",
     "compile": "npm run -s clean && npm run -s copy && cp -Rf ./node_modules ./tmp && npm run -s compile:icns && (cd ./tmp && npm prune --production)",
     "compile:icns": "png2icons ./src/assets/img/logo.png ./tmp/src/assets/img/logo -icns",
     "copy": "mkdir -p ./tmp && cp -Rf ./src ./tmp/src && cp ./package.json ./tmp && cp ./.compilerc ./tmp",
