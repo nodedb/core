@@ -20,8 +20,8 @@
     "dist:compress:win32": "cd build && zip -rq ../dist/win32.zip win32/ && cd ..",
     "dist:compress:win64": "cd build && zip -rq ../dist/win64.zip win64/ && cd ..",
     "dist:rename": "mv build/nodedb-darwin-x64 build/osx && mv build/nodedb-linux-armv7l build/armv7l && mv build/nodedb-linux-ia32 build/linux32 && mv build/nodedb-linux-x64 build/linux64 && mv build/nodedb-win32-ia32 build/win32 && mv build/nodedb-win32-x64 build/win64",
-    "package": "electron-packager-compile ./tmp nodedb --icon ./tmp/src/assets/img/logo.icns --all --out ./build --overwrite true",
-    "package:local": "npm run compile && electron-packager-compile ./tmp nodedb --icon ./tmp/src/assets/img/logo.icns --out ./build --overwrite true",
+    "package": "electron-packager-compile --asar=false ./tmp nodedb --icon ./tmp/src/assets/img/logo.icns --all --out ./build --overwrite true",
+    "package:local": "npm run compile && electron-packager-compile --asar=false ./tmp nodedb --icon ./tmp/src/assets/img/logo.icns --out ./build --overwrite true",
     "postversion": "git push --tags && git push",
     "serve": "DEBUG=-electron-compile:* ENABLE_LIVE_RELOAD=true SHOW_DEV_TOOLS=true electron . | bunyan",
     "test": "npm run -s test:lint && npm run -s test:unit",
@@ -53,7 +53,7 @@
     "font-awesome": "^4.7.0",
     "fs-extra": "^4.0.1",
     "glob": "^7.1.2",
-    "i18next": "^8.4.3",
+    "i18next": "^9.0.0",
     "i18next-electron-language-detector": "0.0.8",
     "i18next-sync-fs-backend": "^1.0.0",
     "jquery": "^3.2.1",
@@ -74,7 +74,7 @@
     "chai": "^4.1.0",
     "chai-as-promised": "^7.1.1",
     "electron-mocha": "^4.0.0",
-    "electron-packager": "^8.7.2",
+    "electron-packager": "^9.0.1",
     "electron-prebuilt-compile": "^1.6.11",
     "eslint": "^4.3.0",
     "eslint-config-airbnb": "^15.1.0",
@@ -86,7 +86,7 @@
     "nodemon": "^1.11.0",
     "png2icons": "^0.9.1",
     "proxyquire": "^1.8.0",
-    "sinon": "^2.4.1",
+    "sinon": "^3.2.1",
     "sinon-chai": "^2.12.0"
   }
 }
