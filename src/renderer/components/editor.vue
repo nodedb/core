@@ -1,6 +1,6 @@
 <template lang="jade">
   .query_input(
-    :class="'language--' + lang"
+    :class="'query_input--' + lang"
   )
 </template>
 

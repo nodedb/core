@@ -31,11 +31,15 @@
       ) ok
 
     .result_wrapper
-      h2 query
+      h2 result
 
       .error(
         v-if="err"
       ) {{ err.message || err }}
+
+      .empty(
+        v-else-if="emptyResult"
+      ) empty result
 
       table.table(
         v-else-if="fields.length > 0"
@@ -78,6 +82,7 @@
 
   /* Third-party modules */
   import { _ } from 'lodash';
+  import { remote } from 'electron';
 
   /* Files */
   import store from '../store';
@@ -93,6 +98,7 @@
       connection: null,
       cursor: null,
       dbList: [],
+      emptyResult: false,
       err: null,
       fields: [],
       lang: null,
@@ -109,13 +115,33 @@
         this.selectedDb = this.activeDb;
       },
 
+      checkEmptyResult () {
+        this.emptyResult = false;
+
+        if (this.fields.length === 0) {
+          this.emptyResult = true;
+        }
+      },
+
       fetchData () {
         this.connection = this.$route.meta.connection;
         this.cursor = store.getters.getDbSession(this.$route.path, 'cursor');
+        this.emptyResult = false;
         this.lang = this.connection.lang;
         this.query = store.getters.getDbSession(this.$route.path, 'query') || '';
         this.selectAll = false;
         this.selectedDb = store.getters.getDbSession(this.$route.path, 'activeDb');
+
+        const queryResult = store.getters.getDbSession(this.$route.path, 'queryResult');
+
+        if (queryResult) {
+          if (queryResult.err) {
+            this.err = queryResult.err;
+          } else if (queryResult.fields && queryResult.result) {
+            this.fields = queryResult.fields;
+            this.result = queryResult.result;
+          }
+        }
 
         return this.connection.dbList()
           .then((dbList) => {
@@ -151,6 +177,16 @@
         });
       },
 
+      saveQueryResult (err, result = null) {
+        const value = err ? { err: { message: err.message } } : result;
+
+        store.commit('saveDbSession', {
+          id: this.$route.path,
+          key: 'queryResult',
+          value,
+        });
+      },
+
       selectAllRows () {
         if (this.selectAll) {
           this.selectedRows = this.result.map(() => true);
@@ -167,13 +203,45 @@
         this.result = [];
         this.selectAll = false;
 
+        remote.app.logger.trigger('debug', 'New DB query', {
+          connection: this.connection.connectionString(),
+          db: this.selectedDb,
+          query: this.query,
+        });
+
         return this.connection.query(this.selectedDb, this.query)
           .then(({ fields, result }) => {
             this.fields = fields;
             this.result = result;
+
+            console.log(this.fields);
+
+            this.saveQueryResult(null, {
+              fields,
+              result,
+            });
+
+            console.log('result');
+
+            remote.app.logger.trigger('debug', 'DB query made successfully', {
+              connection: this.connection.connectionString(),
+              db: this.selectedDb,
+              query: this.query,
+              fields,
+              result,
+            });
           })
           .catch((err) => {
             this.err = err;
+
+            this.saveQueryResult(err);
+
+            remote.app.logger.trigger('debug', 'DB query errored', {
+              connection: this.connection.connectionString(),
+              db: this.selectedDb,
+              query: this.query,
+              err,
+            });
           });
       },
 
@@ -187,6 +255,7 @@
       $route: 'fetchData',
       activeDb: 'changeDb',
       cursor: 'saveCursor',
+      fields: 'checkEmptyResult',
       query: 'saveQuery',
       selectAll: 'selectAllRows',
       selectedDb: 'saveDb',

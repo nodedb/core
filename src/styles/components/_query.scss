@@ -1,11 +1,20 @@
 .query_page_wrapper {
 
-  $query-navbar-height: 54px;
+  $query-navbar-height: 56px;
 
   .query_wrapper {
 
     .query_input {
       height: calc(100% - #{$query-navbar-height});
+
+      &.query_input--sql {
+
+        .ace_keyword {
+          text: {
+            transform: uppercase;
+          }
+        }
+      }
 
       .ace_gutter-cell,
       .ace_line {
@@ -18,7 +27,6 @@
     }
 
     .query_submit {
-      //display: none;
       position: absolute;
       bottom: 0;
       right: 0;
