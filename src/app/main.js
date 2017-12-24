@@ -15,7 +15,6 @@ import { enableLiveReload } from 'electron-compile';
 /* Files */
 import i18n from './i18n';
 import Logger from './logger';
-import pkg from '../../package.json';
 
 /* Set the logger */
 const appName = app.getName();
