@@ -13,8 +13,13 @@ import { app, BrowserWindow, shell } from 'electron';
 import { enableLiveReload } from 'electron-compile';
 
 /* Files */
+import i18n from './i18n';
 import Logger from './logger';
 import pkg from '../../package.json';
+
+/* Set the logger */
+const logger = new Logger(`${app.getPath('userData')}/logs/ci-menu.log`);
+const i18next = i18n(logger);
 
 /*
  Keep a global reference of the window, so it's
@@ -23,12 +28,18 @@ import pkg from '../../package.json';
 let mainWindow;
 
 function createWindow () {
-  mainWindow = new BrowserWindow({
+  const opts = {
     icon: path.join(__dirname, '..', 'assets', 'img', 'logo.png'),
     minHeight: 600,
-    minWidth: 993, // Prevents us having to faff about with the mobile view
+    minWidth: 800,
     title: pkg.productName,
+  };
+
+  app.logger.trigger('trace', 'Creating browser window with opts', {
+    opts,
   });
+
+  mainWindow = new BrowserWindow(opts);
 
   const { webContents } = mainWindow;
 
@@ -44,9 +55,13 @@ function createWindow () {
 
   mainWindow.loadURL(`file://${__dirname}/../index.html`);
 
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
+  mainWindow
+    .on('closed', () => {
+      mainWindow = null;
+    })
+    .on('ready-to-show', () => {
+      mainWindow.show();
+    });
 
   const handleRedirect = (event, url) => {
     if (url !== webContents.getURL()) {
@@ -61,11 +76,27 @@ function createWindow () {
 }
 
 app
-  .on('activate', () => (mainWindow === null ? createWindow() : ''))
-  .on('ready', createWindow)
-  .on('window-all-closed', () => app.quit());
+  .on('activate', () => {
+    if (mainWindow === null) {
+      createWindow();
+    }
 
-/* Set the logger */
-app.logger = new Logger(`${app.getPath('userData')}/logs/nodedb.log`);
+    if (mainWindow.isVisible()) {
+      app.logger.trigger('trace', 'Hiding main window');
+
+      mainWindow.hide();
+    } else {
+      app.logger.trigger('trace', 'Showing main window');
+
+      mainWindow.show();
+    }
+  })
+  .on('window-all-closed', () => {
+    /* Don't quit app if last window closed */
+  })
+  .on('ready', createWindow);
+
+app.logger = logger;
+app.i18next = i18next;
 
 module.exports = app;

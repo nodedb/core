@@ -5,38 +5,27 @@
 /* Node modules */
 
 /* Third-party modules */
-import vex from 'vex-js';
-import vexDialog from 'vex-dialog/src/vex.dialog';
 import Vue from 'vue/dist/vue.min';
-import VueFormGenerator from 'vue-form-generator';
-import VueShortKey from 'vue-shortkey';
+import Vuetify from 'vuetify';
 
 /* Files */
 import App from './components/app.vue';
-import fieldButtonGroup from './components/fields/button-group.vue';
 import i18n from './lib/i18n';
 import router from './lib/router';
-import treeItem from './components/tree-item.vue';
-import VueEditor from './components/editor.vue';
+import store from './store';
 
-/* Register global Vue components */
-Vue.component('fieldButtonGroup', fieldButtonGroup);
-Vue.component('vueEditor', VueEditor);
-Vue.component('vueTreeItem', treeItem);
+Vue.use(Vuetify);
 
-Vue.use(VueFormGenerator);
-Vue.use(VueShortKey);
+setInterval(() => {
+  console.log(location.href);
+}, 1000);
 
-/* Configure Vex */
-vex.registerPlugin(vexDialog);
-vex.defaultOptions.className = 'vex-theme-os';
-
-// eslint-disable-next-line no-new
 new Vue({
   components: {
     App,
   },
   i18n,
   router,
+  store,
   template: '<App />',
 }).$mount('#app');

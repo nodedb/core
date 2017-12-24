@@ -24,14 +24,14 @@ export default class Logger {
 
     /* Create bunyan instance */
     this.bunyan = bunyan.createLogger({
-      name: 'NodeDB',
+      name: 'CI-Menu',
       streams: [{
-        level: 'trace',
+        level: process.env.CI_MENU_CONSOLE_LOG_LEVEL || 'trace',
         stream: process.stdout,
       }, {
         type: 'rotating-file',
         path: this.logPath,
-        level: 'trace',
+        level: process.env.CI_MENU_FILE_LOG_LEVEL || 'info',
         period: '1d',
       }],
     });

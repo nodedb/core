@@ -1,10 +1,13 @@
 <template lang="jade">
-    div login page
+  div
+    v-content
+      router-view
+        v-container(fluid)
 </template>
 
 <script>
   /**
-   * login
+   * layoutFullWidth
    */
 
   /* Node modules */

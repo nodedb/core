@@ -14,9 +14,5 @@
 
   /* Files */
 
-  export default {
-    data () {
-      return {};
-    },
-  };
+  export default {};
 </script>

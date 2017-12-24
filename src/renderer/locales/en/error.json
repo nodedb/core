@@ -1,4 +1,0 @@
-{
-  "DB_CONNECTION": "Failed to connect to database: '{{ err }}'",
-  "GENERAL_EXCEPTION": "A general exception has occurred"
-}

@@ -1,22 +1,26 @@
-/*
-  Main
- */
+* {
+  user-select: none;
+}
 
-/* Global */
-@import "_global.scss";
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../assets/fonts/material-icons.woff2') format('woff2');
+}
 
-/* Third party */
-@import "third-party/_bootstrap.scss";
-@import "third-party/_icons.scss";
-@import "third-party/_vex.scss";
-
-/* Layouts */
-@import "layouts/_common.scss";
-@import "layouts/_left-sidebar.scss";
-@import "layouts/_no-sidebar.scss";
-
-/* Components */
-@import "components/_buttons.scss";
-@import "components/_connections.scss";
-@import "components/_tree.scss";
-@import "components/_query.scss";
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -moz-font-feature-settings: 'liga';
+  -moz-osx-font-smoothing: grayscale;
+}
