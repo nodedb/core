@@ -24,6 +24,7 @@ before_script:
 
 script:
 - npm run -s ci
+# @todo Fix
 #- npm run -s dist
 
 deploy:
