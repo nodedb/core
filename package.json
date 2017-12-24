@@ -1,8 +1,8 @@
 {
-  "name": "ci-menu",
-  "productName": "CI Menu",
-  "version": "0.1.0",
-  "description": "Cross platform tray monitor for CI projects",
+  "name": "@nodedb/core",
+  "productName": "NodeDB",
+  "version": "0.0.0",
+  "description": "A cross-platform tool for managing all databases",
   "main": "./src/app/main.js",
   "private": true,
   "scripts": {
@@ -19,9 +19,9 @@
     "dist:compress:osx": "cd build && tar -zcf ../dist/osx.tar.gz osx/ && cd ..",
     "dist:compress:win32": "cd build && zip -rq ../dist/win32.zip win32/ && cd ..",
     "dist:compress:win64": "cd build && zip -rq ../dist/win64.zip win64/ && cd ..",
-    "dist:rename": "mv build/ci-menu-darwin-x64 build/osx && mv build/ci-menu-linux-armv7l build/armv7l && mv build/ci-menu-linux-ia32 build/linux32 && mv build/ci-menu-linux-x64 build/linux64 && mv build/ci-menu-win32-ia32 build/win32 && mv build/ci-menu-win32-x64 build/win64",
-    "package": "npm run -s clean && mkdir -p ./tmp && electron-packager-compile ./tmp ci-menu --icon ./tmp/src/assets/img/logo.icns --all --out ./build --overwrite true",
-    "package:local": "npm run compile && electron-packager-compile ./tmp ci-menu --icon ./tmp/src/assets/img/logo.icns --out ./build --overwrite true",
+    "dist:rename": "mv build/nodedb-darwin-x64 build/osx && mv build/nodedb-linux-armv7l build/armv7l && mv build/nodedb-linux-ia32 build/linux32 && mv build/nodedb-linux-x64 build/linux64 && mv build/nodedb-win32-ia32 build/win32 && mv build/nodedb-win32-x64 build/win64",
+    "package": "npm run -s clean && mkdir -p ./tmp && electron-packager-compile ./tmp nodedb --icon ./tmp/src/assets/img/logo.icns --all --out ./build --overwrite true",
+    "package:local": "npm run compile && electron-packager-compile ./tmp nodedb --icon ./tmp/src/assets/img/logo.icns --out ./build --overwrite true",
     "postversion": "git push --tags && git push",
     "serve": "DEBUG=-electron-compile:* ENABLE_LIVE_RELOAD=true SHOW_DEV_TOOLS=true electron . | bunyan",
     "test": "npm run -s test:lint && npm run -s test:unit",
@@ -34,14 +34,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/riggerthegeek/ci-menu.git"
+    "url": "git+https://github.com/nodedb/core.git"
   },
   "author": "Simon Emms <simon@simonemms.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/riggerthegeek/ci-menu/issues"
+    "url": "https://github.com/nodedb/core/issues"
   },
-  "homepage": "https://github.com/riggerthegeek/ci-menu#readme",
+  "homepage": "https://github.com/nodedb/core#readme",
   "dependencies": {
     "@panter/vue-i18next": "^0.9.1",
     "axios": "^0.17.1",

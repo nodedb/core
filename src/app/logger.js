@@ -6,10 +6,13 @@
 import path from 'path';
 
 /* Third-party modules */
+import { app } from 'electron';
 import bunyan from 'bunyan';
 import fs from 'fs-extra';
 
 /* Files */
+
+const appName = app.getName();
 
 export default class Logger {
   constructor (logPath) {
@@ -24,7 +27,7 @@ export default class Logger {
 
     /* Create bunyan instance */
     this.bunyan = bunyan.createLogger({
-      name: 'CI-Menu',
+      name: appName,
       streams: [{
         level: process.env.CI_MENU_CONSOLE_LOG_LEVEL || 'trace',
         stream: process.stdout,

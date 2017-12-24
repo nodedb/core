@@ -18,7 +18,8 @@ import Logger from './logger';
 import pkg from '../../package.json';
 
 /* Set the logger */
-const logger = new Logger(`${app.getPath('userData')}/logs/ci-menu.log`);
+const appName = app.getName();
+const logger = new Logger(`${app.getPath('userData')}/logs/${appName}.log`);
 const i18next = i18n(logger);
 
 /*
@@ -32,7 +33,7 @@ function createWindow () {
     icon: path.join(__dirname, '..', 'assets', 'img', 'logo.png'),
     minHeight: 600,
     minWidth: 800,
-    title: pkg.productName,
+    title: appName,
   };
 
   app.logger.trigger('trace', 'Creating browser window with opts', {
