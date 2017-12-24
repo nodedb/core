@@ -16,12 +16,10 @@ const sinonChai = require('sinon-chai');
 chai.use(sinonChai);
 chai.use(chaiAsPromised);
 
-const expect = chai.expect;
-
 proxyquire.noCallThru();
 
 module.exports = {
-  expect,
+  expect: chai.expect,
   proxyquire,
   sinon,
 };

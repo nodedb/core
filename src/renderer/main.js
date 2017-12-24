@@ -16,10 +16,6 @@ import store from './store';
 
 Vue.use(Vuetify);
 
-setInterval(() => {
-  console.log(location.href);
-}, 1000);
-
 new Vue({
   components: {
     App,
