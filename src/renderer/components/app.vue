@@ -1,6 +1,7 @@
 <template lang="jade">
   #app
-    router-view
+    v-app(dark)
+      router-view
 </template>
 
 <script>
