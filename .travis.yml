@@ -24,7 +24,7 @@ before_script:
 
 script:
 - npm run -s ci
-- npm run -s dist
+#- npm run -s dist
 
 deploy:
   provider: releases
