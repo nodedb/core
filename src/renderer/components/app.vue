@@ -1,6 +1,8 @@
 <template lang="jade">
   #app
-    v-app(dark)
+    v-app(
+      :dark="dark"
+    )
       router-view
 </template>
 
@@ -15,5 +17,13 @@
 
   /* Files */
 
-  export default {};
+  export default {
+
+    data () {
+      return {
+        dark: true,
+      };
+    },
+
+  };
 </script>

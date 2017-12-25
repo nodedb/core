@@ -1,8 +1,7 @@
 <template lang="jade">
-  div
-    v-content
-      v-container(fluid)
-        router-view
+  v-content
+    v-container(fluid)
+      router-view
 </template>
 
 <script>
