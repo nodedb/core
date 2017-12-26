@@ -3,9 +3,22 @@
     h1 hello world
 
     v-layout(row wrap)
-      v-flex(xs4 offset-xs4)
+      v-flex(xs6 offset-xs3)
+        v-alert(
+          v-if="err",
+          color="error",
+          icon="warning",
+          value="true",
+          v-html="$t('errors:CONNECTION', { message: err.message })"
+        )
+
         div(v-if="loaded")
-          div(v-if="drivers.length === 0") no drivers installed
+          v-alert(
+            v-if="drivers.length === 0"
+            icon="priority_high",
+            color="warning",
+            value="true"
+          ) no drivers installed
 
           v-form(v-else)
             v-select(
@@ -28,6 +41,18 @@
                   )
                 v-list-tile-content
                   v-list-tile-title {{ data.item.name }}
+
+            login-form(
+              :form="loginForm",
+              :input="model.connection"
+            )
+
+            .text-xs-centers
+              v-btn(
+                block,
+                color="primary",
+                @click="login"
+              ) {{ $t('buttons:LOGIN') }}
 </template>
 
 <script>
@@ -38,10 +63,18 @@
   /* Node modules */
 
   /* Third-party modules */
+  import { remote } from 'electron';
 
   /* Files */
+  import loginForm from '../components/login.vue';
+
+  const { logger } = remote.app;
 
   export default {
+
+    components: {
+      loginForm,
+    },
 
     created () {
       this.fetchData();
@@ -49,15 +82,30 @@
 
     data () {
       return {
+        active: null,
         drivers: [],
+        err: null,
         loaded: false,
+        loginForm: [],
         model: {
+          connection: {},
           driver: null,
         },
       };
     },
 
     methods: {
+      changeDriver (driver) {
+        this.active = this.drivers.find(({ id }) => id === driver);
+
+        this.loginForm = this.active.getLoginForm();
+
+        this.model.connection = this.loginForm.reduce((result, item) => {
+          result[item.key] = item.default || null;
+          return result;
+        }, {});
+      },
+
       fetchData () {
         return this.$store.dispatch('drivers/loadAll')
           .then((drivers) => {
@@ -69,10 +117,39 @@
             }
           });
       },
+
+      login () {
+        const model = {
+          driver: this.model.driver,
+          connection: this.model.connection,
+        };
+
+        logger.trigger('trace', 'New connection attempt', model);
+
+        return this.active.connect(this.model.connection)
+          .then(() => {
+            logger.trigger('trace', 'Connection succeeded', model);
+
+            return this.$store.dispatch('connections/save', model);
+          })
+          .then(id => this.$router.push({
+            name: 'query',
+            params: {
+              id,
+            },
+          }))
+          .catch((err) => {
+            model.err = err;
+            logger.trigger('warn', 'Connection failed', model);
+
+            this.err = err;
+          });
+      },
     },
 
     watch: {
       $route: 'fetchData',
+      'model.driver': 'changeDriver',
     },
 
   };
