@@ -1,5 +1,5 @@
 <template lang="jade">
-  div
+  v-container
     h1 hello world
 
     v-layout(row wrap)

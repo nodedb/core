@@ -1,5 +1,5 @@
 <template lang="jade">
-    div query {{ id }}
+  div hello herehrererhereheoh ewrjh eowurh e
 </template>
 
 <script>
@@ -12,8 +12,13 @@
   /* Third-party modules */
 
   /* Files */
+  import sidebar from '../components/sidebar.vue';
 
   export default {
+
+    components: {
+      sidebar,
+    },
 
     data () {
       return {
