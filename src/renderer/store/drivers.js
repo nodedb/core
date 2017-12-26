@@ -119,10 +119,9 @@ export default {
      * Returns the file name for where the drivers
      * are stored.
      */
-    fileName () {
+    fileName (state, getters) {
       const args = [
-        remote.app.getPath('userData'),
-        remote.app.getName(),
+        getters.pathName,
         'drivers.json',
       ];
 
