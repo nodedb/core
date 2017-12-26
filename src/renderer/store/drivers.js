@@ -95,6 +95,7 @@ export default {
             strategy = strategy.default;
           }
 
+          /* Create instance of driver class */
           const driver = new Driver(id, strategy);
 
           result.push(driver);

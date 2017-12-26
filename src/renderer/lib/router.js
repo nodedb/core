@@ -9,8 +9,8 @@ import Vue from 'vue/dist/vue.min';
 import VueRouter from 'vue-router';
 
 /* Files */
-import layoutFullWidth from '../components/layoutFullWidth.vue';
-import login from '../components/login.vue';
+import layoutFullWidth from '../layouts/fullWidth.vue';
+import login from '../pages/login.vue';
 
 Vue.use(VueRouter);
 
