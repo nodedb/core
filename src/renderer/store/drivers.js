@@ -138,8 +138,6 @@ export default {
     },
   },
 
-  mutations: {},
-
   state: [],
 
 };
