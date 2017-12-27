@@ -1,6 +1,7 @@
 <template lang="jade">
   v-app(dark)
     v-navigation-drawer(
+      v-if="connections.length > 0",
       clipped,
       fixed,
       permanent,
@@ -60,6 +61,7 @@
 
     data () {
       return {
+        connections: this.$store.getters['connections/state'],
         dark: false,
         mini: true,
       };
