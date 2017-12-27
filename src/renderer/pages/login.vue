@@ -14,11 +14,11 @@
 
       div(v-if="loaded")
         v-alert(
-          v-if="drivers.length === 0"
+          v-if="drivers.length !== 0"
           icon="priority_high",
           color="warning",
           value="true"
-        ) no drivers installed
+        ) {{ $t('errors:NO_DRIVERS_INSTALLED') }}
 
         v-form(v-else)
           v-select(

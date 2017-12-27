@@ -1,3 +1,4 @@
 {
-  "CONNECTION": "Connection error: {{message}}"
+  "CONNECTION": "Connection error: {{message}}",
+  "NO_DRIVERS_INSTALLED": "No drivers installed"
 }
