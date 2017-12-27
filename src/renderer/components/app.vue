@@ -34,7 +34,6 @@
     v-content
       v-container(
         fluid
-        fill-height
         grid-list-md
       )
         v-layout(row wrap)
