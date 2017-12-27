@@ -1,58 +1,58 @@
 <template lang="jade">
-  v-container
-    h1 hello world
+  v-layout(wrap row)
+    v-flex(xs-12)
+      h1 hello world
 
-    v-layout(row wrap)
-      v-flex(xs6 offset-xs3)
+    v-flex(xs-12)
+      v-alert(
+        v-if="err",
+        color="error",
+        icon="warning",
+        value="true",
+        v-html="$t('errors:CONNECTION', { message: err.message })"
+      )
+
+      div(v-if="loaded")
         v-alert(
-          v-if="err",
-          color="error",
-          icon="warning",
-          value="true",
-          v-html="$t('errors:CONNECTION', { message: err.message })"
-        )
+          v-if="drivers.length === 0"
+          icon="priority_high",
+          color="warning",
+          value="true"
+        ) no drivers installed
 
-        div(v-if="loaded")
-          v-alert(
-            v-if="drivers.length === 0"
-            icon="priority_high",
-            color="warning",
-            value="true"
-          ) no drivers installed
-
-          v-form(v-else)
-            v-select(
-              :label="$t('forms:DRIVER_LABEL')",
-              :items="drivers",
-              item-avatar="logo",
-              item-text="name",
-              item-value="id",
-              v-model="model.driver",
-              single-line,
-              bottom
+        v-form(v-else)
+          v-select(
+            :label="$t('forms:DRIVER_LABEL')",
+            :items="drivers",
+            item-avatar="logo",
+            item-text="name",
+            item-value="id",
+            v-model="model.driver",
+            single-line,
+            bottom
+          )
+            template(
+              slot="item",
+              slot-scope="data"
             )
-              template(
-                slot="item",
-                slot-scope="data"
-              )
-                v-list-tile-avatar
-                  img(
-                    :src="data.item.logo || 'assets/img/logo.png'"
-                  )
-                v-list-tile-content
-                  v-list-tile-title {{ data.item.name }}
+              v-list-tile-avatar
+                img(
+                  :src="data.item.logo || 'assets/img/logo.png'"
+                )
+              v-list-tile-content
+                v-list-tile-title {{ data.item.name }}
 
-            login-form(
-              :form="loginForm",
-              :input="model.connection"
-            )
+          login-form(
+            :form="loginForm",
+            :input="model.connection"
+          )
 
-            .text-xs-centers
-              v-btn(
-                block,
-                color="primary",
-                @click="login"
-              ) {{ $t('buttons:LOGIN') }}
+          .text-xs-centers
+            v-btn(
+              block,
+              color="primary",
+              @click="login"
+            ) {{ $t('buttons:LOGIN') }}
 </template>
 
 <script>

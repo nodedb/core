@@ -34,8 +34,9 @@
       v-container(
         fluid
         fill-height
+        grid-list-md
       )
-        v-layout
+        v-layout(row wrap)
           router-view
     v-footer(
       app

@@ -12,13 +12,7 @@
   /* Third-party modules */
 
   /* Files */
-  import sidebar from '../components/sidebar.vue';
-
   export default {
-
-    components: {
-      sidebar,
-    },
 
     data () {
       return {
