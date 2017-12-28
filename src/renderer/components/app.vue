@@ -69,7 +69,6 @@
 
     v-content
       v-tabs(
-        centered,
         v-model="activeId"
       )
         v-tabs-bar(
