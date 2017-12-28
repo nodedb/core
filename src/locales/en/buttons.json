@@ -1,3 +1,6 @@
 {
-  "LOGIN": "Login"
+  "CANCEL": "Cancel",
+  "CLOSE": "Close",
+  "LOGIN": "Login",
+  "OK": "Ok"
 }

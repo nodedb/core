@@ -22,6 +22,7 @@
 
     data () {
       return {
+        connection: undefined,
         id: null,
       };
     },
@@ -29,6 +30,16 @@
     methods: {
       fetchData () {
         this.id = this.$route.params.id;
+        this.connection = this.$store.getters['connections/getById'](this.id);
+
+        if (!this.connection) {
+          /* No connections available - to login page */
+          return this.$router.push({
+            name: 'login',
+          });
+        }
+
+        return undefined;
       },
     },
 

@@ -8,6 +8,7 @@
 import { _ } from 'lodash';
 import { remote } from 'electron';
 import uuid from 'uuid';
+import Vue from 'vue/dist/vue.min';
 
 /* Files */
 
@@ -24,11 +25,33 @@ try {
   });
 }
 
+function prepareState (state) {
+  /* Clone and remove the driver instance */
+  const newState = _.chain(state)
+    .cloneDeep()
+    .map(({ connection, id, name }) => ({
+      connection,
+      name,
+      id,
+    }))
+    .value();
+
+  return JSON.stringify(newState);
+}
+
 export default {
 
   namespaced: true,
 
   actions: {
+    removeById ({ commit, getters }, id) {
+      const index = getters.getIndexById(id);
+
+      commit('removeById', id);
+
+      return index;
+    },
+
     save ({ commit }, { connection, name }) {
       const id = uuid.v4();
 
@@ -43,7 +66,13 @@ export default {
   },
 
   getters: {
-    list: (connections, getters, states, globalGetters) => connections.map((item) => {
+    getById: (state, getters) => id => getters.list
+      .find(item => item.id === id),
+
+    getIndexById: (state, getters) => id => getters.list
+      .findIndex(item => item.id === id),
+
+    list: (state, getters, states, globalGetters) => state.connections.map((item) => {
       item.driver = globalGetters['drivers/load'](item.name);
       item.driver.setConnection(item.connection);
       return item;
@@ -52,22 +81,24 @@ export default {
 
   mutations: {
     add (state, newConnection) {
-      state.push(newConnection);
+      state.connections.push(newConnection);
 
-      /* Clone and remove the driver instance */
-      const newState = _.chain(state)
-        .cloneDeep()
-        .map(({ connection, id, name }) => ({
-          connection,
-          name,
-          id,
-        }))
-        .value();
+      const newState = prepareState(state.connections);
 
-      sessionStorage.setItem(stateKey, JSON.stringify(newState));
+      sessionStorage.setItem(stateKey, newState);
+    },
+
+    removeById (state, id) {
+      const newState = state.connections.filter(item => item.id !== id);
+
+      Vue.set(state, 'connections', newState);
+
+      sessionStorage.setItem(stateKey, prepareState(newState));
     },
   },
 
-  state: Array.isArray(connectionState) ? connectionState : [],
+  state: {
+    connections: Array.isArray(connectionState) ? connectionState : [],
+  },
 
 };
