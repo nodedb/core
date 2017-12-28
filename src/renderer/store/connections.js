@@ -5,6 +5,7 @@
 /* Node modules */
 
 /* Third-party modules */
+import { _ } from 'lodash';
 import { remote } from 'electron';
 import uuid from 'uuid';
 
@@ -28,12 +29,12 @@ export default {
   namespaced: true,
 
   actions: {
-    save ({ commit }, { connection, driver }) {
+    save ({ commit }, { connection, name }) {
       const id = uuid.v4();
 
       commit('add', {
         connection,
-        driver,
+        name,
         id,
       });
 
@@ -42,8 +43,8 @@ export default {
   },
 
   getters: {
-    state: (connections, getters, states, globalGetters) => connections.map((item) => {
-      item.driver = globalGetters['drivers/load'](item.driver);
+    list: (connections, getters, states, globalGetters) => connections.map((item) => {
+      item.driver = globalGetters['drivers/load'](item.name);
       item.driver.setConnection(item.connection);
       return item;
     }),
@@ -53,7 +54,17 @@ export default {
     add (state, newConnection) {
       state.push(newConnection);
 
-      sessionStorage.setItem(stateKey, JSON.stringify(state));
+      /* Clone and remove the driver instance */
+      const newState = _.chain(state)
+        .cloneDeep()
+        .map(({ connection, id, name }) => ({
+          connection,
+          name,
+          id,
+        }))
+        .value();
+
+      sessionStorage.setItem(stateKey, JSON.stringify(newState));
     },
   },
 

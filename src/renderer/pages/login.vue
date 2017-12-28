@@ -120,8 +120,8 @@
 
       login () {
         const model = {
-          driver: this.model.driver,
           connection: this.model.connection,
+          name: this.model.driver,
         };
 
         logger.trigger('trace', 'New connection attempt', model);

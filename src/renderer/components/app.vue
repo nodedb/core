@@ -96,7 +96,7 @@
               id: '@todo',
             },
           }),
-          conditional: () => this.connections.length > 0,
+          // conditional: () => this.connections.length > 0,
           icon: 'add',
           title: this.$i18n.t('pages:NEW_CONNECTION'),
         }, {
@@ -124,7 +124,7 @@
       },
 
       fetchData () {
-        this.connections = this.$store.getters['connections/state'];
+        this.connections = this.$store.getters['connections/list'];
       },
     },
 
