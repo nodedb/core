@@ -1,5 +1,5 @@
 {
   "CONFIRM_TITLE": "Are you sure?",
   "DISCONNECTION_ERROR": "Error disconnecting from this database",
-  "DISCONNECT_MESSAGE": "This will terminate your connection to {{ name }}."
+  "DISCONNECT_MESSAGE": "This will terminate your connection \"{{ name }}\"."
 }

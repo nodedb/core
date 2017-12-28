@@ -53,7 +53,7 @@
           ) {{ $t('buttons:CLOSE') }}
       v-card(v-else)
         v-card-title.headline {{ $t('modal:CONFIRM_TITLE') }}
-        v-card-text {{ $t('modal:DISCONNECT_MESSAGE', { name: '@todo' }) }}
+        v-card-text {{ $t('modal:DISCONNECT_MESSAGE', { name: getConnection(disconnectId).connectionName }) }}
         v-card-actions
           v-spacer
           v-btn(
@@ -92,7 +92,7 @@
                 slot="badge",
                 @click.self.prevent.stop="confirmDisconnection(item.id)"
               ) close
-              span {{ item.driver.name }}
+              span {{ item.connection.connectionName }}
 
           v-tabs-slider(color="yellow")
 
@@ -226,6 +226,14 @@
       fetchData () {
         this.connections = this.$store.getters['connections/list'];
         this.activeId = this.$route.params.id;
+      },
+
+      getConnection (id) {
+        try {
+          return this.$store.getters['connections/getById'](id).connection;
+        } catch (err) {
+          return {};
+        }
       },
     },
 
