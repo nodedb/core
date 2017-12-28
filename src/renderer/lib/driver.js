@@ -18,14 +18,17 @@ export default class Driver {
     this.inst = null;
   }
 
-  connect (connectionData) {
+  /**
+   * Connect
+   *
+   * Connects to the database
+   *
+   * @returns {Promise<void>}
+   */
+  connect () {
     /* Wrap in a promise */
     return Promise.resolve()
-      .then(() => {
-        this.setConnection(connectionData);
-
-        return this.inst.connect();
-      });
+      .then(() => this.inst.connect());
   }
 
   /**

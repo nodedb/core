@@ -1,7 +1,8 @@
 <template lang="jade">
-  v-app(dark)
+  v-app(
+    :dark="dark"
+  )
     v-navigation-drawer(
-      v-if="connections.length > 0",
       clipped,
       fixed,
       permanent,
@@ -9,26 +10,49 @@
       app
     )
       v-toolbar.transparent(flat)
-        v-list.pa-0
-          v-list-tile(avatar)
-            v-list-tile-avatar
-              img(
-                src="https://randomuser.me/api/portraits/men/85.jpg"
-              )
+        v-list
+          v-tooltip(right)
+            span {{ appName }}
+            v-list-tile(
+              avatar
+              slot="activator"
+            )
+              v-list-tile-avatar
+                img(
+                  src="https://randomuser.me/api/portraits/men/85.jpg"
+                )
 
-      v-list.pt-0(dense)
+      v-list.pt-0
+        v-divider
+
         v-tooltip(
           v-for="item in connections"
           right
         )
-          span spanky
+          span {{ item.driver.name }}
           v-list-tile(
-            slot="activator"
+            avatar
+            slot="activator",
+            @click="connection(item.id)"
           )
             v-list-tile-action
-              v-icon dashboard
-            v-list-tile-content
-              v-list-tile-title Dashboard
+              v-list-tile-avatar
+                img(
+                  :src="item.driver.logo"
+                )
+
+        v-tooltip(
+          right,
+          v-for="item in actions"
+          v-if="item.conditional ? item.conditional() : true"
+        )
+          span {{ item.title }}
+          v-list-tile(
+            slot="activator",
+            @click="item.action()"
+          )
+            v-list-tile-action
+              v-icon {{ item.icon }}
 
     v-content
       v-container(
@@ -37,6 +61,7 @@
       )
         v-layout(row wrap)
           router-view
+
     v-footer(
       app
       fixed
@@ -52,6 +77,7 @@
   /* Node modules */
 
   /* Third-party modules */
+  import { remote } from 'electron';
 
   /* Files */
 
@@ -63,12 +89,40 @@
 
     data () {
       return {
+        actions: [{
+          action: () => this.$router.push({
+            name: 'login',
+            query: {
+              id: '@todo',
+            },
+          }),
+          conditional: () => this.connections.length > 0,
+          icon: 'add',
+          title: this.$i18n.t('pages:NEW_CONNECTION'),
+        }, {
+          action: () => this.$router.push({
+            name: 'settings',
+          }),
+          icon: 'settings',
+          title: this.$i18n.t('pages:SETTINGS'),
+        }],
+        appName: remote.app.getName(),
         connections: [],
-        dark: false,
+        dark: true,
+        speedDial: false,
       };
     },
 
     methods: {
+      connection (id) {
+        return this.$router.push({
+          name: 'query',
+          params: {
+            id,
+          },
+        });
+      },
+
       fetchData () {
         this.connections = this.$store.getters['connections/state'];
       },

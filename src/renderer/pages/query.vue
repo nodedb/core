@@ -1,5 +1,5 @@
 <template lang="jade">
-  div hello world
+  div hello world {{ id }}
 </template>
 
 <script>
@@ -13,6 +13,8 @@
 
   /* Files */
   export default {
+
+    name: 'query',
 
     data () {
       return {

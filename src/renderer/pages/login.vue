@@ -70,6 +70,8 @@
 
   export default {
 
+    name: 'login',
+
     components: {
       loginForm,
     },
@@ -124,7 +126,8 @@
 
         logger.trigger('trace', 'New connection attempt', model);
 
-        return this.active.connect(this.model.connection)
+        return this.active.setConnection(this.model.connection)
+          .connect()
           .then(() => {
             logger.trigger('trace', 'Connection succeeded', model);
 
