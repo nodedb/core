@@ -18,7 +18,11 @@
             value="true"
           ) {{ $t('errors:NO_DRIVERS_INSTALLED') }}
 
-          v-form(v-else)
+          v-form(
+            v-else,
+            ref="form",
+            lazy-validation
+          )
             v-select(
               :label="$t('forms:DRIVER_LABEL')",
               :items="drivers",
@@ -41,6 +45,7 @@
                   v-list-tile-title {{ data.item.name }}
 
             login-form(
+              :enter="login",
               :form="loginForm",
               :input="model.connection"
             )
@@ -89,6 +94,7 @@
         loginForm: [],
         model: {
           connection: {},
+          name: null,
           driver: null,
         },
       };
@@ -119,6 +125,10 @@
       },
 
       login () {
+        if (!this.$refs.form.validate()) {
+          return false;
+        }
+
         const model = {
           connection: this.model.connection,
           name: this.model.driver,

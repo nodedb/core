@@ -11,7 +11,10 @@
         :append-icon-cb="item.type === 'password' ? (() => visible[item.key] = !visible[item.key]) : item.append-icon-cb",
         :suffix="item.suffix",
         :prefix="item.prefix",
-        :type="item.type === 'password' ? (visible[item.key] ? 'text' : 'password') : item.type"
+        :type="item.type === 'password' ? (visible[item.key] ? 'text' : 'password') : item.type",
+        :required="item.required === true",
+        :rules="getRules(item)",
+        @keyup.enter="enter",
         v-model="input[item.key]"
       )
 </template>
@@ -33,6 +36,11 @@
 
     data () {
       return {
+        rules: {
+          required: item => value => !!value || this.$i18n.t('rules:REQUIRED', {
+            name: this.$i18n.t(`connection:${item.label}`),
+          }),
+        },
         types: {
           text: [
             'text',
@@ -50,12 +58,27 @@
     },
 
     methods: {
+      getRules (item) {
+        const rules = [];
+
+        if (item.required === true) {
+          rules.push(this.rules.required(item));
+        }
+
+        return rules;
+      },
+
       isTextField (type) {
         return this.types.text.includes(type);
       },
     },
 
     props: {
+      enter: {
+        required: true,
+        type: Function,
+      },
+
       form: {
         required: true,
         type: Array,
