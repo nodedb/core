@@ -16,10 +16,24 @@
 
     name: 'query',
 
+    created () {
+      this.fetchData();
+    },
+
     data () {
       return {
-        id: this.$route.params.id,
+        id: null,
       };
+    },
+
+    methods: {
+      fetchData () {
+        this.id = this.$route.params.id;
+      },
+    },
+
+    watch: {
+      $route: 'fetchData',
     },
 
   };
