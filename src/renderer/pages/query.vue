@@ -1,5 +1,5 @@
 <template lang="jade">
-  div hello herehrererhereheoh ewrjh eowurh e
+  div hello world
 </template>
 
 <script>

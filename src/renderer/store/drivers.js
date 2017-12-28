@@ -80,31 +80,10 @@ export default {
 
         return data;
       }).then(data => data.reduce((result, id) => {
-        const args = [
-          this.getters['drivers/pathName'],
-          id,
-        ];
+        const driver = this.getters['drivers/load'](id);
 
-        const strategyPath = path.join(...args);
-
-        try {
-          // eslint-disable-next-line global-require,import/no-dynamic-require
-          let strategy = require(strategyPath);
-
-          if (strategy.default) {
-            strategy = strategy.default;
-          }
-
-          /* Create instance of driver class */
-          const driver = new Driver(id, strategy);
-
+        if (driver) {
           result.push(driver);
-        } catch (err) {
-          logger.trigger('debug', 'Error loading driver', {
-            err,
-            driver: id,
-            strategyPath,
-          });
         }
 
         return result;
@@ -128,6 +107,47 @@ export default {
       return path.join(...args);
     },
 
+    /**
+     * Load
+     *
+     * Loads a specific driver
+     *
+     * @param {*} state
+     * @param {*} getters
+     * @returns {function({string}={object})}
+     */
+    load (state, getters) {
+      return (id) => {
+        const args = [
+          getters.pathName,
+          id,
+        ];
+
+        const strategyPath = path.join(...args);
+
+        let driver = null;
+        try {
+          // eslint-disable-next-line global-require,import/no-dynamic-require
+          let strategy = require(strategyPath);
+
+          if (strategy.default) {
+            strategy = strategy.default;
+          }
+
+          /* Create instance of driver class */
+          driver = new Driver(id, strategy);
+        } catch (err) {
+          logger.trigger('debug', 'Error loading driver', {
+            err,
+            driver: id,
+            strategyPath,
+          });
+        }
+
+        return driver;
+      };
+    },
+
     pathName () {
       const args = [
         remote.app.getPath('userData'),
@@ -138,6 +158,6 @@ export default {
     },
   },
 
-  state: [],
+  state: new Map(),
 
 };

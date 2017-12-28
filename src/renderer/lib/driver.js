@@ -22,9 +22,7 @@ export default class Driver {
     /* Wrap in a promise */
     return Promise.resolve()
       .then(() => {
-        const Strategy = this.strategy;
-
-        this.inst = new Strategy(connectionData);
+        this.setConnection(connectionData);
 
         return this.inst.connect();
       });
@@ -45,5 +43,23 @@ export default class Driver {
     }
 
     return [];
+  }
+
+  /**
+   * Set Connection
+   *
+   * Creates a new instance of the strategy with
+   * the connection data set to it. This allows
+   * us to interact with the database
+   *
+   * @param {*} connectionData
+   * @returns {Driver}
+   */
+  setConnection (connectionData) {
+    const Strategy = this.strategy;
+
+    this.inst = new Strategy(connectionData);
+
+    return this;
   }
 }

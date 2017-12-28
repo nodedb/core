@@ -5,7 +5,7 @@
       clipped,
       fixed,
       permanent,
-      :mini-variant.sync="mini",
+      mini-variant,
       app
     )
       v-toolbar.transparent(flat)
@@ -15,21 +15,20 @@
               img(
                 src="https://randomuser.me/api/portraits/men/85.jpg"
               )
-            v-list-tile-content
-              v-list-tile-title hello world
-            v-list-tile-action
-              v-btn(
-                icon
-                @click.native.stop="mini = !mini"
-              )
-                v-icon chevron_left
 
       v-list.pt-0(dense)
-        v-list-tile(@click="")
-          v-list-tile-action
-            v-icon dashboard
-          v-list-tile-content
-            v-list-tile-title Dashboard
+        v-tooltip(
+          v-for="item in connections"
+          right
+        )
+          span spanky
+          v-list-tile(
+            slot="activator"
+          )
+            v-list-tile-action
+              v-icon dashboard
+            v-list-tile-content
+              v-list-tile-title Dashboard
 
     v-content
       v-container(
@@ -62,8 +61,10 @@
       return {
         connections: this.$store.getters['connections/state'],
         dark: false,
-        mini: true,
       };
+    },
+
+    methods: {
     },
 
   };

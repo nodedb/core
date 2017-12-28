@@ -42,7 +42,11 @@ export default {
   },
 
   getters: {
-    state: state => state,
+    state: (connections, getters, states, globalGetters) => connections.map((item) => {
+      item.driver = globalGetters['drivers/load'](item.driver);
+      item.driver.setConnection(item.connection);
+      return item;
+    }),
   },
 
   mutations: {
