@@ -1,4 +1,5 @@
 {
+  "CONNECTION_NAME": "Name",
   "HOST": "Host",
   "PASSWORD": "Password",
   "PORT": "Port",

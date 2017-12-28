@@ -94,7 +94,6 @@
         loginForm: [],
         model: {
           connection: {},
-          name: null,
           driver: null,
         },
       };
@@ -105,6 +104,14 @@
         this.active = this.drivers.find(({ id }) => id === driver);
 
         this.loginForm = this.active.getLoginForm();
+
+        /* Add in the connect name */
+        this.loginForm.unshift({
+          label: 'CONNECTION_NAME',
+          key: 'connectionName',
+          type: 'text',
+          required: true,
+        });
 
         this.model.connection = this.loginForm.reduce((result, item) => {
           result[item.key] = item.default || null;
