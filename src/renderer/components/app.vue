@@ -57,14 +57,25 @@
 
   export default {
 
+    created () {
+      this.fetchData();
+    },
+
     data () {
       return {
-        connections: this.$store.getters['connections/state'],
+        connections: [],
         dark: false,
       };
     },
 
     methods: {
+      fetchData () {
+        this.connections = this.$store.getters['connections/state'];
+      },
+    },
+
+    watch: {
+      $route: 'fetchData',
     },
 
   };
