@@ -51,7 +51,8 @@
             flat="flat",
             @click.native="disconnectModal = false"
           ) {{ $t('buttons:CLOSE') }}
-      v-card(v-else)
+
+      v-card(v-else-if="!disconnectError && disconnectModal")
         v-card-title.headline {{ $t('modal:CONFIRM_TITLE') }}
         v-card-text {{ $t('modal:DISCONNECT_MESSAGE', { name: getConnection(disconnectId).connectionName }) }}
         v-card-actions
