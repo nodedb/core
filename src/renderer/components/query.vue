@@ -1,8 +1,11 @@
 <template lang="jade">
-  div.query_input(
-    :class="'query_input--' + lang",
-    :style="{ height: height ? px(height) : '100%', width: width ? px(width) : '100%' }"
-  )
+  div
+    .query_input(
+      :class="'query_input--' + lang",
+      :style="{ height: height ? px(height) : '100%', width: width ? px(width) : '100%' }",
+      @keyup="execute"
+    )
+    slot(name="buttons")
 </template>
 
 <script>
@@ -29,7 +32,8 @@
 
     methods: {
       createEditor () {
-        this.editor = ace.edit(this.$el);
+        const element = this.$el.getElementsByClassName('query_input')[0];
+        this.editor = ace.edit(element);
 
         try {
           // eslint-disable-next-line global-require, import/no-dynamic-require
@@ -56,12 +60,32 @@
           this.editor.moveCursorToPosition(this.cursor);
         }
 
+        if (this.focus) {
+          this.editor.focus();
+        }
+
         this.editor.on('change', () => {
           const cursor = this.editor.getCursorPosition();
           const query = this.editor.getValue();
           this.$emit('update:cursor', cursor);
           this.$emit('input', query);
         });
+      },
+
+      execute (event) {
+        try {
+          const valid = this.executeOn.find((target) => {
+            const keys = Object.keys(target);
+
+            return keys.every(key => target[key] === event[key]);
+          });
+
+          if (valid) {
+            this.$emit('execute');
+          }
+        } catch (err) {
+          throw new Error('Unable to process the execution event - check the executeOn property');
+        }
       },
 
       px (value) {
@@ -79,6 +103,23 @@
     props: {
       cursor: {
         type: Object,
+      },
+
+      executeOn: {
+        type: Array,
+        default: () => [{
+          /* F5 */
+          keyCode: 116,
+        }, {
+          /* Ctrl + Enter */
+          keyCode: 13,
+          ctrlKey: true,
+        }],
+      },
+
+      focus: {
+        type: Boolean,
+        default: true,
       },
 
       fontSize: {
@@ -122,7 +163,7 @@
   };
 </script>
 
-<style lang="scss">
+<style lang="scss" scope>
 
   .query_input {
 
