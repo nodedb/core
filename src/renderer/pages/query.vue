@@ -3,11 +3,19 @@
     tree.db-tree(
       :style="'width: ' + treeWidth + 'px;'"
     )
-    query-builder.query-builder(
-      :style="'left: ' + treeWidth + 'px; height: ' + queryHeight + 'px;'"
+
+    #tree-width.grey.darken-4(
+      @click="resize",
+      :style="'left: ' + treeWidth + 'px; width: ' + borderWidth + 'px;'"
     )
+
+    query-builder.query-builder(
+      :style="'left: ' + (treeWidth + borderWidth) + 'px; height: ' + queryHeight + 'px;'",
+      :value="query"
+    )
+
     result.query-result(
-      :style="'left: ' + treeWidth + 'px; top: ' + queryHeight + 'px;'"
+      :style="'left: ' + (treeWidth + borderWidth) + 'px; top: ' + queryHeight + 'px;'"
     )
 </template>
 
@@ -41,10 +49,12 @@
 
     data () {
       return {
+        borderWidth: 5,
         connection: undefined,
+        id: null,
+        query: 'select\n\t*\nfrom\n\ttable_name\nwhere\n\tvalue = 2',
         queryHeight: 250,
         treeWidth: 250,
-        id: null,
       };
     },
 
@@ -61,6 +71,10 @@
         }
 
         return undefined;
+      },
+
+      resize () {
+        // @todo
       },
     },
 
@@ -81,6 +95,14 @@
     left: 81px;
     right: 0;
     bottom: 36px;
+
+    #tree-width {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 5px;
+      cursor: ew-resize;
+    }
 
     .db-tree {
       position: absolute;

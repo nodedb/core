@@ -79,8 +79,8 @@ acorn@^3.0.4:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-3.3.0.tgz#45e37fb39e8da3f25baee3ff5369e2bb5f22017a"
 
 acorn@^5.2.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.2.1.tgz#317ac7821826c22c702d66189ab8359675f135d7"
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.3.0.tgz#7446d39459c54fb49a80e6ee6478149b940ec822"
 
 ajv-keywords@^2.1.0:
   version "2.1.1"
@@ -943,6 +943,10 @@ brace-expansion@^1.1.7:
   dependencies:
     balanced-match "^1.0.0"
     concat-map "0.0.1"
+
+brace@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/brace/-/brace-0.11.0.tgz#155cd80607687dc8cb908f0df94e62a033c1d563"
 
 braces@^1.8.2:
   version "1.8.5"
@@ -3552,8 +3556,8 @@ mksnapshot@^0.3.0:
     request "^2.79.0"
 
 mocha@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/mocha/-/mocha-4.0.1.tgz#0aee5a95cf69a4618820f5e51fa31717117daf1b"
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/mocha/-/mocha-4.1.0.tgz#7d86cfbcf35cb829e2754c32e17355ec05338794"
   dependencies:
     browser-stdout "1.3.0"
     commander "2.11.0"
@@ -3667,8 +3671,8 @@ nodeify@^1.0.1:
     promise "~1.3.0"
 
 nodemon@^1.14.3:
-  version "1.14.3"
-  resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.14.3.tgz#f08d66726fb9876d76956b57cc91624793de4dbb"
+  version "1.14.5"
+  resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.14.5.tgz#0fc1ad9f325f7923d71c3f0ab0da1c6ba46822e5"
   dependencies:
     chokidar "^1.7.0"
     debug "^2.6.8"
@@ -5434,8 +5438,8 @@ vueify@^9.4.1:
     vue-template-es2015-compiler "^1.2.2"
 
 vuetify@^0.17.5:
-  version "0.17.5"
-  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-0.17.5.tgz#3dc03471ed1af72501284fa1b43c2327756bea2f"
+  version "0.17.6"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-0.17.6.tgz#09197c0baba675a13ea749e326ff47df367b21a8"
 
 vuex@^3.0.1:
   version "3.0.1"
