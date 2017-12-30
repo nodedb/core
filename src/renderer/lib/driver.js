@@ -21,14 +21,23 @@ export default class Driver {
   /**
    * Connect
    *
-   * Connects to the database
+   * Connects to the database. Will automatically
+   * disconnect afterwards.
    *
+   * @param {boolean} disconnect
    * @returns {Promise<void>}
    */
-  connect () {
+  connect (disconnect = true) {
     /* Wrap in a promise */
     return Promise.resolve()
-      .then(() => this.inst.connect());
+      .then(() => this.inst.connect())
+      .then((connection) => {
+        if (disconnect) {
+          return this.inst.disconnect(connection);
+        }
+
+        return undefined;
+      });
   }
 
   /**
@@ -46,6 +55,11 @@ export default class Driver {
     }
 
     return [];
+  }
+
+  query (query) {
+    return Promise.resolve()
+      .then(() => this.inst.query(query));
   }
 
   /**

@@ -10,11 +10,23 @@
     )
 
     query-builder.query-builder(
+      v-model="query",
+      :cursor.sync="cursor",
+      v-on:execute="execute",
       :style="'left: ' + (treeWidth + borderWidth) + 'px; height: ' + queryHeight + 'px;'",
-      :value="query"
     )
+      div(slot="buttons")
+        v-btn.execute_button(
+          color="primary",
+          absolute,
+          fab,
+          bottom,
+          right
+          @click="execute"
+        )
+          v-icon send
 
-    result.query-result(
+    query-result.query-result(
       :style="'left: ' + (treeWidth + borderWidth) + 'px; top: ' + queryHeight + 'px;'"
     )
 </template>
@@ -30,7 +42,7 @@
 
   /* Files */
   import queryBuilder from '../components/query.vue';
-  import result from '../components/result.vue';
+  import queryResult from '../components/result.vue';
   import tree from '../components/tree.vue';
 
   export default {
@@ -39,7 +51,7 @@
 
     components: {
       queryBuilder,
-      result,
+      queryResult,
       tree,
     },
 
@@ -51,14 +63,29 @@
       return {
         borderWidth: 5,
         connection: undefined,
+        cursor: null,
         id: null,
-        query: 'select\n\t*\nfrom\n\ttable_name\nwhere\n\tvalue = 2',
+        query: 'select * from users AS u1 JOIN users AS u2',
         queryHeight: 250,
         treeWidth: 250,
       };
     },
 
     methods: {
+      execute () {
+        return this.connection.driver.query(this.query)
+          .then((result) => {
+            console.log({
+              execute: result,
+            });
+          })
+          .catch((err) => {
+            console.log({
+              err,
+            });
+          });
+      },
+
       fetchData () {
         this.id = this.$route.params.id;
         this.connection = this.$store.getters['connections/getById'](this.id);
@@ -117,6 +144,10 @@
       top: 0;
       right: 0;
       overflow: auto;
+
+      .execute_button {
+        bottom: 16px; // Same as the "right"
+      }
     }
 
     .query-result {
