@@ -6,6 +6,7 @@
 
 /* Third-party modules */
 import { remote } from 'electron';
+import bunyan from 'bunyan';
 
 /* Files */
 
@@ -27,6 +28,13 @@ export default (level, message, data = {}, ...additional) => {
     message,
     data,
     additional,
+  });
+
+  /* Serialize the error - as the app is a different process, it can't do it */
+  Object.keys(data).forEach((key) => {
+    const value = data[key];
+
+    data[key] = bunyan.stdSerializers.err(value);
   });
 
   /* Record the log as normal */
