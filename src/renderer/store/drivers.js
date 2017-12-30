@@ -13,6 +13,7 @@ import { remote } from 'electron';
 import Driver from '../lib/driver';
 import logger from '../lib/logger';
 
+const appName = remote.app.getName();
 
 export default {
 
@@ -112,36 +113,55 @@ export default {
      *
      * Loads a specific driver
      *
-     * @param {*} state
-     * @param {*} getters
-     * @returns {function({string}={object})}
+     * The
+     *
+     * @param state
+     * @returns {function(*=)}
      */
-    load (state, getters) {
+    load (state) {
       return (id) => {
-        const args = [
-          getters.pathName,
-          id,
-        ];
+        const moduleName = `@${appName}/drivers/${id}`;
 
-        const strategyPath = path.join(...args);
+        logger('trace', 'Loading driver strategy', {
+          module: moduleName,
+        });
 
         let driver = null;
-        try {
-          // eslint-disable-next-line global-require,import/no-dynamic-require
-          let strategy = require(strategyPath);
 
-          if (strategy.default) {
-            strategy = strategy.default;
-          }
-
-          /* Create instance of driver class */
-          driver = new Driver(id, strategy);
-        } catch (err) {
-          logger('debug', 'Error loading driver', {
-            err,
-            driver: id,
-            strategyPath,
+        if (state.has(moduleName)) {
+          logger('trace', 'Using cached version of module', {
+            module: moduleName,
           });
+
+          driver = state.get(moduleName);
+        } else {
+          logger('trace', 'Loading module', {
+            module: moduleName,
+          });
+
+          try {
+            // eslint-disable-next-line global-require,import/no-dynamic-require
+            let strategy = require(moduleName);
+
+            if (strategy.default) {
+              strategy = strategy.default;
+            }
+
+            state.set(moduleName, strategy);
+
+            /* Create instance of driver class */
+            driver = new Driver(id, strategy);
+
+            logger('trace', 'Module loaded successfully', {
+              module: moduleName,
+            });
+          } catch (err) {
+            logger('debug', 'Error loading driver', {
+              err,
+              driver: id,
+              module: moduleName,
+            });
+          }
         }
 
         return driver;
@@ -151,7 +171,7 @@ export default {
     pathName () {
       const args = [
         remote.app.getPath('userData'),
-        remote.app.getName(),
+        appName,
       ];
 
       return path.join(...args);
