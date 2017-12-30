@@ -121,8 +121,7 @@
   import { remote } from 'electron';
 
   /* Files */
-
-  const { logger } = remote.app;
+  import logger from '../lib/logger';
 
   export default {
 
@@ -168,14 +167,14 @@
       disconnect () {
         const id = this.disconnectId;
 
-        logger.trigger('trace', 'Disconnecting from database', {
+        logger('trace', 'Disconnecting from database', {
           id,
           connection: this.connections[id],
         });
 
         return this.$store.dispatch('connections/removeById', id)
           .then((index) => {
-            logger.trigger('trace', 'Disconnected from database', {
+            logger('trace', 'Disconnected from database', {
               id,
               connection: this.connections[id],
             });
@@ -212,7 +211,7 @@
             return undefined;
           })
           .catch((err) => {
-            logger.trigger('error', 'Error disconnecting from database', {
+            logger('error', 'Error disconnecting from database', {
               id,
               connection: this.connections[id],
               err,

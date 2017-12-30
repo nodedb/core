@@ -66,12 +66,10 @@
   /* Node modules */
 
   /* Third-party modules */
-  import { remote } from 'electron';
 
   /* Files */
+  import logger from '../lib/logger';
   import loginForm from '../components/login.vue';
-
-  const { logger } = remote.app;
 
   export default {
 
@@ -141,12 +139,12 @@
           name: this.model.driver,
         };
 
-        logger.trigger('trace', 'New connection attempt', model);
+        logger('trace', 'New connection attempt', model);
 
         return this.active.setConnection(this.model.connection)
           .connect()
           .then(() => {
-            logger.trigger('trace', 'Connection succeeded', model);
+            logger('trace', 'Connection succeeded', model);
 
             return this.$store.dispatch('connections/save', model);
           })
@@ -158,7 +156,7 @@
           }))
           .catch((err) => {
             model.err = err;
-            logger.trigger('warn', 'Connection failed', model);
+            logger('warn', 'Connection failed', model);
 
             this.err = err;
           });

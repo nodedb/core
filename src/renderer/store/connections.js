@@ -6,13 +6,11 @@
 
 /* Third-party modules */
 import { _ } from 'lodash';
-import { remote } from 'electron';
 import uuid from 'uuid';
 import Vue from 'vue/dist/vue.min';
 
 /* Files */
-
-const { logger } = remote.app;
+import logger from '../lib/logger';
 
 const stateKey = 'connections';
 
@@ -20,7 +18,7 @@ let connectionState = sessionStorage.getItem(stateKey);
 try {
   connectionState = JSON.parse(connectionState);
 } catch (err) {
-  logger.trigger('error', 'Connection data in unknown state', {
+  logger('error', 'Connection data in unknown state', {
     err,
   });
 }

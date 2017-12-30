@@ -11,8 +11,8 @@ import { remote } from 'electron';
 
 /* Files */
 import Driver from '../lib/driver';
+import logger from '../lib/logger';
 
-const { logger } = remote.app;
 
 export default {
 
@@ -29,7 +29,7 @@ export default {
     loadAll () {
       const fileName = this.getters['drivers/fileName'];
 
-      logger.trigger('trace', 'Load all drivers', {
+      logger('trace', 'Load all drivers', {
         fileName,
       });
 
@@ -38,14 +38,14 @@ export default {
           if (err) {
             if (err.code === 'ENOENT') {
               /* File doesn't exist - empty array */
-              logger.trigger('trace', 'File doesn\'t exist', {
+              logger('trace', 'File doesn\'t exist', {
                 fileName,
               });
 
               return resolve([]);
             }
 
-            logger.trigger('error', 'Error loading drivers', {
+            logger('error', 'Error loading drivers', {
               err,
               fileName,
             });
@@ -62,7 +62,7 @@ export default {
           data = JSON.parse(result);
 
           if (!Array.isArray(data)) {
-            logger.trigger('debug', 'Driver list is not an array', {
+            logger('debug', 'Driver list is not an array', {
               data,
             });
 
@@ -70,7 +70,7 @@ export default {
           }
         } catch (err) {
           /* Unable to cast to array */
-          logger.trigger('debug', 'Drivers list is not valid JSON', {
+          logger('debug', 'Drivers list is not valid JSON', {
             err,
             data: result,
           });
@@ -137,7 +137,7 @@ export default {
           /* Create instance of driver class */
           driver = new Driver(id, strategy);
         } catch (err) {
-          logger.trigger('debug', 'Error loading driver', {
+          logger('debug', 'Error loading driver', {
             err,
             driver: id,
             strategyPath,
