@@ -126,14 +126,14 @@ export default {
           module: moduleName,
         });
 
-        let driver = null;
+        let strategy = null;
 
         if (state.has(moduleName)) {
           logger('trace', 'Using cached version of module', {
             module: moduleName,
           });
 
-          driver = state.get(moduleName);
+          strategy = state.get(moduleName);
         } else {
           logger('trace', 'Loading module', {
             module: moduleName,
@@ -141,16 +141,13 @@ export default {
 
           try {
             // eslint-disable-next-line global-require,import/no-dynamic-require
-            let strategy = require(moduleName);
+            strategy = require(moduleName);
 
             if (strategy.default) {
               strategy = strategy.default;
             }
 
             state.set(moduleName, strategy);
-
-            /* Create instance of driver class */
-            driver = new Driver(id, strategy);
 
             logger('trace', 'Module loaded successfully', {
               module: moduleName,
@@ -164,7 +161,12 @@ export default {
           }
         }
 
-        return driver;
+        if (!strategy) {
+          return null;
+        }
+
+        /* Create instance of driver class */
+        return new Driver(id, strategy);
       };
     },
 
