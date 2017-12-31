@@ -1,5 +1,5 @@
 <template lang="jade">
-  div result
+  div {{ value }}
 </template>
 
 <script>
@@ -16,6 +16,15 @@
   export default {
 
     name: 'result',
+
+    props: {
+
+      value: {
+        required: true,
+        type: Array,
+      },
+
+    },
 
   };
 </script>

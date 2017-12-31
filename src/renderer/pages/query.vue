@@ -27,7 +27,8 @@
           v-icon send
 
     query-result.query-result(
-      :style="'left: ' + (treeWidth + borderWidth) + 'px; top: ' + queryHeight + 'px;'"
+      :style="'left: ' + (treeWidth + borderWidth) + 'px; top: ' + queryHeight + 'px;'",
+      v-model="queryResult"
     )
 </template>
 
@@ -66,6 +67,7 @@
         cursor: null,
         id: null,
         query: 'select * from users AS u1 JOIN users AS u2',
+        queryResult: [],
         queryHeight: 250,
         treeWidth: 250,
       };
@@ -75,9 +77,7 @@
       execute () {
         return this.connection.driver.query(this.query)
           .then((result) => {
-            console.log({
-              execute: result,
-            });
+            this.queryResult = result;
           })
           .catch((err) => {
             console.log({
