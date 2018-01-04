@@ -23,7 +23,7 @@
     "package": "npm run -s clean && mkdir -p ./tmp && electron-packager-compile ./tmp nodedb --icon ./tmp/src/assets/img/logo.icns --all --out ./build --overwrite true",
     "package:local": "npm run compile && electron-packager-compile ./tmp nodedb --icon ./tmp/src/assets/img/logo.icns --out ./build --overwrite true",
     "postversion": "git push --tags && git push",
-    "serve": "node scripts/symlink-drivers && DEBUG=-electron-compile:* ENABLE_LIVE_RELOAD=true SHOW_DEV_TOOLS=true electron . | bunyan",
+    "serve": "node scripts/symlink-drivers || true && DEBUG=-electron-compile:* ENABLE_LIVE_RELOAD=true SHOW_DEV_TOOLS=true electron . | bunyan",
     "test": "npm run -s test:lint && npm run -s test:unit",
     "test:lint": "npm run -s test:lint:src && npm run -s test:lint:test",
     "test:lint:src": "eslint --ext .js,.vue src",
