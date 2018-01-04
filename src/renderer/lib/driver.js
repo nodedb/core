@@ -13,9 +13,25 @@ export default class Driver {
     this.id = id;
     this.strategy = strategy;
 
-    this.logo = this.strategy.logo;
-    this.name = this.strategy.name;
     this.inst = null;
+  }
+
+  get displayType () {
+    const { displayType } = this.strategy;
+
+    if (!Driver.displayTypes.includes(displayType)) {
+      return 'table';
+    }
+
+    return displayType;
+  }
+
+  get logo () {
+    return this.strategy.logo;
+  }
+
+  get name () {
+    return this.strategy.name;
   }
 
   /**
@@ -78,5 +94,20 @@ export default class Driver {
     this.inst = new Strategy(connectionData);
 
     return this;
+  }
+
+  /**
+   * Display Types
+   *
+   * Gets the display types we can support
+   *
+   * @returns {string[]}
+   */
+  static get displayTypes () {
+    return [
+      'document', // eg, MongoDB
+      'key-value', // eg, Redis
+      'table', // default type eg, MySQL, PostgreSQL
+    ];
   }
 }
