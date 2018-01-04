@@ -3,6 +3,7 @@
  */
 
 /* Node modules */
+const os = require('os');
 const path = require('path');
 
 /* Third-party modules */
@@ -11,14 +12,18 @@ const fs = require('fs-extra');
 /* Files */
 const pkg = require('../package');
 
+const configFiles = [
+  'Electron',
+  pkg.productName,
+];
 const projectPath = path.join(__dirname, '..');
 const target = path.join(projectPath, 'node_modules', `@${pkg.productName}`, 'drivers');
 const driverPath = path.join(projectPath, '..');
+const homeDir = os.homedir();
 
 const drivers = fs.readdirSync(driverPath);
 
 try {
-
   fs.mkdirpSync(target);
 
   const driversLinked = [];
@@ -43,6 +48,14 @@ try {
     fs.ensureSymlinkSync(fullDriverPath, fullTargetPath);
 
     driversLinked.push(driver);
+  });
+
+  const configData = JSON.stringify(driversLinked, null, 2);
+
+  configFiles.forEach((configFile) => {
+    const fileName = path.join(homeDir, '.config', configFile, pkg.productName, 'drivers.json');
+
+    fs.writeFileSync(fileName, `${configData}\n`);
   });
 
   console.log(`Linked ${driversLinked.length} driver(s)`);
