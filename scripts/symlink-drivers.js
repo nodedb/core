@@ -53,7 +53,10 @@ try {
   const configData = JSON.stringify(driversLinked, null, 2);
 
   configFiles.forEach((configFile) => {
-    const fileName = path.join(homeDir, '.config', configFile, pkg.productName, 'drivers.json');
+    const configDir = path.join(homeDir, '.config', configFile, pkg.productName);
+    fs.mkdirpSync(configDir);
+
+    const fileName = path.join(configDir, 'drivers.json');
 
     fs.writeFileSync(fileName, `${configData}\n`);
   });
