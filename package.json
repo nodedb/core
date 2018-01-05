@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "clean": "rm -Rf ./build ./dist ./tmp",
-    "ci": "npm run -s clean && npm run -s test && npm run -s compile",
+    "ci": "npm run -s clean && npm run -s test",
     "compile": "npm run -s clean && npm run -s copy && cp -Rf ./node_modules ./tmp && npm run -s compile:icns && (cd ./tmp && npm prune --production)",
     "compile:icns": "png2icons ./src/assets/img/logo.png ./tmp/src/assets/img/logo -icns",
     "copy": "mkdir -p ./tmp && cp -Rf ./src ./tmp/src && cp ./package.json ./tmp && cp ./.compilerc ./tmp",
@@ -20,7 +20,7 @@
     "dist:compress:win32": "cd build && zip -rq ../dist/win32.zip win32/ && cd ..",
     "dist:compress:win64": "cd build && zip -rq ../dist/win64.zip win64/ && cd ..",
     "dist:rename": "mv build/nodedb-darwin-x64 build/osx && mv build/nodedb-linux-armv7l build/armv7l && mv build/nodedb-linux-ia32 build/linux32 && mv build/nodedb-linux-x64 build/linux64 && mv build/nodedb-win32-ia32 build/win32 && mv build/nodedb-win32-x64 build/win64",
-    "package": "npm run -s clean && mkdir -p ./tmp && electron-packager-compile ./tmp nodedb --icon ./tmp/src/assets/img/logo.icns --all --out ./build --overwrite true",
+    "package": "npm run -s compile && electron-packager-compile ./tmp nodedb --icon ./tmp/src/assets/img/logo.icns --all --out ./build --overwrite true",
     "package:local": "npm run compile && electron-packager-compile ./tmp nodedb --icon ./tmp/src/assets/img/logo.icns --out ./build --overwrite true",
     "postversion": "git push --tags && git push",
     "serve": "node scripts/symlink-drivers || true && concurrently \"npm run -s serve:api\" \"npm run -s serve:app\"",
