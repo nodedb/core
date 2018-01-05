@@ -1,5 +1,23 @@
 {
-  "connections": [],
+  "connections": [{
+    "connection": {
+      "connectionName": "MongoDB 1",
+      "host": "localhost",
+      "port": 37017,
+      "username": null,
+      "password": null
+    },
+    "driver": "mongodb"
+  }, {
+    "connection": {
+      "connectionName": "MySQL 1",
+      "host": "localhost",
+      "port": 13306,
+      "username": "root",
+      "password": "q1w2e3r4"
+    },
+    "driver": "mysql"
+  }],
   "profile": {
     "username": "tester",
     "emailAddress": "test@test.com"
