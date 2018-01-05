@@ -1,5 +1,6 @@
 {
   "CONNECTION_NAME": "Name",
+  "DEFAULT_CONNECTION_NAME": "{{ driver }} Connection {{ number }}",
   "HOST": "Host",
   "PASSWORD": "Password",
   "PORT": "Port",

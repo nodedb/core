@@ -107,6 +107,10 @@
         this.loginForm.unshift({
           label: 'CONNECTION_NAME',
           key: 'connectionName',
+          default: this.$i18n.t('connection:DEFAULT_CONNECTION_NAME', {
+            driver: this.active.name,
+            number: 1, // @todo
+          }),
           type: 'text',
           required: true,
         });
