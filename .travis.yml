@@ -13,18 +13,11 @@ sudo: required
 cache:
   yarn: true
 
-before_script:
-- sudo dpkg --add-architecture i386
-- sudo add-apt-repository ppa:jonathonf/wine -y
-- sudo apt-get update -qq
-- sudo apt-get install wine32 -y
-- wine --version
-- export DISPLAY=:99.0;
-- sh -e /etc/init.d/xvfb start;
-
 script:
 - npm run -s ci
-- npm run -s dist
+- npm run package:osx && npm run installer:osx
+
+os: osx
 
 deploy:
   provider: releases
