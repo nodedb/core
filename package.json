@@ -21,7 +21,7 @@
     "dist:compress:win64": "cd build && zip -rq ../dist/win64.zip win64/ && cd ..",
     "dist:rename": "mv build/nodedb-darwin-x64 build/osx && mv build/nodedb-linux-armv7l build/armv7l && mv build/nodedb-linux-ia32 build/linux32 && mv build/nodedb-linux-x64 build/linux64 && mv build/nodedb-win32-ia32 build/win32 && mv build/nodedb-win32-x64 build/win64",
     "installer:deb": "docker build -t deb-builder -f builddeps/deb.Dockerfile . && docker run -it deb-builder",
-    "installer:osx": "electron-installer-dmg ./build/nodedb-darwin-x64/nodedb.app --icon=./tmp/src/assets/img/logo.icns NodeDB",
+    "installer:osx": "electron-installer-dmg ./build/nodedb-darwin-x64/nodedb.app --icon=./tmp/src/assets/img/logo.icns --out=./dist NodeDB",
     "installer:rpm": "",
     "installer:win": "",
     "package": "electron-packager-compile ./tmp nodedb --icon ./tmp/src/assets/img/logo.icns --platform=darwin,linux,win32 --arch=x64,armv7l,arm64 --out ./build --overwrite true",
