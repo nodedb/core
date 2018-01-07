@@ -16,7 +16,7 @@ cache:
 script:
 - npm run -s ci
 - npm run package:osx && npm run installer:osx
-- npm run package:linux && npm run installer:deb && npm run installer:rpm
+- npm run package:linux && npm run installer:linux
 
 os: osx
 

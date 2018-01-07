@@ -1,13 +1,18 @@
-FROM node:6
+FROM ubuntu:16.04
+
+ARG NODE_VERSION=6.12.3
 
 WORKDIR /opt/builder
-COPY build build
 COPY builddeps builddeps
-COPY src src
 
-RUN apt-get install -y rpmbuild \
-  && npm i -g electron-installer-redhat
+RUN apt-get update \
+  && apt-get install -y build-essential curl rpm \
+  && curl -sL https://deb.nodesource.com/setup_6.x | bash - \
+  && apt-get install -y nodejs \
+  && node --version \
+  && npm --version \
+  && npm i -g electron-installer-redhat electron-installer-debian
 
-VOLUME [ "/opt/builder/dist" ]
+VOLUME /opt/builder/build /opt/builder/dist
 
-CMD electron-installer-redhat --src build/nodedb-linux-x64 --dest dist/ --arch x86_64 --config ./builddeps/rpm-config.json
+CMD make -f builddeps/Makefile linux

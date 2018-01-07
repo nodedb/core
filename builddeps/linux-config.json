@@ -1,7 +1,7 @@
 {
   "name": "NodeDB",
   "dest": "dist/",
-  "icon": "src/assets/img/logo.png",
+  "icon": "build/nodedb-linux-x64/src/assets/img/logo.png",
   "categories": [
     "Programming"
   ]
