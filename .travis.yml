@@ -16,6 +16,7 @@ cache:
 script:
 - npm run -s ci
 - npm run package:osx && npm run installer:osx
+- npm run package:linux && npm run installer:deb && npm run installer:rpm
 
 os: osx
 
@@ -23,12 +24,7 @@ deploy:
   provider: releases
   api_key: todo
   file:
-  - dist/armv7l.tar.gz
-  - dist/osx.tar.gz
-  - dist/linux32.tar.gz
-  - dist/linux64.tar.gz
-  - dist/win32.zip
-  - dist/win64.zip
+  - dist/NodeDB.dmg
   skip_cleanup: true
   on:
     repo: nodedb/core

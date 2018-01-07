@@ -1,0 +1,8 @@
+{
+  "name": "NodeDB",
+  "dest": "dist/",
+  "icon": "src/assets/img/logo.png",
+  "categories": [
+    "Programming"
+  ]
+}
