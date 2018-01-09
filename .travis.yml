@@ -10,6 +10,9 @@ dist: trusty
 
 sudo: required
 
+services:
+- docker
+
 cache:
   yarn: true
 
