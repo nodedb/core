@@ -25,6 +25,8 @@ deploy:
   api_key: todo
   file:
   - dist/NodeDB.dmg
+  - dist/NodeDB-*.rpm
+  - dist/NodeDB-*.deb
   skip_cleanup: true
   on:
     repo: nodedb/core
