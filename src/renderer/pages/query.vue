@@ -11,9 +11,10 @@
 
     query-builder.query-builder(
       v-model="query",
+      :lang="connection.driver.lang",
       :cursor.sync="cursor",
       v-on:execute="execute",
-      :style="'left: ' + (treeWidth + borderWidth) + 'px; height: ' + queryHeight + 'px;'",
+      :style="'left: '  + (treeWidth + borderWidth) + 'px; height: ' + queryHeight + 'px;'",
     )
       div(slot="buttons")
         v-btn.execute_button(
@@ -65,9 +66,14 @@
         borderWidth: 5,
         connection: undefined,
         cursor: null,
+        db: 'sys',
         id: null,
-        query: 'select * from users AS u1 JOIN users AS u2',
-        queryResult: [],
+        query: 'select * from session',
+        queryResult: {
+          data: [],
+          info: null,
+          fields: [],
+        },
         queryHeight: 250,
         treeWidth: 250,
       };
@@ -75,9 +81,15 @@
 
     methods: {
       execute () {
-        return this.connection.driver.query(this.query)
-          .then((result) => {
-            this.queryResult = result;
+        return this.connection.driver.query(this.query, this.db)
+          .then(({ data = [], fields = [], info = {} }) => {
+            if (fields.length > 0) {
+              /* Show results is there are some fields */
+              this.queryResult = {
+                data,
+                fields,
+              };
+            }
           })
           .catch((err) => {
             console.log({
