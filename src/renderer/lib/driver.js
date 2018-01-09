@@ -26,6 +26,10 @@ export default class Driver {
     return displayType;
   }
 
+  get lang () {
+    return this.strategy.lang || 'sql';
+  }
+
   get logo () {
     return this.strategy.logo;
   }
@@ -37,23 +41,27 @@ export default class Driver {
   /**
    * Connect
    *
-   * Connects to the database. Will automatically
-   * disconnect afterwards.
+   * Connects to the database.
    *
-   * @param {boolean} disconnect
    * @returns {Promise<void>}
    */
-  connect (disconnect = true) {
+  connect () {
     /* Wrap in a promise */
     return Promise.resolve()
-      .then(() => this.inst.connect())
-      .then((connection) => {
-        if (disconnect) {
-          return this.inst.disconnect(connection);
-        }
+      .then(() => this.inst.connect());
+  }
 
-        return undefined;
-      });
+  /**
+   * Disconnect
+   *
+   * Terminates a connection
+   *
+   * @param {*} connection
+   * @returns {Promise<void>}
+   */
+  disconnect (connection) {
+    return Promise.resolve()
+      .then(() => this.inst.disconnect(connection));
   }
 
   /**
@@ -73,9 +81,41 @@ export default class Driver {
     return [];
   }
 
-  query (query) {
+  /**
+   * Query
+   *
+   * Makes a new query. This handles creating
+   * a connection to the DB and destroying the
+   * connection after we've finished with it.
+   * This does it after an error condition too.
+   *
+   * @param {string} query
+   * @param {string} db
+   * @returns {Promise<void>}
+   */
+  query (query, db = undefined) {
     return Promise.resolve()
-      .then(() => this.inst.query(query));
+      /* Get a new connection */
+      .then(() => this.connect())
+      .then(connection => Promise
+        .resolve()
+        .then(() => {
+          /* Connect to a DB */
+          if (!db) {
+            return undefined;
+          }
+
+          return this.setDb(connection, db);
+        })
+        /* Make the query */
+        .then(() => this.inst.query(connection, query))
+        /* Terminate the connection */
+        .catch(err => this.disconnect(connection)
+          /* Reject promise with the error */
+          .then(() => Promise.reject(err)))
+        .then(result => this.disconnect(connection)
+          /* Return the DB result */
+          .then(() => result)));
   }
 
   /**
@@ -94,6 +134,11 @@ export default class Driver {
     this.inst = new Strategy(connectionData);
 
     return this;
+  }
+
+  setDb (connection, db) {
+    return Promise.resolve()
+      .then(() => this.inst.setDb(connection, db));
   }
 
   /**

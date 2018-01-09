@@ -2,6 +2,10 @@
   user-select: none;
 }
 
+a {
+  outline: none !important;
+}
+
 @font-face {
   font-family: 'Material Icons';
   font-style: normal;
