@@ -29,7 +29,7 @@
     "serve": "node scripts/symlink-drivers || true && concurrently \"npm run -s serve:api\" \"npm run -s serve:app\"",
     "serve:api": "json-server --watch ./api/db.json",
     "serve:app": "DEBUG=-electron-compile:* API_URL=http://localhost:3000 ENABLE_LIVE_RELOAD=true SHOW_DEV_TOOLS=true electron . | bunyan",
-    "serve:dist": "npm run compile && electron-packager-compile ./tmp nodedb --icon ./tmp/src/assets/img/logo.icns --out ./build --overwrite true",
+    "serve:dist": "npm run compile && electron-packager-compile ./tmp dist --icon ./tmp/src/assets/img/logo.icns --out ./build --overwrite true && $(node builddeps/serveDist)",
     "test": "npm run -s test:lint && npm run -s test:unit",
     "test:lint": "npm run -s test:lint:src && npm run -s test:lint:test",
     "test:lint:src": "eslint --ext .js,.vue src",
