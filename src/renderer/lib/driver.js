@@ -109,10 +109,11 @@ export default class Driver {
         })
         /* Make the query */
         .then(() => this.inst.query(connection, query))
-        /* Terminate the connection */
+        /* Error - terminate the connection */
         .catch(err => this.disconnect(connection)
           /* Reject promise with the error */
           .then(() => Promise.reject(err)))
+        /* Success - terminate the connection */
         .then(result => this.disconnect(connection)
           /* Return the DB result */
           .then(() => result)));
