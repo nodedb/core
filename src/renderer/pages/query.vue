@@ -64,11 +64,11 @@
     data () {
       return {
         borderWidth: 5,
-        connection: undefined,
+        connection: null,
         cursor: null,
-        db: 'sys',
+        db: null,
         id: null,
-        query: 'select * from session',
+        query: '',
         queryResult: {
           data: [],
           info: null,
@@ -82,7 +82,7 @@
     methods: {
       execute () {
         return this.connection.driver.query(this.query, this.db)
-          .then(({ data = [], fields = [], info = {} }) => {
+          .then(({ data = [], fields = [] }) => {
             if (fields.length > 0) {
               /* Show results is there are some fields */
               this.queryResult = {
@@ -102,14 +102,14 @@
         this.id = this.$route.params.id;
         this.connection = this.$store.getters['connections/getById'](this.id);
 
-        if (!this.connection) {
-          /* No connections available - to login page */
-          return this.$router.push({
-            name: 'login',
-          });
+        if (this.connection) {
+          return undefined;
         }
 
-        return undefined;
+        /* No connections available - to login page */
+        return this.$router.push({
+          name: 'login',
+        });
       },
 
       resize () {
