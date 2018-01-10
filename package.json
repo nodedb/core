@@ -16,13 +16,16 @@
     "source-map-support": "^0.5.0"
   },
   "devDependencies": {
-    "electron": "1.7.9",
+    "electron": "^1.7.9",
     "electron-builder": "^19.42.1",
-    "electron-webpack": "1.10.1",
+    "electron-webpack": "^1.10.1",
     "webpack": "^3.8.1"
   },
   "build": {
     "appId": "com.nodedb.core",
-    "linux": "zip"
+    "linux": {
+      "target": "zip",
+      "category": "Development"
+    }
   }
 }
