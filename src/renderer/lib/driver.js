@@ -93,7 +93,7 @@ export default class Driver {
    * @param {string} db
    * @returns {Promise<void>}
    */
-  query (query, db = undefined) {
+  query (query, db) {
     return Promise.resolve()
       /* Get a new connection */
       .then(() => this.connect())
