@@ -1,10 +1,14 @@
 {
-  "name": "electron-webpack-quick-start",
+  "name": "nodedb",
+  "description": "A cross-platform tool for managing all databases",
+  "author": "Guerrilla Software <https://guerrila.software>",
   "version": "0.0.0",
   "license": "MIT",
+  "private": true,
   "scripts": {
+    "clean": "rm -Rf dist",
     "dev": "electron-webpack dev",
-    "compile": "electron-webpack",
+    "compile": "yarn clean && electron-webpack",
     "dist": "yarn compile && electron-builder",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
   },
@@ -16,5 +20,9 @@
     "electron-builder": "^19.42.1",
     "electron-webpack": "1.10.1",
     "webpack": "^3.8.1"
+  },
+  "build": {
+    "appId": "com.nodedb.core",
+    "linux": "zip"
   }
 }
