@@ -31,11 +31,7 @@
     components,
 
     created () {
-      const layout = `${this.$route.meta.layout}Layout`;
-
-      if (this.$options.components[layout]) {
-        this.layout = layout;
-      }
+      this.setLayout();
     },
 
     data () {
@@ -43,6 +39,22 @@
         dark: false,
         layout: 'defaultLayout',
       };
+    },
+
+    methods: {
+      setLayout () {
+        let layout = `${this.$route.meta.layout}Layout`;
+
+        if (!this.$options.components[layout]) {
+          layout = 'defaultLayout';
+        }
+
+        this.layout = layout;
+      },
+    },
+
+    watch: {
+      $route: 'setLayout',
     },
 
   };
