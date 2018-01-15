@@ -11,8 +11,13 @@
         v-html="$t('errors:CONNECTION', { message: err.message })"
       )
 
-      div(v-if="!loaded")
-        v-progress-linear
+      div.text-center(v-if="!loaded")
+        v-progress-circular(
+          indeterminate,
+          v-bind:size="70",
+          v-bind:width="7",
+          color="error"
+        )
       div(v-else)
         v-alert(
           v-if="drivers.length === 0",
