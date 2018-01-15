@@ -1,17 +1,3 @@
 <template lang="jade">
-  div default
+  router-view
 </template>
-
-<script>
-  /**
-   * default
-   */
-
-  /* Node modules */
-
-  /* Third-party modules */
-
-  /* Files */
-
-  export default {};
-</script>
