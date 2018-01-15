@@ -1,10 +1,10 @@
 <template lang="jade">
-  div some tree
+  div default
 </template>
 
 <script>
   /**
-   * tree
+   * default
    */
 
   /* Node modules */
@@ -13,9 +13,5 @@
 
   /* Files */
 
-  export default {
-
-    name: 'tree',
-
-  };
+  export default {};
 </script>

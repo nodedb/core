@@ -60,6 +60,7 @@
     "i18next-sync-fs-backend": "^1.0.0",
     "lodash": "^4.17.4",
     "moment": "^2.20.1",
+    "require-dir": "^0.3.2",
     "uuid": "^3.1.0",
     "vue": "^2.5.13",
     "vue-router": "^3.0.1",

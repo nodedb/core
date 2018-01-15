@@ -1,61 +1,64 @@
 <template lang="jade">
-  v-container(fluid)
-    v-layout(row)
-      v-flex.form-wrapper
+  div
+    v-toolbar(dark color="primary")
+      v-toolbar-title @todo
+    v-card-text
+      v-alert(
+        v-if="err",
+        color="error",
+        icon="warning",
+        value="true",
+        v-html="$t('errors:CONNECTION', { message: err.message })"
+      )
+
+      div(v-if="!loaded")
+        v-progress-linear
+      div(v-else)
         v-alert(
-          v-if="err",
-          color="error",
-          icon="warning",
-          value="true",
-          v-html="$t('errors:CONNECTION', { message: err.message })"
+          v-if="drivers.length === 0",
+          icon="priority_high",
+          color="warning",
+          value="true"
+        ) {{ $t('errors:NO_DRIVERS_INSTALLED') }}
+
+        v-form(
+          v-else,
+          ref="form",
+          lazy-validation
         )
-
-        div(v-if="loaded")
-          v-alert(
-            v-if="drivers.length === 0"
-            icon="priority_high",
-            color="warning",
-            value="true"
-          ) {{ $t('errors:NO_DRIVERS_INSTALLED') }}
-
-          v-form(
-            v-else,
-            ref="form",
-            lazy-validation
+          v-select(
+            :label="$t('forms:DRIVER_LABEL')",
+            :items="drivers",
+            item-avatar="logo",
+            item-text="name",
+            item-value="id",
+            v-model="model.driver",
+            single-line,
+            bottom
           )
-            v-select(
-              :label="$t('forms:DRIVER_LABEL')",
-              :items="drivers",
-              item-avatar="logo",
-              item-text="name",
-              item-value="id",
-              v-model="model.driver",
-              single-line,
-              bottom
+            template(
+              slot="item",
+              slot-scope="data"
             )
-              template(
-                slot="item",
-                slot-scope="data"
-              )
-                v-list-tile-avatar
-                  img(
-                    :src="data.item.logo || 'assets/img/logo.png'"
-                  )
-                v-list-tile-content
-                  v-list-tile-title {{ data.item.name }}
+              v-list-tile-avatar
+                img(
+                  :src="data.item.logo || 'assets/img/logo.png'"
+                )
+              v-list-tile-content
+                v-list-tile-title {{ data.item.name }}
 
-            login-form(
-              :enter="login",
-              :form="loginForm",
-              :input="model.connection"
-            )
+          login-form(
+            :enter="login",
+            :form="loginForm",
+            :input="model.connection"
+          )
 
-            .text-xs-centers
-              v-btn(
-                block,
-                color="primary",
-                @click="login"
-              ) {{ $t('buttons:LOGIN') }}
+    v-card-actions(v-if="loaded")
+      v-spacer
+      v-btn(
+        color="primary",
+        @click="login"
+      ) {{ $t('buttons:LOGIN') }}
 </template>
 
 <script>
@@ -174,10 +177,3 @@
 
   };
 </script>
-
-<style lang="scss">
-  .form-wrapper {
-    margin: 0 auto;
-    max-width: 400px;
-  }
-</style>
