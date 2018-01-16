@@ -195,6 +195,20 @@
       },
     },
 
+    mounted () {
+      if (!this.cancelId) {
+        return;
+      }
+
+      document.addEventListener('keyup', ({ keyCode }) => {
+        if (keyCode === 27) {
+          return this.cancel();
+        }
+
+        return undefined;
+      });
+    },
+
     watch: {
       $route: 'fetchData',
       'model.driver': 'changeDriver',
