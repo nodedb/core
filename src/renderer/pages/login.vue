@@ -39,7 +39,8 @@
             item-value="id",
             v-model="model.driver",
             single-line,
-            bottom
+            bottom,
+            append-icon="mdi-menu-down"
           )
             template(
               slot="item",
@@ -60,6 +61,10 @@
 
     v-card-actions(v-if="loaded")
       v-spacer
+      v-btn(
+        v-if="cancelId",
+        @click="cancel"
+      ) {{ $t('buttons:CANCEL') }}
       v-btn(
         color="primary",
         @click="login"
@@ -94,6 +99,7 @@
     data () {
       return {
         active: null,
+        cancelId: null,
         drivers: [],
         err: null,
         loaded: false,
@@ -106,6 +112,15 @@
     },
 
     methods: {
+      cancel () {
+        return this.$router.push({
+          name: 'query',
+          params: {
+            id: this.cancelId,
+          },
+        });
+      },
+
       changeDriver (driver) {
         this.active = this.drivers.find(({ id }) => id === driver);
 
@@ -130,6 +145,11 @@
       },
 
       fetchData () {
+        const cancelId = this.$route.query.id;
+        if (cancelId) {
+          this.cancelId = cancelId;
+        }
+
         return this.$store.dispatch('drivers/loadAll')
           .then((drivers) => {
             this.loaded = true;
