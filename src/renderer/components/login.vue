@@ -7,7 +7,7 @@
         v-if="isTextField(item.type)",
         :label="$t('connection:' + item.label)",
         :prepend-icon="item.prependIcon",
-        :append-icon="item.type === 'password' ? (visible[item.key] ? 'visibility_off' : 'visibility') : item.appendIcon",
+        :append-icon="item.type === 'password' ? (visible[item.key] ? 'mdi-eye' : 'mdi-eye-off') : item.appendIcon",
         :append-icon-cb="item.type === 'password' ? (() => visible[item.key] = !visible[item.key]) : item.append-icon-cb",
         :suffix="item.suffix",
         :prefix="item.prefix",
