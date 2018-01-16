@@ -19,6 +19,7 @@
   import ace from 'brace';
 
   /* Files */
+  import logger from '../lib/logger';
 
   export default {
 
@@ -63,6 +64,12 @@
         if (this.focus) {
           this.editor.focus();
         }
+
+        logger('debug', 'New editor created', {
+          lang: this.lang,
+          theme: this.theme,
+          value: this.value,
+        });
 
         this.editor.on('change', () => {
           const cursor = this.editor.getCursorPosition();
@@ -163,7 +170,7 @@
   };
 </script>
 
-<style lang="scss" scope>
+<style lang="scss" scoped>
 
   .query_input {
 

@@ -19,6 +19,9 @@ const routes = [{
   path: '/login',
   name: 'login',
   component: login,
+  meta: {
+    layout: 'login',
+  },
 }, {
   path: '/query/:id',
   name: 'query',
