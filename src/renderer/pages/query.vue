@@ -1,7 +1,8 @@
 <template lang="jade">
   .query-page
-    tree.db-tree(
-      :style="'width: ' + treeWidth + 'px;'"
+    tree-viewer.db-tree(
+      :style="'width: ' + treeWidth + 'px;'",
+      v-model="tree"
     )
 
     #tree-width.grey.darken-4(
@@ -45,7 +46,7 @@
   /* Files */
   import queryBuilder from '../components/query.vue';
   import queryResult from '../components/result.vue';
-  import tree from '../components/tree.vue';
+  import treeViewer from '../components/tree.vue';
 
   export default {
 
@@ -54,7 +55,7 @@
     components: {
       queryBuilder,
       queryResult,
-      tree,
+      treeViewer,
     },
 
     created () {
@@ -75,6 +76,7 @@
           fields: [],
         },
         queryHeight: 250,
+        tree: [],
         treeWidth: 250,
       };
     },
@@ -103,7 +105,15 @@
         this.connection = this.$store.getters['connections/getById'](this.id);
 
         if (this.connection) {
-          return undefined;
+          /* Populate the tree */
+          return this.connection.driver.getTableOfContents()
+            .then((toc) => {
+              if (!Array.isArray(toc)) {
+                toc = [];
+              }
+
+              this.tree = toc;
+            });
         }
 
         /* No connections available - to login page */
